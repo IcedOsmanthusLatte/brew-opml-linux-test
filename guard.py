@@ -15,6 +15,8 @@ import pyatspi
 
 
 ACCOUNT = "Brew OPML test"
+IMPORT_SUCCESS = "Import was completely successful."
+IMPORT_WARNING = "Some feeds/folders were not imported due to error, check debug log for more details."
 BUTTONS = {"button", "push button", "toggle button"}
 EDITORS = {"text", "entry"}
 MENU_ITEMS = {"menu item", "check menu item", "menu", "popup menu"}
@@ -216,8 +218,7 @@ def run_import(input_opml, directory):
     choose_file("Select file for feeds import", input_opml, "Open")
     click(find("Import from file", BUTTONS, root=stage))
     result = find(
-        ["Import was completely successful.",
-         "Some feeds/folders were not imported due to error, check debug log for more details."],
+        [IMPORT_SUCCESS, IMPORT_WARNING],
         root=stage,
     )
     capture(directory, "import")
@@ -281,12 +282,16 @@ def run_guard(app, input_opml, output_opml, directory):
                 run_export(output_opml, directory)
                 operation = "check_export"
                 output_feeds = get_feeds(output_opml)
-                if not output_feeds or not set(output_feeds) <= input_feeds:
-                    raise ValueError("Actual export is empty or contains feeds outside the fixture")
+                empty_with_warning = not output_feeds and import_status == IMPORT_WARNING
+                if not set(output_feeds) <= input_feeds:
+                    raise ValueError("Actual export contains feeds outside the fixture")
+                if not output_feeds and not empty_with_warning:
+                    raise ValueError("Actual export is empty despite a successful import")
                 report = {
                     "input": input_opml.name, "output": output_opml.name,
                     "fetch_online_metadata": False, "import_status": import_status,
                     "export_entries": len(output_feeds), "unique_exported": len(set(output_feeds)),
+                    "empty_with_import_warning": empty_with_warning,
                     "missing_input_addresses": sorted(input_feeds - set(output_feeds)),
                 }
                 (directory / "result.json").write_text(

@@ -20,7 +20,7 @@ def digest(file: Path) -> str:
     return hashlib.sha256(file.read_bytes()).hexdigest()
 
 
-def inspect_opml(file: Path) -> dict:
+def inspect_opml(file: Path, *, allow_empty: bool = False) -> dict:
     root = ET.parse(file).getroot()
     body = root.find("body")
     if root.tag != "opml" or body is None:
@@ -37,7 +37,7 @@ def inspect_opml(file: Path) -> dict:
         return feeds
 
     rows = collect(body)
-    if not rows:
+    if not rows and not allow_empty:
         raise ValueError(f"Application did not export any subscription rows: {file}")
     return {
         "file": str(file.relative_to(EVIDENCE) if file.is_relative_to(EVIDENCE) else file.name),
@@ -46,6 +46,19 @@ def inspect_opml(file: Path) -> dict:
         "rows": rows,
         "unique": len({row["url"] for row in rows}),
     }
+
+
+def restore_titles(export: Path, source: Path, output: Path) -> None:
+    titles = {
+        row.attrib["xmlUrl"]: row.get("title") or row.attrib["text"]
+        for row in ET.parse(source).findall(".//outline[@xmlUrl]")
+    }
+    xml = ET.parse(export)
+    for row in xml.findall(".//outline[@xmlUrl]"):
+        for attribute in ("title", "text"):
+            if not row.get(attribute):
+                row.set(attribute, titles[row.attrib["xmlUrl"]])
+    xml.write(output, encoding="utf-8", xml_declaration=True)
 
 
 def run(args: list[str], output: Path, *, timeout: int = 40) -> None:
@@ -94,8 +107,23 @@ def experiment(case: str, label: str, scratch: Path, summary: dict) -> None:
     profiles["newsboat_default"] = inspect_opml(default)
     profiles["newsboat_tags"] = inspect_opml(tags)
     profiles["rssguard_direct"] = inspect_opml(rss_guard_roundtrip(source, output, "rssguard-direct"))
-    profiles["rssguard_from_default"] = inspect_opml(rss_guard_roundtrip(default, output, "rssguard-from-default"))
-    profiles["rssguard_from_tags"] = inspect_opml(rss_guard_roundtrip(tags, output, "rssguard-from-tags"))
+    profiles["rssguard_from_default"] = inspect_opml(
+        rss_guard_roundtrip(default, output, "rssguard-from-default"), allow_empty=True
+    )
+    profiles["rssguard_from_tags"] = inspect_opml(
+        rss_guard_roundtrip(tags, output, "rssguard-from-tags"), allow_empty=True
+    )
+    if case == "nested-duplicate":
+        for name, raw in (("default", default), ("tags", tags)):
+            titled = output / f"newsboat-{name}-with-titles.opml"
+            restore_titles(raw, source, titled)
+            original = inspect_opml(raw)
+            profiles[f"newsboat_{name}_with_titles"] = inspect_opml(titled)
+            if signatures(original) != signatures(profiles[f"newsboat_{name}_with_titles"]):
+                raise ValueError("Title repair changed subscription URLs, folder paths, or categories")
+            profiles[f"rssguard_from_{name}_with_titles"] = inspect_opml(
+                rss_guard_roundtrip(titled, output, f"rssguard-from-{name}-with-titles"), allow_empty=True
+            )
 
 
 def save(summary: dict) -> None:
