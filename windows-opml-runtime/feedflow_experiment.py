@@ -153,12 +153,31 @@ class FeedFlow:
 
     def open_tools(self):
         self.main.set_focus()
+        stored = data(self.profile)
+        if stored and not stored[0]:
+            try:
+                self.click("Import and export", seconds=4)
+            except RuntimeError:
+                # Confirmed initial 800x600 view on both hosted Windows images.
+                frame = self.main.rectangle()
+                coords = (frame.left + round(frame.width()*0.25), frame.top + round(frame.height()*0.66))
+                mouse.click(coords=coords)
+            time.sleep(0.6)
+            return
         keyboard.send_keys("^i", pause=0.18)
         time.sleep(0.6)
 
     def import_opml(self):
         self.open_tools()
-        self.click("Import feed from OPML")
+        try:
+            self.click("Import feed from OPML")
+        except RuntimeError:
+            if PHASE == "source OPML and refreshed matched IDs" and not data(self.profile)[0]:
+                for idx, window in enumerate(self.windows()[:3],1):
+                    rect=window.rectangle()
+                    image=ImageGrab.grab((rect.left,rect.top,rect.right,rect.bottom))
+                    image.save(OUT/f"feedflow-empty-opml-panel-{idx}.png")
+            raise
         file_dialog(OPML, self.pid)
         self.click("Done", seconds=70)
         wait(lambda: (d := data(self.profile)) and d[0] == FEED_URLS,
