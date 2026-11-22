@@ -3,7 +3,7 @@ from contextlib import closing, contextmanager
 from hashlib import sha256
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from pywinauto import Desktop
+from pywinauto import Desktop, keyboard
 from urllib.request import urlopen
 from xml.etree import ElementTree
 import json
@@ -13,6 +13,7 @@ import sqlite3
 import subprocess
 import time
 import traceback
+import win32clipboard
 
 
 ROOT = Path(os.environ["BREW_WIN_RUNTIME"])
@@ -39,7 +40,7 @@ def wait(fn, description, seconds=45):
     raise RuntimeError(f"Timed out waiting for {description}")
 
 
-def file_dialog(value, pid):
+def file_dialog(value, pid, saving=False):
     def pick():
         for w in Desktop(backend="win32").windows(class_name="#32770"):
             if w.process_id() != pid or not w.is_visible():
@@ -49,10 +50,31 @@ def file_dialog(value, pid):
                 return w, next((e for e in edits if e.control_id() == 1148), edits[-1])
         return None
     window, edit = wait(pick, "Fluent Reader file dialog")
-    edit.set_edit_text(str(value))
-    Desktop(backend="win32").window(handle=window.handle).child_window(class_name="Button", control_id=1).click()
+    window.set_focus()
+    edit.set_focus()
+    win32clipboard.OpenClipboard()
+    try:
+        win32clipboard.EmptyClipboard()
+        win32clipboard.SetClipboardText(str(value), win32clipboard.CF_UNICODETEXT)
+    finally:
+        win32clipboard.CloseClipboard()
+    keyboard.send_keys("^a^v", pause=0.15)
+    assert edit.window_text().strip().strip('"') == str(value)
+    keyboard.send_keys("{ENTER}", pause=0.15)
     handle = window.handle
-    wait(lambda: not any(w.handle == handle and w.is_visible() for w in Desktop(backend="win32").windows(class_name="#32770")), "file picker dismissal")
+    try:
+        wait(lambda: (saving and value.is_file()) or not any(
+            w.handle == handle and w.is_visible() for w in Desktop(backend="win32").windows(class_name="#32770")
+        ), "file picker dismissal", 15)
+    except RuntimeError:
+        boxes = []
+        for w in Desktop(backend="win32").windows(class_name="#32770"):
+            if w.process_id() == pid and w.is_visible():
+                buttons = [b.window_text() for b in w.descendants(class_name="Button")]
+                boxes.append({"control_ids": [b.control_id() for b in w.descendants(class_name="Button")],
+                              "button_labels": [s for s in buttons if s in ("&Save", "&Open", "Cancel", "OK", "Yes", "No")]})
+        put("fluent-file-dialog-diagnostics.json", {"saving": saving, "boxes": boxes})
+        raise
 
 
 def confirm_restore(pid):
@@ -219,13 +241,13 @@ def main():
                 target = [(True, True, False), (True, False, True), (True, False, False)]
                 seeded = wait(lambda: s if states(s := snapshot(source, chosen)) == target else None,
                               "both intended article states and unchanged control")
+                put(f"fluent-round-{number}-source.json", seeded)
                 preferences(page)
                 page.get_by_role("button", name="Backup", exact=True).click(timeout=9000)
-                file_dialog(backup, proc.pid)
+                file_dialog(backup, proc.pid, saving=True)
                 wait(lambda: backup.is_file() and backup.stat().st_size > 0, "native .frdata output")
                 packed = json.loads(backup.read_text(encoding="utf-8"))
                 assert "sources" in packed["sqlite"] and "items" in packed["sqlite"]
-                put(f"fluent-round-{number}-source.json", seeded)
             finally:
                 stop(proc, 9250)
             proc, page = start(pw, control, 9251)

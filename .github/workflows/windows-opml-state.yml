@@ -33,3 +33,25 @@ jobs:
           path: windows-opml-evidence
           if-no-files-found: warn
           retention-days: 14
+  probe-server-2022:
+    runs-on: windows-2022
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prepare the same released applications
+        shell: pwsh
+        run: ./windows-opml-runtime/prepare.ps1
+      - name: Set up desktop UI automation
+        run: python -m pip install --disable-pip-version-check pywinauto==0.6.9 pillow==11.3.0 playwright==1.55.0
+      - name: Probe the alternative isolated Windows image
+        run: python windows-opml-runtime/probe.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-2022-opml-probe
+          path: windows-opml-evidence
+          if-no-files-found: warn
+          retention-days: 14
