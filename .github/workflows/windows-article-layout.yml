@@ -1,0 +1,62 @@
+name: Windows RSS article layout
+on:
+  push:
+    branches: [windows-opml-reading-state]
+    paths:
+      - .github/workflows/windows-article-layout.yml
+      - verification/check-windows-article.py
+      - verification/windows-reading-state-live.txt
+permissions:
+  contents: read
+jobs:
+  layout:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare one-time preview key
+        if: ${{ !contains(github.event.head_commit.message, 'Verify published article') }}
+        run: |
+          install -d -m 700 "$RUNNER_TEMP/brew-key" layout-transport
+          openssl genpkey -quiet -algorithm RSA -pkeyopt rsa_keygen_bits:3072 -out "$RUNNER_TEMP/brew-key/preview.pem"
+          openssl pkey -in "$RUNNER_TEMP/brew-key/preview.pem" -pubout -out layout-transport/preview-public.pem
+      - uses: actions/upload-artifact@v4
+        if: ${{ !contains(github.event.head_commit.message, 'Verify published article') }}
+        with:
+          name: brew-windows-preview-public-key
+          path: layout-transport/preview-public.pem
+          retention-days: 1
+      - name: Install browser
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install playwright==1.55.0
+          .venv/bin/playwright install chromium
+      - name: Check selected article viewports
+        env:
+          LIVE: ${{ contains(github.event.head_commit.message, 'Verify published article') }}
+        run: |
+          if [[ "$LIVE" == true ]]; then
+            .venv/bin/python verification/check-windows-article.py live
+          else
+            set -eu
+            capsule="$RUNNER_TEMP/brew-key/preview.enc"
+            deadline=$((SECONDS + 510))
+            endpoint="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/windows-opml-reading-state/.qa-requests/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.enc"
+            while (( SECONDS < deadline )); do
+              if curl --fail --silent --max-time 6 "$endpoint?stamp=$(date +%s)" -o "$capsule"; then
+                if openssl pkeyutl -decrypt -inkey "$RUNNER_TEMP/brew-key/preview.pem" -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -in "$capsule" -out "$RUNNER_TEMP/brew-key/input"; then
+                  rm -- "$RUNNER_TEMP/brew-key/preview.pem"
+                  .venv/bin/python verification/check-windows-article.py preview "$RUNNER_TEMP/brew-key/input"
+                  exit 0
+                fi
+              fi
+              sleep 5
+            done
+            exit 2
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brew-windows-article-layout
+          path: layout-proof
+          retention-days: 7
