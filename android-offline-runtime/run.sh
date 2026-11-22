@@ -2,8 +2,10 @@
 set -euo pipefail
 d="$(cd "$(dirname "$0")" && pwd)"
 pkg="system-images;android-35;google_apis;x86_64"
-sdkmanager "$pkg" "platforms;android-35"
-echo no | avdmanager create avd --force -n brew_android -k "$pkg"
+sdk="$ANDROID_HOME/cmdline-tools/latest/bin"
+if ! test -x "$sdk/sdkmanager"; then sdk="$(dirname "$(command -v sdkmanager)")"; fi
+"$sdk/sdkmanager" "$pkg" "platforms;android-35"
+echo no | "$sdk/avdmanager" create avd --force -n brew_android -k "$pkg"
 emulator -avd brew_android -no-window -no-audio -no-boot-anim -no-snapshot-load -no-snapshot-save -gpu swiftshader_indirect -accel on > "$RUNNER_TEMP/brew-emulator.log" 2>&1 &
 pid=$!
 trap 'kill "$pid" 2>/dev/null || true' EXIT
