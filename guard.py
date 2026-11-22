@@ -15,9 +15,9 @@ import pyatspi
 
 
 ACCOUNT = "Brew OPML test"
-BUTTONS = {"push button", "toggle button"}
+BUTTONS = {"button", "push button", "toggle button"}
 EDITORS = {"text", "entry"}
-MENU_ITEMS = {"menu item", "check menu item", "menu"}
+MENU_ITEMS = {"menu item", "check menu item", "menu", "popup menu"}
 
 
 def xdo(*args):
@@ -176,9 +176,12 @@ def record_accessibility_tree(path):
 
 
 def create_account():
-    click(find("Accounts", {"menu"}, seconds=35))
-    click(find("Add account", MENU_ITEMS))
-    selection = find("Local RSS/RDF/ATOM/JSON", enabled=False)
+    try:
+        selection = find("Local RSS/RDF/ATOM/JSON", {"list item"}, seconds=8, enabled=False)
+    except TimeoutError:
+        click(find("Accounts", MENU_ITEMS, seconds=25))
+        click(find("Add account", MENU_ITEMS))
+        selection = find("Local RSS/RDF/ATOM/JSON", {"list item"}, enabled=False)
     click(selection, count=2)
     title_label = find("Title", {"label"})
     setup = title_label
@@ -224,7 +227,7 @@ def run_import(input_opml, directory):
 
 
 def run_export(output_opml, directory):
-    click(find("Accounts", {"menu"}))
+    click(find("Accounts", MENU_ITEMS))
     account = find(ACCOUNT, {"menu", "menu item"})
     move(account)
     try:
@@ -261,10 +264,12 @@ def run_guard(app, input_opml, output_opml, directory):
            "QT_QPA_PLATFORM": "xcb", "QT_STYLE_OVERRIDE": "Fusion", "QT_QPA_PLATFORMTHEME": "",
            "LANG": "C.UTF-8", "LC_ALL": "C.UTF-8"}
     with tempfile.TemporaryDirectory(prefix="rssguard-brew-") as run_dir:
+        data_dir = Path(run_dir) / "rssguard-data"
+        (data_dir / "config").mkdir(parents=True)
         env.pop("NO_AT_BRIDGE", None)
         with (directory / "rssguard.log").open("w", encoding="utf-8") as log:
             process = subprocess.Popen(
-                [str(app), "--data", str(Path(run_dir) / "rssguard-data")],
+                [str(app), "--data", str(data_dir)],
                 env=env, stdout=log, stderr=subprocess.STDOUT,
             )
             operation = "create_local_account"
