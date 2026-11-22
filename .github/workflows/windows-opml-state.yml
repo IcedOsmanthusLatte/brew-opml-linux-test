@@ -1,0 +1,32 @@
+name: Windows OPML reading-state experiment
+on:
+  push:
+    branches: [windows-opml-reading-state]
+    paths:
+      - .github/workflows/windows-opml-state.yml
+      - windows-opml-runtime/**
+permissions:
+  contents: read
+jobs:
+  experiment:
+    runs-on: windows-2025
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prepare pinned released applications
+        shell: pwsh
+        run: ./windows-opml-runtime/prepare.ps1
+      - name: Set up desktop UI automation
+        run: python -m pip install --disable-pip-version-check pywinauto==0.6.9 pillow==11.3.0 playwright==1.55.0
+      - name: Probe Windows app UI and restore entry points
+        run: python windows-opml-runtime/probe.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-opml-evidence
+          path: windows-opml-evidence
+          if-no-files-found: warn
+          retention-days: 14
