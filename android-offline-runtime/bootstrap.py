@@ -31,9 +31,12 @@ def wait(check, timeout=26):
 
 
 def state(offline):
+    if offline:
+        shell("svc", "data", "disable")
     shell("cmd", "connectivity", "airplane-mode", "enable" if offline else "disable")
     shell("svc", "wifi", "disable" if offline else "enable")
-    shell("svc", "data", "disable" if offline else "enable")
+    if not offline:
+        shell("svc", "data", "enable")
     return wait(lambda: shell("settings", "get", "global", "airplane_mode_on") == ("1" if offline else "0"))
 
 
@@ -41,6 +44,24 @@ def probe(offline, change_state=True):
     if change_state:
         state(offline)
     time.sleep(3)
+    for _ in range(5):
+        result = probe_once()
+        if offline:
+            valid = (result["http_status"] == 0 and not result["any_active_network"]
+                     and result["airplane_mode"] == "1" and result["wifi_setting"] == "0"
+                     and result.get("default_mobile_data_enabled") is False
+                     and result.get("mobile_data_connection_allowed") is False
+                     and not (result["wifi"] or result["cellular"] or result["validated"]))
+        else:
+            valid = result["http_status"] == 200 and result["any_active_network"] and result["airplane_mode"] == "0"
+        print(json.dumps({"probe_offline": offline, "passed": valid, **result}), flush=True)
+        if valid:
+            return result
+        time.sleep(4)
+    raise AssertionError("Requested guest network state could not be verified")
+
+
+def probe_once():
     nonce = secrets.token_hex(8)
     shell("am", "force-stop", "lab.brew.netprobe")
     shell("am", "start", "-n", "lab.brew.netprobe/.Probe", "--es", "nonce", nonce)
@@ -60,13 +81,6 @@ def probe(offline, change_state=True):
     result["airplane_mode"] = shell("settings", "get", "global", "airplane_mode_on")
     result["wifi_setting"] = shell("settings", "get", "global", "wifi_on")
     result["mobile_data_setting"] = shell("settings", "get", "global", "mobile_data")
-    if offline:
-        assert result["http_status"] == 0 and not result["any_active_network"]
-        assert result["airplane_mode"] == "1" and result["wifi_setting"] == "0"
-        assert result["mobile_data_setting"] == "0"
-        assert not result["wifi"] and not result["cellular"] and not result["validated"]
-    else:
-        assert result["http_status"] == 200 and result["any_active_network"]
     return result
 
 
@@ -90,8 +104,10 @@ def stages():
         host["installed_apps"][package] = {"version_code": code, "version": expected_version}
     host["fixture_sha256_in_guest"] = shell("sha256sum", "/sdcard/Download/brew-control.opml").split()[0]
     assert host["fixture_sha256_in_guest"] == "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd"
-    control = {"avd": host, "online": probe(False), "offline": probe(True), "restored": probe(False)}
-    (OUT / "host.json").write_text(json.dumps(control, indent=2) + "\n")
+    control = {"avd": host}
+    for key, offline in (("online", False), ("offline", True), ("restored", False)):
+        control[key] = probe(offline)
+        (OUT / "host.json").write_text(json.dumps(control, indent=2) + "\n")
     for package in APPS:
         shell("monkey", "-p", package, "-c", "android.intent.category.LAUNCHER", "1")
         time.sleep(4)

@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
@@ -37,6 +38,7 @@ public final class Probe extends Activity {
                 conn.setConnectTimeout(3500);
                 conn.setReadTimeout(3500);
                 conn.setUseCaches(false);
+                conn.setRequestProperty("Cache-Control", "no-cache");
                 conn.setInstanceFollowRedirects(false);
                 status = conn.getResponseCode();
                 conn.disconnect();
@@ -51,6 +53,13 @@ public final class Probe extends Activity {
             result.put("wifi", capabilities != null && capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI));
             result.put("cellular", capabilities != null && capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
             result.put("validated", capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED));
+            TelephonyManager phone = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+            try {
+                result.put("default_mobile_data_enabled", phone.isDataEnabled());
+                result.put("mobile_data_connection_allowed", phone.isDataConnectionAllowed());
+            } catch (RuntimeException unavailable) {
+                result.put("mobile_state_unavailable", unavailable.getClass().getSimpleName());
+            }
             File target = new File(getFilesDir(), "proof.json");
             try (FileOutputStream stream = new FileOutputStream(target)) {
                 stream.write(result.toString().getBytes(StandardCharsets.UTF_8));
