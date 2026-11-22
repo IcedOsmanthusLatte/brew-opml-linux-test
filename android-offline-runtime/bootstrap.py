@@ -37,8 +37,9 @@ def state(offline):
     return wait(lambda: shell("settings", "get", "global", "airplane_mode_on") == ("1" if offline else "0"))
 
 
-def probe(offline):
-    state(offline)
+def probe(offline, change_state=True):
+    if change_state:
+        state(offline)
     time.sleep(3)
     nonce = secrets.token_hex(8)
     shell("am", "force-stop", "lab.brew.netprobe")
@@ -62,6 +63,7 @@ def probe(offline):
     if offline:
         assert result["http_status"] == 0 and not result["any_active_network"]
         assert result["airplane_mode"] == "1" and result["wifi_setting"] == "0"
+        assert result["mobile_data_setting"] == "0"
         assert not result["wifi"] and not result["cellular"] and not result["validated"]
     else:
         assert result["http_status"] == 200 and result["any_active_network"]
@@ -88,9 +90,8 @@ def stages():
         host["installed_apps"][package] = {"version_code": code, "version": expected_version}
     host["fixture_sha256_in_guest"] = shell("sha256sum", "/sdcard/Download/brew-control.opml").split()[0]
     assert host["fixture_sha256_in_guest"] == "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd"
-    control = {"avd": host, "online": probe(False), "offline": probe(True)}
+    control = {"avd": host, "online": probe(False), "offline": probe(True), "restored": probe(False)}
     (OUT / "host.json").write_text(json.dumps(control, indent=2) + "\n")
-    probe(False)
     for package in APPS:
         shell("monkey", "-p", package, "-c", "android.intent.category.LAUNCHER", "1")
         time.sleep(4)
