@@ -30,14 +30,16 @@ MEASURE = r"""
     .find(a => a.href.split('?')[0] === sample);
   const visible = element => {
     if (!element) return false;
-    const rect = element.getBoundingClientRect();
-    const x = rect.left + Math.min(rect.width / 2, 25);
-    const y = rect.top + rect.height / 2;
-    const top = document.elementFromPoint(x, y);
-    return rect.left >= 0 && rect.right <= innerWidth + 1 && rect.top >= 0 &&
-      rect.bottom <= innerHeight + 1 && rect.width > 0 && rect.height > 0 &&
-      getComputedStyle(element).visibility === 'visible' &&
-      Boolean(top && (top === element || element.contains(top)));
+    const rects = Array.from(element.getClientRects());
+    return rects.length > 0 && getComputedStyle(element).visibility === 'visible' &&
+      rects.every(rect => {
+        const x = rect.left + Math.min(rect.width / 2, 25);
+        const y = rect.top + rect.height / 2;
+        const top = document.elementFromPoint(x, y);
+        return rect.left >= 0 && rect.right <= innerWidth + 1 && rect.top >= 0 &&
+          rect.bottom <= innerHeight + 1 && rect.width > 0 && rect.height > 0 &&
+          Boolean(top && (top === element || element.contains(top)));
+      });
   };
   const routes = Array.from(table.tBodies[0].rows);
   return {
@@ -79,11 +81,10 @@ def check(browser, view):
         landing_pass = (
             result["status"] == 200 and result["url"] == URL and result["width"] == width
             and result["heading_visible"] and result["whole_table_visible"] and result["every_row_visible"]
-            and result["no_horizontal_overflow"] and result["scroll_y"] > 0 and result["rows"] == ROUTES
+            and result["sample_visible"] and result["no_horizontal_overflow"]
+            and result["scroll_y"] > 0 and result["rows"] == ROUTES
         )
         if result["sample_link"]:
-            # The email promises direct access to the comparison. If the download link
-            # is below the fold, its click may scroll within the same comparison section.
             sample = page.locator(f'article a[href^="{SAMPLE}"]').first
             with page.expect_download(timeout=12000) as waiting:
                 sample.click()
