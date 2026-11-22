@@ -78,10 +78,10 @@ def feedflow():
             observed["windows"] = [{"class":w.class_name(), "visible":w.is_visible(),
                 "title_is_feedflow":w.window_text().strip().lower() == "feedflow",
                 "rect_wh":[w.rectangle().width(),w.rectangle().height()]} for w in wins]
-            possible = [w for w in wins if w.is_visible() and w.rectangle().width() > 200
+            possible = [w for w in wins if w.is_visible() and w.rectangle().width() >= 600
                         and (w.class_name().startswith("SunAwt") or w.window_text().strip().lower() == "feedflow")]
             return next(iter(possible), None)
-        w = wait(lookup)
+        w = wait(lookup, timeout=70)
         if w.rectangle().width() < 800:
             w.maximize()
         time.sleep(4)
@@ -90,6 +90,7 @@ def feedflow():
             dict(title=w.window_text(), controls=controls(uia)), indent=2), encoding="utf-8")
         w.capture_as_image().save(evidence / "feedflow-start.png")
     finally:
+        before_cleanup = p.poll()
         subprocess.run(["taskkill", "/pid", str(p.pid), "/t", "/f"], capture_output=True)
         stream.close()
         collected = []
@@ -105,7 +106,7 @@ def feedflow():
                         clean = re.sub(r"https?://\S+", "(url)", line)
                         clean = re.sub(r"(?i)[A-Z]:[\\/][^\r\n]*", "(runner path)", clean)
                         collected.append(clean[:300])
-        diagnostics = {"process_exit":p.poll(), "safe_startup_events":collected[-30:], "observed": observed,
+        diagnostics = {"process_exit_before_cleanup":before_cleanup, "process_exit_after_cleanup":p.poll(), "safe_startup_events":collected[-30:], "observed": observed,
                        "java_runtime_exists":(exe.parent / "runtime").is_dir()}
         (evidence / "feedflow-diagnostics.json").write_text(
             json.dumps(diagnostics, indent=2), encoding="utf-8")

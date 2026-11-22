@@ -198,16 +198,19 @@ def block_app_network():
     name = "BrewFluentReadingStateOffline"
     add = ("New-NetFirewallRule -Name '%s' -Direction Outbound -Action Block -Enabled True "
            "-Profile Any -Program $env:BREW_WIN_FLUENT -ErrorAction Stop | Out-Null" % name)
-    subprocess.run(["pwsh", "-NoProfile", "-Command", add], check=True, capture_output=True,
-                   creationflags=subprocess.CREATE_NO_WINDOW)
+    installed = subprocess.run(["pwsh", "-NoProfile", "-Command", add], capture_output=True,
+                               creationflags=subprocess.CREATE_NO_WINDOW).returncode == 0
+    if not installed:
+        yield False
+        return
     try:
         check = ("$r=Get-NetFirewallRule -Name '%s' -ErrorAction Stop; "
                  "if ($r.Enabled -ne 'True' -or $r.Action -ne 'Block') {exit 1}; "
                  "if (($r|Get-NetFirewallApplicationFilter).Program -ne $env:BREW_WIN_FLUENT) {exit 2}; "
                  "if (@(Get-NetFirewallProfile -PolicyStore ActiveStore | Where-Object Enabled -ne True).Count) {exit 3}" % name)
-        subprocess.run(["pwsh", "-NoProfile", "-Command", check], check=True, capture_output=True,
-                       creationflags=subprocess.CREATE_NO_WINDOW)
-        yield
+        verified = subprocess.run(["pwsh", "-NoProfile", "-Command", check], capture_output=True,
+                                  creationflags=subprocess.CREATE_NO_WINDOW).returncode == 0
+        yield verified
     finally:
         subprocess.run(["pwsh", "-NoProfile", "-Command", f"Remove-NetFirewallRule -Name '{name}'"], check=True,
                        capture_output=True, creationflags=subprocess.CREATE_NO_WINDOW)
@@ -246,8 +249,15 @@ def main():
                 page.get_by_role("button", name="Backup", exact=True).click(timeout=9000)
                 file_dialog(backup, proc.pid, saving=True)
                 wait(lambda: backup.is_file() and backup.stat().st_size > 0, "native .frdata output")
-                packed = json.loads(backup.read_text(encoding="utf-8"))
-                assert "sources" in packed["sqlite"] and "items" in packed["sqlite"]
+                packed = json.loads(backup.read_text(encoding="utf-8"))["sqlite"]
+                native_src = {s["sid"]: s["url"] for s in packed["sources"]}
+                native_items = {(native_src[i["source"]], i["link"]): (bool(i["hasRead"]), bool(i["starred"]))
+                                for i in packed["items"] if i["source"] in native_src}
+                assert set(native_src.values()) == WANTED_FEEDS
+                assert [native_items[k] for k in chosen.values()] == [(True, False), (False, True), (False, False)]
+                native_flags = dict((label, {"read":native_items[key][0], "saved":native_items[key][1]})
+                                    for label, key in chosen.items())
+                put(f"fluent-round-{number}-backup-state.json", native_flags)
             finally:
                 stop(proc, 9250)
             proc, page = start(pw, control, 9251)
@@ -264,7 +274,7 @@ def main():
                 assert states(baseline_after_restart) == states(baseline)
             finally:
                 stop(proc, 9254)
-            with block_app_network():
+            with block_app_network() as blocked:
                 proc, page = start(pw, restore, 9252)
                 try:
                     assert rows(restore) == (set(), {})
@@ -285,7 +295,8 @@ def main():
                 finally:
                     stop(proc, 9253)
             round_result = dict(source=seeded, opml_only=baseline, opml_only_after_restart=baseline_after_restart, native_restore=after,
-                                native_restore_after_restart=after_restart, with_app_outbound_block=True,
+                                native_restore_after_restart=after_restart, verified_program_block_rule=blocked,
+                                native_file_state=native_flags,
                                 native_backup_sha256=sha256(backup.read_bytes()).hexdigest(),
                                 native_backup_bytes=backup.stat().st_size)
             put(f"fluent-round-{number}.json", round_result)
