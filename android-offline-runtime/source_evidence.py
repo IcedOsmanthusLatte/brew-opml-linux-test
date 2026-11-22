@@ -26,24 +26,27 @@ class HTML(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.text = []
         self.articles = []
+        self.bbc_paragraphs = []
         self.paragraph = None
         self.article_depth = 0
         self.hidden = 0
         self.stack = []
         self.bbc_text_block = 0
+        self.paragraph_in_bbc_block = False
 
     def handle_starttag(self, tag, attrs):
         if tag not in {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta",
                        "param", "source", "track", "wbr"}:
-            text_block = dict(attrs).get("data-component") == "text-block"
+            text_block = any(v == "text-block" for k, v in attrs if k in {"data-component", "data-testid"})
             self.stack.append((tag, text_block))
             self.bbc_text_block += text_block
         if tag in {"script", "style", "noscript"}:
             self.hidden += 1
         if tag == "article":
             self.article_depth += 1
-        if tag == "p" and self.article_depth and self.bbc_text_block:
+        if tag == "p" and self.article_depth and not any(t in {"nav", "aside", "header", "footer"} for t, _ in self.stack):
             self.paragraph = []
+            self.paragraph_in_bbc_block = bool(self.bbc_text_block)
 
     def handle_endtag(self, tag):
         if tag in {"script", "style", "noscript"}:
@@ -51,11 +54,16 @@ class HTML(HTMLParser):
         if tag == "article":
             self.article_depth = max(0, self.article_depth - 1)
         if tag == "p" and self.paragraph is not None:
-            self.articles.append(normalized(" ".join(self.paragraph)))
+            paragraph = normalized(" ".join(self.paragraph))
+            self.articles.append(paragraph)
+            if self.paragraph_in_bbc_block:
+                self.bbc_paragraphs.append(paragraph)
             self.paragraph = None
-        if self.stack and self.stack[-1][0] == tag:
-            _, text_block = self.stack.pop()
-            self.bbc_text_block -= text_block
+        for index in reversed(range(len(self.stack))):
+            if self.stack[index][0] == tag:
+                self.bbc_text_block -= sum(marked for _, marked in self.stack[index:])
+                del self.stack[index:]
+                break
 
     def handle_data(self, data):
         if self.hidden:
@@ -110,8 +118,10 @@ class Item:
         if self.source != "BBC" or self.origin_verified:
             return
         matches = []
-        for paragraph in parse_html(get(self.url, 6_000_000).decode("utf-8", "replace")).articles:
-            if len(paragraph.split()) >= 15:
+        page = parse_html(get(self.url, 6_000_000).decode("utf-8", "replace"))
+        paragraphs = page.bbc_paragraphs if len(page.bbc_paragraphs) >= 6 else page.articles
+        for paragraph in paragraphs[1:]:
+            if len(paragraph.split()) >= 17:
                 matches.extend(markers(paragraph, (self.title, self.snippet, self.body)))
         if len(matches) < 8:
             raise ValueError("BBC origin marker control insufficient")
@@ -145,7 +155,11 @@ def load_items():
     feeds = [x.attrib["xmlUrl"] for x in control.iter("outline") if "xmlUrl" in x.attrib]
     observed = {}
     for source, feed in zip(("BBC", "NASA", "WordPress"), feeds, strict=True):
-        channel = ET.fromstring(get(feed, 5_000_000)).find("channel")
+        try:
+            channel = ET.fromstring(get(feed, 5_000_000)).find("channel")
+        except (OSError, ET.ParseError, ValueError):
+            observed[source] = []
+            continue
         items = []
         for node in channel.findall("item"):
             item = Item(clear(node.findtext("title", "")), node.findtext("link", ""), node.findtext("guid", ""),

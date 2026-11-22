@@ -279,16 +279,26 @@ def ocr():
 
 def measure(package, node, item):
     click(node)
+
     def opened_reader():
         tree = xml()
-        return tree if reader_context(tree, package) else None
+        if not reader_context(tree, package):
+            return None
+        if package == FLOW:
+            ready = any(n.get("resource-id", "").startswith("reader_article_") for n in tree.iter("node"))
+            unavailable = find(tree, by("Unable to parse article", "No content available")) is not None
+            if not (ready or unavailable):
+                return None
+        return tree
 
-    tree = wait(opened_reader, timeout=16)
+    tree = wait(opened_reader, timeout=32)
     activity = reader_activity(package)
     recorded_keys = sorted(v for node in tree.iter("node") for v in fields(node)[1:]
                            if v in {"Go back", "Fetch full article", "Open menu", "reader_back_button",
                                     "reader_bookmark_button", "reader_content_source_button"})
     selected_id = node.get("resource-id", "")
+    source_button = find(tree, by("reader_content_source_button"))
+    feed_content_selected = source_button.get("checked") == "true" if source_button is not None else None
     visible = [view_text(tree, package), ocr()]
     for _ in range(4):
         result = item.classify(visible)
@@ -302,6 +312,7 @@ def measure(package, node, item):
     assert result["title_observed"], "Measured title identity failed inside native reader"
     result["resumed_activity"] = activity
     result["reader_ui_controls"] = recorded_keys
+    result["reader_feed_content_switch_selected"] = feed_content_selected
     result["timeline_item_resource_id_sha256"] = digest(selected_id) if selected_id else None
     back()
     return result
@@ -357,6 +368,16 @@ def measure_route(package, condition, round_num, candidates, selected):
 def main():
     candidates = load_items()
     selected = {}
+    bbc_verified = []
+    for item in candidates["BBC"][:5]:
+        try:
+            item.prove_origin()
+        except (OSError, ValueError):
+            continue
+        bbc_verified.append(item)
+    assert bbc_verified, "Cloud runner could not verify BBC original article body"
+    candidates["BBC"] = bbc_verified
+    note("public-source-reference-controls", candidates={source: len(items) for source, items in candidates.items()})
     package = os.environ["BREW_TEST_PACKAGE"]
     assert package in APPS
     for round_number in (1, 2):
@@ -366,4 +387,27 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception:
+        try:
+            safe_labels = {"OK", "Done", "Confirm", "Save", "Downloads", "Recent", "Show roots", "Settings",
+                           "Open menu", "Open navigation drawer", "Open navigation menu", "Reading behavior",
+                           "Feeds & accounts", "Import and export", "Import feeds from OPML", "Edit feed",
+                           "Sync feeds", "Refresh feeds", FEEDER_ADV, FLOW_ADV, *SOURCES.values()}
+            rows = []
+            for n in xml().iter("node"):
+                label, description, resource = fields(n)
+                if not any((label, description, resource)):
+                    continue
+                if "article_row_" in resource or "reader_article_" in resource:
+                    resource = "article-item-hash:" + digest(resource)
+                rows.append({"package": n.get("package"), "bounds": n.get("bounds"),
+                             "known_label": label if label in safe_labels else "",
+                             "known_description": description if description in safe_labels else "",
+                             "resource_id": resource, "class": n.get("class"),
+                             "checkable": n.get("checkable"), "checked": n.get("checked")})
+            (OUT / "ui-failure.json").write_text(json.dumps(rows, indent=2) + "\n")
+        except Exception:
+            pass
+        raise
