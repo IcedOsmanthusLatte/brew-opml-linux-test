@@ -204,7 +204,11 @@ def setup_prefetch(package, enabled):
         if enabled:
             tap(FEEDER_ADV)
         assert read_switch(package, FEEDER_ADV) == enabled
-        tap("OK", "Save")
+        if enabled:
+            scroll_to("OK")
+            tap("OK")
+        else:
+            back()
         label = FEEDER_ADV
     else:
         feedflow_settings()
@@ -257,10 +261,14 @@ def reader_context(tree, package):
     if not in_native_app:
         return False
     if package == FLOW:
-        return find(tree, by("reader_back_button", "reader_bookmark_button")) is not None
+        return find(tree, by("reader_back_button", "reader_bookmark_button")) is not None or flow_content(tree)
     has_back = find(tree, by("Go back")) is not None
     has_reader_control = find(tree, by("Fetch full article", "Open in web view", "Open menu")) is not None
     return has_back and has_reader_control
+
+
+def flow_content(tree):
+    return any(n.get("resource-id", "").rsplit(":id/", 1)[-1].startswith("reader_article_") for n in tree.iter("node"))
 
 
 def reader_activity(package):
@@ -290,10 +298,12 @@ def measure(package, node, item):
         if not reader_context(tree, package):
             return None
         if package == FLOW:
-            ready = any(n.get("resource-id", "").rsplit(":id/", 1)[-1].startswith("reader_article_")
-                        for n in tree.iter("node"))
             unavailable = find(tree, by("Unable to parse article", "No content available")) is not None
-            if not (ready or unavailable):
+            if not (flow_content(tree) or unavailable):
+                return None
+        else:
+            fetching = find(tree, lambda n: n.get("text", "").startswith("Fetching full article"))
+            if fetching is not None:
                 return None
         return tree
 
