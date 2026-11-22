@@ -6,6 +6,7 @@ from PIL import ImageGrab
 from pywinauto import Desktop, keyboard, mouse
 from rapidocr_onnxruntime import RapidOCR
 from xml.etree import ElementTree
+import csv
 import ctypes
 import hashlib
 import json
@@ -179,6 +180,7 @@ class FeedFlow:
                     image.save(OUT/f"feedflow-empty-opml-panel-{idx}.png")
             raise
         file_dialog(OPML, self.pid)
+        self.click("OK", seconds=60)
         self.click("Done", seconds=70)
         wait(lambda: (d := data(self.profile)) and d[0] == FEED_URLS,
              "all FeedFlow expected subscriptions", 50)
@@ -194,6 +196,7 @@ class FeedFlow:
             self.click("Import articles from CSV")
             file_dialog(file, self.pid)
             self.point("Articles import done", seconds=40)
+        self.click("OK")
         self.click("Done")
         return True
 
@@ -268,6 +271,12 @@ def case(number, keys):
         PHASE = "source export native CSV"
         assert source.articles_csv(csv_file, export=True)
         assert csv_file.is_file() and csv_file.stat().st_size > 0
+        with csv_file.open("r", encoding="utf-8-sig", newline="") as stream:
+            native = {row["url"]: (row["is_read"].lower() in ("true","1"), row["is_bookmarked"].lower() in ("true","1"))
+                      for row in csv.DictReader(stream)}
+        native_csv_flags = {name: native[key[1]] for name,key in keys.items()}
+        assert list(native_csv_flags.values()) == [(True,False), (False,True), (False,False)]
+        put(f"{prefix}-native-export-state.json", native_csv_flags)
     source_sha = hashlib.sha256(csv_file.read_bytes()).hexdigest()
     PHASE = "OPML-only control"
     with run(f"{prefix}-control") as control:
@@ -306,7 +315,7 @@ def case(number, keys):
     with run(f"{prefix}-incorrect") as incorrect:
         wrong_restart = snapshot(incorrect, keys)
         assert flags(wrong_restart) == target
-    record = dict(source=source_flags, native_csv_sha256=source_sha, native_csv_bytes=csv_file.stat().st_size,
+    record = dict(source=source_flags, native_csv_state=native_csv_flags, native_csv_sha256=source_sha, native_csv_bytes=csv_file.stat().st_size,
                   opml_only=initial, proper_before=correct_before, proper_after=correct_after,
                   proper_restart=correct_restart, wrong_order_success_ui=True, wrong_after_csv=wrong_csv,
                   wrong_after_opml=wrong_opml, wrong_retry=wrong_retry, wrong_restart=wrong_restart,
