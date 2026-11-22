@@ -1,0 +1,30 @@
+name: Self-hosted RSS OPML settings round trip
+
+on:
+  push:
+    branches: [self-hosted-opml-settings]
+    paths:
+      - .github/workflows/self-hosted-opml.yml
+      - self-hosted-opml/**
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Test real applications on isolated disposable containers
+        run: python3 self-hosted-opml/compare.py evidence
+      - name: Retain safe public input, original exports and observations
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: self-hosted-opml-evidence
+          path: evidence/
+          if-no-files-found: warn
+          retention-days: 14
