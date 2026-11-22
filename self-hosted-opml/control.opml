@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>Brew OPML migration exercise — normal</title>
+  </head>
+  <body>
+    <outline text="News">
+      <outline text="BBC News — World" title="BBC News — World" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/world/rss.xml" htmlUrl="https://www.bbc.com/news/world"/>
+    </outline>
+    <outline text="Science and technology">
+      <outline text="NASA News Releases" title="NASA News Releases" type="rss" xmlUrl="https://www.nasa.gov/news-release/feed/" htmlUrl="https://www.nasa.gov/"/>
+      <outline text="WordPress News" title="WordPress News" type="rss" xmlUrl="https://wordpress.org/news/feed/" htmlUrl="https://wordpress.org/news/"/>
+    </outline>
+  </body>
+</opml>

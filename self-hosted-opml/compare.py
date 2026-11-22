@@ -12,7 +12,7 @@ import sys
 import time
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
-from urllib.request import Request, build_opener, ProxyHandler, urlopen
+from urllib.request import Request, build_opener, ProxyHandler
 import xml.etree.ElementTree as ET
 
 FRESH_IMAGE = "freshrss/freshrss:1.30.4"
@@ -289,14 +289,13 @@ def one_round(index, sample, expected_folders):
     return {"application_versions": versions, "results": results}
 
 
-def download_sample():
-    with urlopen(URL, timeout=30) as response:
-        payload = response.read()
+def load_sample():
+    payload = Path(__file__).with_name("control.opml").read_bytes()
     if hashlib.sha256(payload).hexdigest() != SHA:
-        raise RuntimeError("The online sample differed from the approved SHA-256.")
+        raise RuntimeError("The checked-in sample differed from the approved SHA-256.")
     _, rows, folders = outline_rows(payload)
     if len(rows) != 3 or len(folders) != 2 or TARGET not in {row["url"] for row in rows}:
-        raise RuntimeError("The online control sample did not contain three feeds and two folders.")
+        raise RuntimeError("The control sample did not contain three feeds and two folders.")
     copy = OUTPUT / "control.opml"
     copy.write_bytes(payload)
     return copy, {row["url"]: row["path"][0] for row in rows}
@@ -311,7 +310,7 @@ def pull(image):
 
 def main():
     OUTPUT.mkdir(parents=True, exist_ok=False)
-    sample, folders = download_sample()
+    sample, folders = load_sample()
     images = [FRESH_IMAGE, MINI_IMAGE, DB_IMAGE]
     with ThreadPoolExecutor(max_workers=3) as pool:
         digests = dict(zip(images, pool.map(pull, images), strict=True))
