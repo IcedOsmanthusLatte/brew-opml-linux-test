@@ -1,0 +1,25 @@
+{
+  "source": "miniflux",
+  "destination": "miniflux",
+  "target_paused_after_import": true,
+  "state": [
+    {
+      "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+      "title": "BBC News — World",
+      "folder": "News",
+      "paused": true
+    },
+    {
+      "url": "https://wordpress.org/news/feed/",
+      "title": "WordPress News",
+      "folder": "Science and technology",
+      "paused": false
+    },
+    {
+      "url": "https://www.nasa.gov/news-release/feed/",
+      "title": "NASA News Releases",
+      "folder": "Science and technology",
+      "paused": false
+    }
+  ]
+}

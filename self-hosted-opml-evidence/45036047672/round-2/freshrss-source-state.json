@@ -1,0 +1,92 @@
+{
+  "before_pause": [
+    {
+      "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+      "title": "BBC News — World",
+      "folder": "News",
+      "paused": false,
+      "ttl_raw_seconds": 0
+    },
+    {
+      "url": "https://wordpress.org/news/feed/",
+      "title": "WordPress News",
+      "folder": "Science and technology",
+      "paused": false,
+      "ttl_raw_seconds": 0
+    },
+    {
+      "url": "https://www.nasa.gov/news-release/feed/",
+      "title": "NASA News Releases",
+      "folder": "Science and technology",
+      "paused": false,
+      "ttl_raw_seconds": 0
+    }
+  ],
+  "after_pause": [
+    {
+      "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+      "title": "BBC News — World",
+      "folder": "News",
+      "paused": true,
+      "ttl_raw_seconds": -3600
+    },
+    {
+      "url": "https://wordpress.org/news/feed/",
+      "title": "WordPress News",
+      "folder": "Science and technology",
+      "paused": false,
+      "ttl_raw_seconds": 0
+    },
+    {
+      "url": "https://www.nasa.gov/news-release/feed/",
+      "title": "NASA News Releases",
+      "folder": "Science and technology",
+      "paused": false,
+      "ttl_raw_seconds": 0
+    }
+  ],
+  "export": {
+    "feeds": [
+      {
+        "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+        "title": "BBC News — World",
+        "path": [
+          "News"
+        ],
+        "fresh_ttl_attribute": "-3600",
+        "miniflux_disabled_attribute": null
+      },
+      {
+        "url": "https://wordpress.org/news/feed/",
+        "title": "WordPress News",
+        "path": [
+          "Science and technology"
+        ],
+        "fresh_ttl_attribute": null,
+        "miniflux_disabled_attribute": null
+      },
+      {
+        "url": "https://www.nasa.gov/news-release/feed/",
+        "title": "NASA News Releases",
+        "path": [
+          "Science and technology"
+        ],
+        "fresh_ttl_attribute": null,
+        "miniflux_disabled_attribute": null
+      }
+    ],
+    "folders": [
+      [
+        "News"
+      ],
+      [
+        "Science and technology"
+      ],
+      [
+        "Uncategorized"
+      ]
+    ],
+    "sha256": "6052ebe92352fa025c2821d8f0395b8c123c5f4160ede1fb9a39e9fb89372313"
+  },
+  "export_mode": "FreshRSS normal CLI OPML export; web export_opml invokes the same generateOpml() service"
+}

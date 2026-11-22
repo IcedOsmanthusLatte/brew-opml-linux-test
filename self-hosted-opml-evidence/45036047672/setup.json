@@ -1,0 +1,28 @@
+{
+  "images_and_digests": {
+    "freshrss/freshrss:1.30.4": [
+      "freshrss/freshrss@sha256:af44385229541bee24aa9148d0ff8f3b40e095373c63a2c0f74e09a27d3c59df"
+    ],
+    "miniflux/miniflux:2.3.5": [
+      "miniflux/miniflux@sha256:8fd6c3c434ecc3d4083306f83e03c0bb74c632e0f8378da5ead7e1773b0b89c9"
+    ],
+    "postgres:16.13-alpine": [
+      "postgres@sha256:4e6e670bb069649261c9c18031f0aded7bb249a5b6664ddec29c013a89310d50"
+    ]
+  },
+  "runner_os": "ubuntu26",
+  "runner_image_version": "20261116.202.1",
+  "input_url": "https://getbrew.app/collections/downloads/opml-migration-normal.opml",
+  "input_sha256": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd",
+  "paused_target": "https://feeds.bbci.co.uk/news/world/rss.xml",
+  "controls": {
+    "https://wordpress.org/news/feed/": "Science and technology",
+    "https://www.nasa.gov/news-release/feed/": "Science and technology"
+  },
+  "fresh_mute_method": "FreshRSS model _mute(true), DAO updateFeed() with signed TTL; new DAO reads back",
+  "miniflux_mute_method": "PUT /v1/feeds/{id} disabled:true, GET /v1/feeds readback",
+  "source_export_modes": {
+    "freshrss": "FreshRSS normal CLI OPML export; web export_opml invokes the same generateOpml() service",
+    "miniflux": "Miniflux GET /v1/export (native OPML)"
+  }
+}

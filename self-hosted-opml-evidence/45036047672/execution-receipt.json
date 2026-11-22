@@ -1,0 +1,54 @@
+{
+  "repo": "https://github.com/IcedOsmanthusLatte/brew-opml-linux-test",
+  "branch": "self-hosted-opml-settings",
+  "run_id": 45036047672,
+  "workflow_commit": "4bed33c86c09f483751e8f48a1e3314e5ed57bc9",
+  "run_url": "https://github.com/IcedOsmanthusLatte/brew-opml-linux-test/actions/runs/45036047672",
+  "created_at": "2026-11-22T15:02:14Z",
+  "completed_at": "2026-11-22T15:03:01Z",
+  "artifact_id": 14760145871,
+  "artifact_sha256": "2fd9bfa93b87b42ee8482c31f5bf29810d3b444dfd7527e89936c75ed2cb43ce",
+  "control_sha256": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd",
+  "application_versions": {
+    "freshrss": "1.30.4",
+    "miniflux": "2.3.5"
+  },
+  "images_and_digests": {
+    "freshrss/freshrss:1.30.4": [
+      "freshrss/freshrss@sha256:af44385229541bee24aa9148d0ff8f3b40e095373c63a2c0f74e09a27d3c59df"
+    ],
+    "miniflux/miniflux:2.3.5": [
+      "miniflux/miniflux@sha256:8fd6c3c434ecc3d4083306f83e03c0bb74c632e0f8378da5ead7e1773b0b89c9"
+    ],
+    "postgres:16.13-alpine": [
+      "postgres@sha256:4e6e670bb069649261c9c18031f0aded7bb249a5b6664ddec29c013a89310d50"
+    ]
+  },
+  "repeat_rounds": 2,
+  "independently_verified_unchanged": true,
+  "verified_public_raw_sha256": {
+    "round-1/freshrss-original.opml": "c3327deea2052a45e5c875e8d0d0399e46020337eaa2e0167d66ac467cfe4b05",
+    "round-1/miniflux-original.opml": "85e82c2dd7e39669b332c242eb51da812f40252cbb6786e75f4d75aff027fc4c",
+    "round-2/freshrss-original.opml": "6052ebe92352fa025c2821d8f0395b8c123c5f4160ede1fb9a39e9fb89372313",
+    "round-2/miniflux-original.opml": "78a2de65530e4aa7347c2c2c10dd6dac48bc56021a7955400edef8ef825804a9"
+  },
+  "settings_check": {
+    "freshrss-to-freshrss": true,
+    "freshrss-to-miniflux": false,
+    "miniflux-to-freshrss": false,
+    "miniflux-to-miniflux": true
+  },
+  "default_freshrss_web_and_cli_export_generator": "https://github.com/FreshRSS/FreshRSS/blob/1.30.4/app/Services/ExportService.php#L47-L57",
+  "freshrss_web_export_controller": "https://github.com/FreshRSS/FreshRSS/blob/1.30.4/app/Controllers/importExportController.php#L772-L793",
+  "freshrss_cli_export": "https://github.com/FreshRSS/FreshRSS/blob/1.30.4/cli/export-opml-for-user.php#L21-L31",
+  "prior_setup_failures": [
+    {
+      "run_id": 45035782101,
+      "reason": "Cloud runner got HTTP 403 on control sample download before app setup. Next run used verified byte-identical public sample."
+    },
+    {
+      "run_id": 45035905155,
+      "reason": "Transient TCP reset during Miniflux startup. FreshRSS raw source export captured, no complete comparison."
+    }
+  ]
+}

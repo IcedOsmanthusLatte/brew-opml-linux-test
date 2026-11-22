@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml xmlns:frss="https://freshrss.org/opml" version="2.0">
+  <head>
+    <title>FreshRSS</title>
+    <dateCreated>Sun, 22 Nov 2026 15:02:47 +0000</dateCreated>
+  </head>
+  <body>
+    <outline text="News">
+      <outline text="BBC News — World" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/world/rss.xml" htmlUrl="https://www.bbc.com/news/world" frss:ttl="-3600"/>
+    </outline>
+    <outline text="Science and technology">
+      <outline text="NASA News Releases" type="rss" xmlUrl="https://www.nasa.gov/news-release/feed/" htmlUrl="https://www.nasa.gov/"/>
+      <outline text="WordPress News" type="rss" xmlUrl="https://wordpress.org/news/feed/" htmlUrl="https://wordpress.org/news/"/>
+    </outline>
+    <outline text="Uncategorized"/>
+  </body>
+</opml>

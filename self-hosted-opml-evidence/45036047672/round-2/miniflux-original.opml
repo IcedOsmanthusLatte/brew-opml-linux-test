@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0" xmlns:miniflux="https://miniflux.app/opml">
+    <head>
+        <title>Miniflux</title>
+        <dateCreated>Sun, 22 Nov 2026 15:02:48 UTC</dateCreated>
+    </head>
+    <body>
+        <outline text="News">
+            <outline title="BBC News — World" text="BBC News — World" xmlUrl="https://feeds.bbci.co.uk/news/world/rss.xml" htmlUrl="https://www.bbc.com/news/world" miniflux:disabled="true" type="rss"></outline>
+        </outline>
+        <outline text="Science and technology">
+            <outline title="NASA News Releases" text="NASA News Releases" xmlUrl="https://www.nasa.gov/news-release/feed/" htmlUrl="https://www.nasa.gov/" type="rss"></outline>
+            <outline title="WordPress News" text="WordPress News" xmlUrl="https://wordpress.org/news/feed/" htmlUrl="https://wordpress.org/news/" type="rss"></outline>
+        </outline>
+    </body>
+</opml>

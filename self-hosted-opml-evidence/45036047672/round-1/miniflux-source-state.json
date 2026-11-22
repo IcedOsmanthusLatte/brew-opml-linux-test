@@ -1,0 +1,83 @@
+{
+  "before_pause": [
+    {
+      "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+      "title": "BBC News — World",
+      "folder": "News",
+      "paused": false
+    },
+    {
+      "url": "https://wordpress.org/news/feed/",
+      "title": "WordPress News",
+      "folder": "Science and technology",
+      "paused": false
+    },
+    {
+      "url": "https://www.nasa.gov/news-release/feed/",
+      "title": "NASA News Releases",
+      "folder": "Science and technology",
+      "paused": false
+    }
+  ],
+  "after_pause": [
+    {
+      "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+      "title": "BBC News — World",
+      "folder": "News",
+      "paused": true
+    },
+    {
+      "url": "https://wordpress.org/news/feed/",
+      "title": "WordPress News",
+      "folder": "Science and technology",
+      "paused": false
+    },
+    {
+      "url": "https://www.nasa.gov/news-release/feed/",
+      "title": "NASA News Releases",
+      "folder": "Science and technology",
+      "paused": false
+    }
+  ],
+  "export": {
+    "feeds": [
+      {
+        "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+        "title": "BBC News — World",
+        "path": [
+          "News"
+        ],
+        "fresh_ttl_attribute": null,
+        "miniflux_disabled_attribute": "true"
+      },
+      {
+        "url": "https://wordpress.org/news/feed/",
+        "title": "WordPress News",
+        "path": [
+          "Science and technology"
+        ],
+        "fresh_ttl_attribute": null,
+        "miniflux_disabled_attribute": null
+      },
+      {
+        "url": "https://www.nasa.gov/news-release/feed/",
+        "title": "NASA News Releases",
+        "path": [
+          "Science and technology"
+        ],
+        "fresh_ttl_attribute": null,
+        "miniflux_disabled_attribute": null
+      }
+    ],
+    "folders": [
+      [
+        "News"
+      ],
+      [
+        "Science and technology"
+      ]
+    ],
+    "sha256": "85e82c2dd7e39669b332c242eb51da812f40252cbb6786e75f4d75aff027fc4c"
+  },
+  "export_mode": "Miniflux GET /v1/export (native OPML)"
+}

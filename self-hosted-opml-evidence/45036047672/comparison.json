@@ -1,0 +1,234 @@
+{
+  "rounds": [
+    {
+      "application_versions": {
+        "freshrss": "1.30.4",
+        "miniflux": "2.3.5"
+      },
+      "results": [
+        {
+          "source": "freshrss",
+          "destination": "freshrss",
+          "target_paused_after_import": true,
+          "state": [
+            {
+              "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+              "title": "BBC News — World",
+              "folder": "News",
+              "paused": true,
+              "ttl_raw_seconds": -3600
+            },
+            {
+              "url": "https://wordpress.org/news/feed/",
+              "title": "WordPress News",
+              "folder": "Science and technology",
+              "paused": false,
+              "ttl_raw_seconds": 0
+            },
+            {
+              "url": "https://www.nasa.gov/news-release/feed/",
+              "title": "NASA News Releases",
+              "folder": "Science and technology",
+              "paused": false,
+              "ttl_raw_seconds": 0
+            }
+          ]
+        },
+        {
+          "source": "freshrss",
+          "destination": "miniflux",
+          "target_paused_after_import": false,
+          "state": [
+            {
+              "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+              "title": "BBC News — World",
+              "folder": "News",
+              "paused": false
+            },
+            {
+              "url": "https://wordpress.org/news/feed/",
+              "title": "WordPress News",
+              "folder": "Science and technology",
+              "paused": false
+            },
+            {
+              "url": "https://www.nasa.gov/news-release/feed/",
+              "title": "NASA News Releases",
+              "folder": "Science and technology",
+              "paused": false
+            }
+          ]
+        },
+        {
+          "source": "miniflux",
+          "destination": "freshrss",
+          "target_paused_after_import": false,
+          "state": [
+            {
+              "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+              "title": "BBC News — World",
+              "folder": "News",
+              "paused": false,
+              "ttl_raw_seconds": 0
+            },
+            {
+              "url": "https://wordpress.org/news/feed/",
+              "title": "WordPress News",
+              "folder": "Science and technology",
+              "paused": false,
+              "ttl_raw_seconds": 0
+            },
+            {
+              "url": "https://www.nasa.gov/news-release/feed/",
+              "title": "NASA News Releases",
+              "folder": "Science and technology",
+              "paused": false,
+              "ttl_raw_seconds": 0
+            }
+          ]
+        },
+        {
+          "source": "miniflux",
+          "destination": "miniflux",
+          "target_paused_after_import": true,
+          "state": [
+            {
+              "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+              "title": "BBC News — World",
+              "folder": "News",
+              "paused": true
+            },
+            {
+              "url": "https://wordpress.org/news/feed/",
+              "title": "WordPress News",
+              "folder": "Science and technology",
+              "paused": false
+            },
+            {
+              "url": "https://www.nasa.gov/news-release/feed/",
+              "title": "NASA News Releases",
+              "folder": "Science and technology",
+              "paused": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "application_versions": {
+        "freshrss": "1.30.4",
+        "miniflux": "2.3.5"
+      },
+      "results": [
+        {
+          "source": "freshrss",
+          "destination": "freshrss",
+          "target_paused_after_import": true,
+          "state": [
+            {
+              "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+              "title": "BBC News — World",
+              "folder": "News",
+              "paused": true,
+              "ttl_raw_seconds": -3600
+            },
+            {
+              "url": "https://wordpress.org/news/feed/",
+              "title": "WordPress News",
+              "folder": "Science and technology",
+              "paused": false,
+              "ttl_raw_seconds": 0
+            },
+            {
+              "url": "https://www.nasa.gov/news-release/feed/",
+              "title": "NASA News Releases",
+              "folder": "Science and technology",
+              "paused": false,
+              "ttl_raw_seconds": 0
+            }
+          ]
+        },
+        {
+          "source": "freshrss",
+          "destination": "miniflux",
+          "target_paused_after_import": false,
+          "state": [
+            {
+              "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+              "title": "BBC News — World",
+              "folder": "News",
+              "paused": false
+            },
+            {
+              "url": "https://wordpress.org/news/feed/",
+              "title": "WordPress News",
+              "folder": "Science and technology",
+              "paused": false
+            },
+            {
+              "url": "https://www.nasa.gov/news-release/feed/",
+              "title": "NASA News Releases",
+              "folder": "Science and technology",
+              "paused": false
+            }
+          ]
+        },
+        {
+          "source": "miniflux",
+          "destination": "freshrss",
+          "target_paused_after_import": false,
+          "state": [
+            {
+              "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+              "title": "BBC News — World",
+              "folder": "News",
+              "paused": false,
+              "ttl_raw_seconds": 0
+            },
+            {
+              "url": "https://wordpress.org/news/feed/",
+              "title": "WordPress News",
+              "folder": "Science and technology",
+              "paused": false,
+              "ttl_raw_seconds": 0
+            },
+            {
+              "url": "https://www.nasa.gov/news-release/feed/",
+              "title": "NASA News Releases",
+              "folder": "Science and technology",
+              "paused": false,
+              "ttl_raw_seconds": 0
+            }
+          ]
+        },
+        {
+          "source": "miniflux",
+          "destination": "miniflux",
+          "target_paused_after_import": true,
+          "state": [
+            {
+              "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+              "title": "BBC News — World",
+              "folder": "News",
+              "paused": true
+            },
+            {
+              "url": "https://wordpress.org/news/feed/",
+              "title": "WordPress News",
+              "folder": "Science and technology",
+              "paused": false
+            },
+            {
+              "url": "https://www.nasa.gov/news-release/feed/",
+              "title": "NASA News Releases",
+              "folder": "Science and technology",
+              "paused": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "identical_rounds": true,
+  "paused_target": "https://feeds.bbci.co.uk/news/world/rss.xml"
+}

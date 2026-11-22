@@ -1,0 +1,28 @@
+{
+  "source": "miniflux",
+  "destination": "freshrss",
+  "target_paused_after_import": false,
+  "state": [
+    {
+      "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+      "title": "BBC News — World",
+      "folder": "News",
+      "paused": false,
+      "ttl_raw_seconds": 0
+    },
+    {
+      "url": "https://wordpress.org/news/feed/",
+      "title": "WordPress News",
+      "folder": "Science and technology",
+      "paused": false,
+      "ttl_raw_seconds": 0
+    },
+    {
+      "url": "https://www.nasa.gov/news-release/feed/",
+      "title": "NASA News Releases",
+      "folder": "Science and technology",
+      "paused": false,
+      "ttl_raw_seconds": 0
+    }
+  ]
+}
