@@ -5,6 +5,7 @@ from pywinauto import Desktop
 import ctypes
 import json
 import os
+import re
 import subprocess
 import time
 import traceback
@@ -47,9 +48,19 @@ def controls(window):
 
 
 def feedflow():
-    p = subprocess.Popen([os.environ["BREW_WIN_FEEDFLOW"]], cwd=runtime)
+    exe = Path(os.environ["BREW_WIN_FEEDFLOW"])
+    profile = runtime / "feedflow-bootstrap"
+    profile.mkdir(exist_ok=True)
+    env = os.environ | {"JAVA_TOOL_OPTIONS": f"-Duser.home={profile} -Dskiko.renderApi=SOFTWARE",
+                        "SKIKO_RENDER_API": "SOFTWARE"}
+    stream = (runtime / "feedflow-bootstrap.log").open("wb")
+    p = subprocess.Popen([str(exe)], cwd=exe.parent, env=env, stdout=stream, stderr=stream)
     try:
-        w = wait(lambda: next(iter(find_windows(p.pid)), None))
+        def lookup():
+            if p.poll() is not None:
+                raise RuntimeError(f"FeedFlow process exited before its first window: {p.returncode}")
+            return next(iter(find_windows(p.pid)), None)
+        w = wait(lookup)
         if w.rectangle().width() < 800:
             w.maximize()
         time.sleep(4)
@@ -58,6 +69,24 @@ def feedflow():
         w.capture_as_image().save(evidence / "feedflow-start.png")
     finally:
         subprocess.run(["taskkill", "/pid", str(p.pid), "/t", "/f"], capture_output=True)
+        stream.close()
+        collected = []
+        allowed = re.compile(r"exception|error|caused by|JAVA_TOOL_OPTIONS|warning|failed|feedflow.bootstrap", re.I)
+        logs = [runtime / "feedflow-bootstrap.log", *profile.rglob("startup-error.log")]
+        default_roaming = Path(os.environ["APPDATA"]) / "FeedFlow" / "startup-error.log"
+        if default_roaming.exists():
+            logs.append(default_roaming)
+        for log in logs:
+            if log.is_file():
+                for line in log.read_text("utf-8", errors="replace").splitlines()[-100:]:
+                    if allowed.search(line):
+                        clean = re.sub(r"https?://\S+", "(url)", line)
+                        clean = re.sub(r"(?i)[A-Z]:[\\/][^\r\n]*", "(runner path)", clean)
+                        collected.append(clean[:300])
+        diagnostics = {"process_exit":p.poll(), "safe_startup_events":collected[-30:],
+                       "java_runtime_exists":(exe.parent / "runtime").is_dir()}
+        (evidence / "feedflow-diagnostics.json").write_text(
+            json.dumps(diagnostics, indent=2), encoding="utf-8")
 
 
 def fluent():
