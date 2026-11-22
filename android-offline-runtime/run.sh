@@ -5,12 +5,23 @@ pkg="system-images;android-35;google_apis;x86_64"
 sdk="$ANDROID_HOME/cmdline-tools/latest/bin"
 if ! test -x "$sdk/sdkmanager"; then sdk="$(dirname "$(command -v sdkmanager)")"; fi
 "$sdk/sdkmanager" "$pkg" "platforms;android-35"
-echo no | "$sdk/avdmanager" create avd --force -n brew_android -k "$pkg"
-emulator -avd brew_android -no-window -no-audio -no-boot-anim -no-snapshot-load -no-snapshot-save -gpu swiftshader_indirect -accel on > "$RUNNER_TEMP/brew-emulator.log" 2>&1 &
+echo no | "$sdk/avdmanager" create avd --force -n brew_android -k "$pkg" --device pixel_5
+emu="$ANDROID_HOME/emulator/emulator"
+"$emu" -version
+"$emu" -list-avds
+log="$RUNNER_TEMP/brew-emulator.log"
+adb start-server
+QT_QPA_PLATFORM=offscreen "$emu" -avd brew_android -no-window -no-audio -no-boot-anim -no-snapshot-load -no-snapshot-save -gpu software -feature -Vulkan -accel on -port 5554 > "$log" 2>&1 &
 pid=$!
-trap 'kill "$pid" 2>/dev/null || true' EXIT
-timeout 200 adb wait-for-device
+trap 'code=$?; if (( code != 0 )); then tail -70 "$log"; adb devices; fi; kill "$pid" 2>/dev/null || true' EXIT
+for (( i=0; i<45; i++ )); do
+    if ! kill -0 "$pid" 2>/dev/null; then exit 1; fi
+    if adb devices | grep -q $'emulator-5554\tdevice'; then break; fi
+    sleep 3
+done
+timeout 15 adb wait-for-device
 timeout 140 bash -c 'until [[ $(adb shell getprop sys.boot_completed | tr -d "\r") == 1 ]]; do sleep 3; done'
+echo "Booted Android API $(adb shell getprop ro.build.version.sdk)"
 adb shell input keyevent 82
 adb shell settings put global window_animation_scale 0
 adb shell settings put global transition_animation_scale 0
