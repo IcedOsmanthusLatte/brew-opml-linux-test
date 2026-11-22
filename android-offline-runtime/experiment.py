@@ -6,7 +6,7 @@ import subprocess
 import time
 
 from bootstrap import APPS, OUT, probe, shell, wait, xml
-from source_evidence import load_items, normalized
+from source_evidence import digest, load_items, normalized
 
 FEEDER, FLOW = APPS
 SOURCES = {"BBC": "BBC News — World", "NASA": "NASA News Releases", "WordPress": "WordPress News"}
@@ -108,8 +108,8 @@ def import_fixture(package):
         tap("Open menu")
         tap("Import feeds from OPML")
         fixture_picker()
-        tap("OK", "Import")
         dismiss_system_dialog()
+        wait(lambda: spot(by("Open navigation drawer")), timeout=30)
     else:
         feedflow_settings()
         tap("settings_feeds_accounts", "Feeds & accounts")
@@ -257,6 +257,14 @@ def reader_context(tree, package):
     return has_back and has_reader_control
 
 
+def reader_activity(package):
+    dump = shell("dumpsys", "activity", "activities")
+    match = re.search(r"(?:topResumedActivity|mResumedActivity)[=:].*?\b(u\d+\s+)?(" +
+                      re.escape(package) + r"/\S+)", dump)
+    assert match, "Reader app is not the resumed activity"
+    return match[2]
+
+
 def view_text(tree, package):
     return normalized(" ".join(node.get("text", "") for node in tree.iter("node") if node.get("package") == package))
 
@@ -275,6 +283,11 @@ def measure(package, node, item):
         return tree if reader_context(tree, package) else None
 
     tree = wait(opened_reader, timeout=16)
+    activity = reader_activity(package)
+    recorded_keys = sorted(v for node in tree.iter("node") for v in fields(node)[1:]
+                           if v in {"Go back", "Fetch full article", "Open menu", "reader_back_button",
+                                    "reader_bookmark_button", "reader_content_source_button"})
+    selected_id = node.get("resource-id", "")
     visible = [view_text(tree, package), ocr()]
     for _ in range(4):
         result = item.classify(visible)
@@ -286,6 +299,9 @@ def measure(package, node, item):
         visible.extend([view_text(tree, package), ocr()])
     result = item.classify(visible)
     assert result["title_observed"], "Measured title identity failed inside native reader"
+    result["resumed_activity"] = activity
+    result["reader_ui_controls"] = recorded_keys
+    result["timeline_item_resource_id_sha256"] = digest(selected_id) if selected_id else None
     back()
     return result
 
@@ -299,15 +315,18 @@ def measure_route(package, condition, round_num, candidates, selected):
     dismiss_system_dialog()
     import_fixture(package)
     setup_prefetch(package, enabled)
+    shell("logcat", "-c", check=False)
     refresh(package)
     # Let standard foreground/background refresh and indexing finish equally across profiles.
     time.sleep(53)
-    if package == FEEDER:
-        log = shell("logcat", "-d", "-s", "FEEDER_FULLTEXT", check=False)
-        note("prefetch-scheduler-observed", package=package,
-             task_log_lines=sum("FEEDER_FULLTEXT" in line for line in log.splitlines()))
+    phrases = ("Performing full text parse work", "Finished full text parse work", "Failed to parse missing full article")
+    if package == FLOW:
+        phrases = ("items for immediate prefetch", "items for background prefetch", "Prefetched successfully:", "Parse failed for:")
+    log = shell("logcat", "-d", check=False, timeout=25)
+    scheduler_events = {phrase: log.count(phrase) for phrase in phrases}
+    note("prefetch-scheduler-observed", package=package, counts=scheduler_events)
     pair = {}
-    for source in ("BBC", "NASA" if candidates["NASA"] else "WordPress"):
+    for source in ("BBC", "WordPress" if candidates["WordPress"] else "NASA"):
         list_items = [selected[source]] if source in selected else candidates[source]
         _, item = visible_item(package, source, list_items)
         if source == "BBC":
@@ -327,7 +346,8 @@ def measure_route(package, condition, round_num, candidates, selected):
     result = {"round": round_num, "package": package, "route": condition,
               "online_initial": before, "offline_before_first_open": cutoff,
               "offline_after_first_open": after, "reconnected": restored,
-              "native_first_open_no_online_open": True, "online_wait_seconds_after_refresh": 53, "items": results}
+              "native_first_open_no_online_open": True, "online_wait_seconds_after_refresh": 53,
+              "prefetch_scheduler_event_counts": scheduler_events, "items": results}
     (OUT / (name + ".json")).write_text(json.dumps(result, indent=2) + "\n")
 
 
