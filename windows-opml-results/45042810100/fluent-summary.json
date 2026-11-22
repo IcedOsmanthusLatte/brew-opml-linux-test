@@ -1,0 +1,326 @@
+{
+  "two_rounds": true,
+  "state_identity": "paired URL SHA-256",
+  "app": "Fluent Reader",
+  "version": "1.3.2",
+  "evidence": [
+    {
+      "source": {
+        "feed_count": 3,
+        "expected_feeds_present": true,
+        "article_count": 49,
+        "items": {
+          "read": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "cb29a20e38ef835b166a4d395353ae86504ae35fb2f596a0ef1919dcacfac8d4",
+            "present": true,
+            "read": true,
+            "saved": false
+          },
+          "saved": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "737a9facdd26faa145938db2af5a5db8203d68bc7cf8e06699a4759fc21cecfd",
+            "present": true,
+            "read": false,
+            "saved": true
+          },
+          "untouched": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+            "present": true,
+            "read": false,
+            "saved": false
+          }
+        }
+      },
+      "opml_only": {
+        "feed_count": 3,
+        "expected_feeds_present": true,
+        "article_count": 49,
+        "items": {
+          "read": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "cb29a20e38ef835b166a4d395353ae86504ae35fb2f596a0ef1919dcacfac8d4",
+            "present": true,
+            "read": false,
+            "saved": false
+          },
+          "saved": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "737a9facdd26faa145938db2af5a5db8203d68bc7cf8e06699a4759fc21cecfd",
+            "present": true,
+            "read": false,
+            "saved": false
+          },
+          "untouched": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+            "present": true,
+            "read": false,
+            "saved": false
+          }
+        }
+      },
+      "opml_only_after_restart": {
+        "feed_count": 3,
+        "expected_feeds_present": true,
+        "article_count": 49,
+        "items": {
+          "read": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "cb29a20e38ef835b166a4d395353ae86504ae35fb2f596a0ef1919dcacfac8d4",
+            "present": true,
+            "read": false,
+            "saved": false
+          },
+          "saved": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "737a9facdd26faa145938db2af5a5db8203d68bc7cf8e06699a4759fc21cecfd",
+            "present": true,
+            "read": false,
+            "saved": false
+          },
+          "untouched": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+            "present": true,
+            "read": false,
+            "saved": false
+          }
+        }
+      },
+      "native_restore": {
+        "feed_count": 3,
+        "expected_feeds_present": true,
+        "article_count": 49,
+        "items": {
+          "read": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "cb29a20e38ef835b166a4d395353ae86504ae35fb2f596a0ef1919dcacfac8d4",
+            "present": true,
+            "read": true,
+            "saved": false
+          },
+          "saved": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "737a9facdd26faa145938db2af5a5db8203d68bc7cf8e06699a4759fc21cecfd",
+            "present": true,
+            "read": false,
+            "saved": true
+          },
+          "untouched": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+            "present": true,
+            "read": false,
+            "saved": false
+          }
+        }
+      },
+      "native_restore_after_restart": {
+        "feed_count": 3,
+        "expected_feeds_present": true,
+        "article_count": 49,
+        "items": {
+          "read": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "cb29a20e38ef835b166a4d395353ae86504ae35fb2f596a0ef1919dcacfac8d4",
+            "present": true,
+            "read": true,
+            "saved": false
+          },
+          "saved": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "737a9facdd26faa145938db2af5a5db8203d68bc7cf8e06699a4759fc21cecfd",
+            "present": true,
+            "read": false,
+            "saved": true
+          },
+          "untouched": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+            "present": true,
+            "read": false,
+            "saved": false
+          }
+        }
+      },
+      "verified_program_block_rule": false,
+      "native_file_state": {
+        "read": {
+          "read": true,
+          "saved": false
+        },
+        "saved": {
+          "read": false,
+          "saved": true
+        },
+        "untouched": {
+          "read": false,
+          "saved": false
+        }
+      },
+      "native_backup_sha256": "0877c15d8688f6fbee1800fd406ff448d80d6ce18415ace2bf96422d1b2af48e",
+      "native_backup_bytes": 495190
+    },
+    {
+      "source": {
+        "feed_count": 3,
+        "expected_feeds_present": true,
+        "article_count": 49,
+        "items": {
+          "read": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "cb29a20e38ef835b166a4d395353ae86504ae35fb2f596a0ef1919dcacfac8d4",
+            "present": true,
+            "read": true,
+            "saved": false
+          },
+          "saved": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "737a9facdd26faa145938db2af5a5db8203d68bc7cf8e06699a4759fc21cecfd",
+            "present": true,
+            "read": false,
+            "saved": true
+          },
+          "untouched": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+            "present": true,
+            "read": false,
+            "saved": false
+          }
+        }
+      },
+      "opml_only": {
+        "feed_count": 3,
+        "expected_feeds_present": true,
+        "article_count": 49,
+        "items": {
+          "read": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "cb29a20e38ef835b166a4d395353ae86504ae35fb2f596a0ef1919dcacfac8d4",
+            "present": true,
+            "read": false,
+            "saved": false
+          },
+          "saved": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "737a9facdd26faa145938db2af5a5db8203d68bc7cf8e06699a4759fc21cecfd",
+            "present": true,
+            "read": false,
+            "saved": false
+          },
+          "untouched": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+            "present": true,
+            "read": false,
+            "saved": false
+          }
+        }
+      },
+      "opml_only_after_restart": {
+        "feed_count": 3,
+        "expected_feeds_present": true,
+        "article_count": 49,
+        "items": {
+          "read": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "cb29a20e38ef835b166a4d395353ae86504ae35fb2f596a0ef1919dcacfac8d4",
+            "present": true,
+            "read": false,
+            "saved": false
+          },
+          "saved": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "737a9facdd26faa145938db2af5a5db8203d68bc7cf8e06699a4759fc21cecfd",
+            "present": true,
+            "read": false,
+            "saved": false
+          },
+          "untouched": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+            "present": true,
+            "read": false,
+            "saved": false
+          }
+        }
+      },
+      "native_restore": {
+        "feed_count": 3,
+        "expected_feeds_present": true,
+        "article_count": 49,
+        "items": {
+          "read": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "cb29a20e38ef835b166a4d395353ae86504ae35fb2f596a0ef1919dcacfac8d4",
+            "present": true,
+            "read": true,
+            "saved": false
+          },
+          "saved": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "737a9facdd26faa145938db2af5a5db8203d68bc7cf8e06699a4759fc21cecfd",
+            "present": true,
+            "read": false,
+            "saved": true
+          },
+          "untouched": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+            "present": true,
+            "read": false,
+            "saved": false
+          }
+        }
+      },
+      "native_restore_after_restart": {
+        "feed_count": 3,
+        "expected_feeds_present": true,
+        "article_count": 49,
+        "items": {
+          "read": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "cb29a20e38ef835b166a4d395353ae86504ae35fb2f596a0ef1919dcacfac8d4",
+            "present": true,
+            "read": true,
+            "saved": false
+          },
+          "saved": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "737a9facdd26faa145938db2af5a5db8203d68bc7cf8e06699a4759fc21cecfd",
+            "present": true,
+            "read": false,
+            "saved": true
+          },
+          "untouched": {
+            "feed_hash": "1796df62c4a287ccaef670b248b7f98c53c459052b150f85ca9c3a5f12e46d0d",
+            "article_url_hash": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+            "present": true,
+            "read": false,
+            "saved": false
+          }
+        }
+      },
+      "verified_program_block_rule": false,
+      "native_file_state": {
+        "read": {
+          "read": true,
+          "saved": false
+        },
+        "saved": {
+          "read": false,
+          "saved": true
+        },
+        "untouched": {
+          "read": false,
+          "saved": false
+        }
+      },
+      "native_backup_sha256": "fae68defaeca1512bb2b34fe159909f24ea9cb1bd49a8d5298b7d92cfe6c7528",
+      "native_backup_bytes": 495190
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "runner_image": "20261116.315.1",
+  "os": {
+    "Caption": "Microsoft Windows Server 2025 Datacenter",
+    "Version": "10.0.26100",
+    "BuildNumber": "26100",
+    "OSArchitecture": "64-bit"
+  },
+  "fixture_sha256": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd",
+  "packages": [
+    {
+      "sha256": "35926189386c98ad3bc5af24c1dceb9e08b7a1f24db797874aee66579c3c93e8",
+      "app": "feedflow",
+      "version": "1.21.0",
+      "binary": "FeedFlow-1.21.0.msi"
+    },
+    {
+      "sha256": "2db9c743903b4a8028495373b39f1cf01999add38a352bc394aaa0400d1f231e",
+      "app": "fluent",
+      "version": "1.3.2",
+      "binary": "Fluent.Reader.Unpacked.1.3.2.x64.zip"
+    }
+  ]
+}
