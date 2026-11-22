@@ -10,7 +10,7 @@ import secrets
 import subprocess
 import sys
 import time
-from urllib.error import HTTPError, URLError
+from urllib.error import HTTPError
 from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, ProxyHandler
 import xml.etree.ElementTree as ET
@@ -58,7 +58,7 @@ def pause_until(fn, timeout=65):
             value = fn()
             if value:
                 return value
-        except (RuntimeError, ValueError, URLError, TimeoutError):
+        except (RuntimeError, ValueError, OSError):
             pass
         time.sleep(1)
     return fn()
