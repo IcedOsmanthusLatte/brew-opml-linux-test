@@ -1,0 +1,65 @@
+name: Linux OPML round trip
+
+on:
+  push:
+    branches: [linux-opml-roundtrip]
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
+      - name: Install the Linux tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            newsboat xvfb xauth dbus-x11 at-spi2-core python3-pyatspi \
+            xdotool imagemagick openbox fonts-dejavu-core \
+            libxcb-cursor0 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 \
+            libxcb-keysyms1 libxcb-render-util0
+          cat /etc/os-release > evidence/os-release.txt
+          dpkg-query -W newsboat xvfb >> evidence/os-release.txt
+
+      - name: Prepare the upstream RSS Guard executable
+        shell: bash
+        run: |
+          set -euo pipefail
+          installer="$RUNNER_TEMP/rssguard-5.3.0.AppImage"
+          curl --fail --show-error --silent --location --retry 3 --max-time 120 \
+            https://github.com/martinrotter/rssguard/releases/download/5.3.0/rssguard-5.3.0-text-qt5-linux64.AppImage \
+            --output "$installer"
+          printf '%s  %s\n' '82d16bc36c2e87f407818b294fcf44f4071413f097e84dba2311378143bd8ccc' "$installer" | sha256sum -c
+          chmod +x "$installer"
+          cd "$RUNNER_TEMP"
+          "$installer" --appimage-extract >/dev/null
+
+      - name: Run the real applications and compare exports
+        shell: bash
+        env:
+          QT_LINUX_ACCESSIBILITY_ALWAYS_ON: "1"
+          QT_ACCESSIBILITY: "1"
+          QT_QPA_PLATFORM: xcb
+          LC_ALL: C.UTF-8
+        run: |
+          set -euo pipefail
+          xvfb-run -a -s '-screen 0 1440x1000x24' dbus-run-session -- \
+            /usr/bin/python3 run.py "$RUNNER_TEMP/squashfs-root/AppRun" fixtures evidence
+
+      - name: Retain the original exports and diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: linux-opml-evidence
+          path: evidence/
+          if-no-files-found: warn
+          retention-days: 7
