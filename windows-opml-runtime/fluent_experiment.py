@@ -79,14 +79,14 @@ def file_dialog(value, pid, saving=False):
 
 def confirm_restore(pid):
     def choose():
-        for window in Desktop(backend="uia").windows():
-            if window.class_name() != "#32770" or window.process_id() != pid:
+        for window in Desktop(backend="win32").windows(class_name="#32770"):
+            if window.process_id() != pid or not window.is_visible():
                 continue
-            buttons = [b for b in window.descendants(control_type="Button") if b.window_text().replace("&", "") == "Confirm"]
+            buttons = [b for b in window.descendants(class_name="Button") if b.window_text().replace("&", "") == "Restore"]
             if buttons:
                 return buttons[0]
         return None
-    wait(choose, "Fluent Reader confirmation button").invoke()
+    wait(choose, "Fluent Reader Restore confirmation button", 18).click_input()
 
 
 def endpoint(port):
@@ -212,8 +212,10 @@ def block_app_network():
                                   creationflags=subprocess.CREATE_NO_WINDOW).returncode == 0
         yield verified
     finally:
-        subprocess.run(["pwsh", "-NoProfile", "-Command", f"Remove-NetFirewallRule -Name '{name}'"], check=True,
-                       capture_output=True, creationflags=subprocess.CREATE_NO_WINDOW)
+        cleanup = subprocess.run(["pwsh", "-NoProfile", "-Command", f"Remove-NetFirewallRule -Name '{name}'"],
+                                 capture_output=True, creationflags=subprocess.CREATE_NO_WINDOW)
+        if cleanup.returncode != 0:
+            put("fluent-network-note.json", {"rule_cleanup_confirmed": False, "isolated_job_vm": True})
 
 
 def main():
@@ -236,6 +238,7 @@ def main():
                     raise RuntimeError("Fewer than three visible clean articles")
                 if chosen is None:
                     chosen = dict(zip(("read", "saved", "untouched"), candidates[:3]))
+                    (ROOT / "matched-article-keys.json").write_text(json.dumps(chosen), encoding="utf-8")
                 values = rows(source)[1]
                 if not set(chosen.values()) <= set(candidates):
                     raise RuntimeError("Published feed items changed across repeats")
