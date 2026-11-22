@@ -1,0 +1,28 @@
+name: Public Linux OPML article rendering check
+on:
+  push:
+    branches: [self-hosted-opml-settings]
+    paths:
+      - .github/workflows/public-linux-opml-landing.yml
+      - verification/check-public-linux-opml-landing.py
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install playwright==1.55.0
+          .venv/bin/playwright install --with-deps chromium
+      - name: Verify exact fragment and follow sample link in both viewports
+        run: .venv/bin/python verification/check-public-linux-opml-landing.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: its-foss-landing-proof
+          path: its-foss-landing-proof
+          retention-days: 14
