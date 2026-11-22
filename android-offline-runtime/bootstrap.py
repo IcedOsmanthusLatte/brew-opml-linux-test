@@ -1,0 +1,93 @@
+"""Confirm a real AVD, exact apps, real isolation, and native startup UI."""
+import json
+from pathlib import Path
+import secrets
+import subprocess
+import time
+from xml.etree import ElementTree as ET
+
+OUT = Path("android-offline-evidence")
+APPS = ("com.nononsenseapps.feeder", "com.prof18.feedflow")
+
+
+def adb(*args, check=True, timeout=20):
+    a = subprocess.run(["adb", *args], text=True, capture_output=True, timeout=timeout, check=check)
+    return a.stdout.strip().replace("\r", "")
+
+
+def shell(*args, check=True, timeout=20):
+    return adb("shell", *args, check=check, timeout=timeout)
+
+
+def wait(check, timeout=26):
+    start = time.monotonic()
+    while time.monotonic() - start < timeout:
+        value = check()
+        if value:
+            return value
+        time.sleep(0.6)
+    raise TimeoutError("Android condition not reached")
+
+
+def state(offline):
+    shell("cmd", "connectivity", "airplane-mode", "enable" if offline else "disable")
+    shell("svc", "wifi", "disable" if offline else "enable")
+    shell("svc", "data", "disable" if offline else "enable")
+    return wait(lambda: shell("settings", "get", "global", "airplane_mode_on") == ("1" if offline else "0"))
+
+
+def probe(offline):
+    state(offline)
+    time.sleep(3)
+    nonce = secrets.token_hex(8)
+    shell("am", "force-stop", "lab.brew.netprobe")
+    shell("am", "start", "-n", "lab.brew.netprobe/.Probe", "--es", "nonce", nonce)
+
+    def read():
+        raw = shell("run-as", "lab.brew.netprobe", "cat", "files/proof.json", check=False)
+        if not raw.startswith("{"):
+            return
+        try:
+            result = json.loads(raw)
+        except json.JSONDecodeError:
+            return
+        if result.get("nonce") == nonce:
+            return result
+
+    result = wait(read, timeout=30)
+    result["airplane_mode"] = shell("settings", "get", "global", "airplane_mode_on")
+    result["wifi_setting"] = shell("settings", "get", "global", "wifi_on")
+    if offline:
+        assert result["http_status"] == 0 and not result["any_active_network"]
+        assert result["airplane_mode"] == "1" and not result["wifi"] and not result["cellular"]
+    else:
+        assert result["http_status"] == 200 and result["any_active_network"]
+    return result
+
+
+def xml():
+    shell("uiautomator", "dump", "/sdcard/brew-ui.xml", timeout=18)
+    return ET.fromstring(shell("cat", "/sdcard/brew-ui.xml"))
+
+
+def stages():
+    host = {"api": shell("getprop", "ro.build.version.sdk"),
+            "abi": shell("getprop", "ro.product.cpu.abi"),
+            "android": shell("getprop", "ro.build.version.release")}
+    assert host["api"] == "35" and host["abi"] == "x86_64"
+    control = {"avd": host, "online": probe(False), "offline": probe(True)}
+    (OUT / "host.json").write_text(json.dumps(control, indent=2) + "\n")
+    probe(False)
+    for package in APPS:
+        shell("monkey", "-p", package, "-c", "android.intent.category.LAUNCHER", "1")
+        time.sleep(4)
+        tree = xml()
+        rows = [{k: n.attrib.get(k, "") for k in ("package", "text", "content-desc", "resource-id", "bounds")}
+                for n in tree.iter("node") if n.attrib.get("text") or n.attrib.get("content-desc") or n.attrib.get("resource-id")]
+        assert any(x["package"]==package for x in rows)
+        (OUT / f"{package}-startup-ui.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2) + "\n")
+        shell("am", "force-stop", package)
+
+
+if __name__ == "__main__":
+    stages()
