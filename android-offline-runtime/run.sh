@@ -5,7 +5,12 @@ pkg="system-images;android-35;google_apis;x86_64"
 sdk="$ANDROID_HOME/cmdline-tools/latest/bin"
 if ! test -x "$sdk/sdkmanager"; then sdk="$(dirname "$(command -v sdkmanager)")"; fi
 "$sdk/sdkmanager" "$pkg" "platforms;android-35"
-echo no | "$sdk/avdmanager" create avd --force -n brew_android -k "$pkg" --device pixel_5
+export ANDROID_USER_HOME="$RUNNER_TEMP/brew-android-user"
+export ANDROID_AVD_HOME="$ANDROID_USER_HOME/avd"
+mkdir -p "$ANDROID_AVD_HOME"
+echo no | "$sdk/avdmanager" create avd --force -n brew_android -k "$pkg" --device pixel_5 \
+    --path "$ANDROID_AVD_HOME/brew_android.avd"
+if ! test -f "$ANDROID_AVD_HOME/brew_android.ini"; then "$sdk/avdmanager" list avd; ls -la "$ANDROID_AVD_HOME"; exit 1; fi
 emu="$ANDROID_HOME/emulator/emulator"
 "$emu" -version
 "$emu" -list-avds

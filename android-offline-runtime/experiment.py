@@ -12,6 +12,7 @@ FEEDER, FLOW = APPS
 SOURCES = {"BBC": "BBC News — World", "NASA": "NASA News Releases", "WordPress": "WordPress News"}
 FEEDER_ADV = "Fetch full articles by default"
 FLOW_ADV = "Make offline copies when feeds refresh"
+FLOW_MENU = ("drawer_menu_button", "Open navigation menu")
 STEPS = []
 WIDTH, HEIGHT = [int(x) for x in shell("wm", "size").splitlines()[-1].split()[-1].split("x")]
 
@@ -92,14 +93,14 @@ def fixture_picker():
 
 def feedflow_home():
     for _ in range(5):
-        if spot(by("drawer_menu_button", "Open menu", "Menu")) is not False:
+        if spot(by(*FLOW_MENU)) is not False:
             return
         back()
     raise AssertionError("FeedFlow timeline not observed")
 
 
 def feedflow_settings():
-    tap("drawer_menu_button", "Open menu", "Menu")
+    tap(*FLOW_MENU)
     tap("drawer_settings_button", "Settings")
 
 
@@ -122,7 +123,7 @@ def import_fixture(package):
 
 
 def drawer(package):
-    tap(*(("Open navigation drawer",) if package == FEEDER else ("drawer_menu_button", "Open menu", "Menu")))
+    tap(*(("Open navigation drawer",) if package == FEEDER else FLOW_MENU))
 
 
 def source_label(node, source):
@@ -317,6 +318,7 @@ def measure_route(package, condition, round_num, candidates, selected):
     setup_prefetch(package, enabled)
     shell("logcat", "-c", check=False)
     refresh(package)
+    refreshed_at = time.monotonic()
     # Let standard foreground/background refresh and indexing finish equally across profiles.
     time.sleep(53)
     phrases = ("Performing full text parse work", "Finished full text parse work", "Failed to parse missing full article")
@@ -334,6 +336,7 @@ def measure_route(package, condition, round_num, candidates, selected):
         pair[source] = item
         selected[source] = item
     shell("am", "force-stop", package)
+    until_cutoff = round(time.monotonic() - refreshed_at, 1)
     cutoff = probe(True)
     launch(package)
     results = {}
@@ -346,7 +349,7 @@ def measure_route(package, condition, round_num, candidates, selected):
     result = {"round": round_num, "package": package, "route": condition,
               "online_initial": before, "offline_before_first_open": cutoff,
               "offline_after_first_open": after, "reconnected": restored,
-              "native_first_open_no_online_open": True, "online_wait_seconds_after_refresh": 53,
+              "native_first_open_no_online_open": True, "online_elapsed_seconds_after_refresh": until_cutoff,
               "prefetch_scheduler_event_counts": scheduler_events, "items": results}
     (OUT / (name + ".json")).write_text(json.dumps(result, indent=2) + "\n")
 
