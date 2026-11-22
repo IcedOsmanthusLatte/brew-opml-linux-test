@@ -63,8 +63,11 @@ def feedflow():
     exe = Path(os.environ["BREW_WIN_FEEDFLOW"])
     profile = runtime / "feedflow-bootstrap"
     profile.mkdir(exist_ok=True)
-    env = os.environ | {"JAVA_TOOL_OPTIONS": f"-Duser.home={profile} -Dskiko.renderApi=SOFTWARE",
-                        "SKIKO_RENDER_API": "SOFTWARE"}
+    renderer = os.environ.get("BREW_FF_RENDER", "default")
+    env = os.environ | {"JAVA_TOOL_OPTIONS": f"-Duser.home={profile}"}
+    if renderer == "software":
+        env["JAVA_TOOL_OPTIONS"] += " -Dskiko.renderApi=SOFTWARE"
+        env["SKIKO_RENDER_API"] = "SOFTWARE"
     stream = (runtime / "feedflow-bootstrap.log").open("wb")
     p = subprocess.Popen([str(exe)], cwd=exe.parent, env=env, stdout=stream, stderr=stream)
     observed = {}
@@ -85,9 +88,13 @@ def feedflow():
         if w.rectangle().width() < 800:
             w.maximize()
         time.sleep(4)
-        uia = Desktop(backend="uia").window(handle=w.handle).wrapper_object()
+        try:
+            uia = Desktop(backend="uia").window(handle=w.handle).wrapper_object()
+            semantic_items = controls(uia)
+        except Exception:
+            semantic_items = []
         (evidence / "feedflow-start.json").write_text(json.dumps(
-            dict(title=w.window_text(), controls=controls(uia)), indent=2), encoding="utf-8")
+            dict(title=w.window_text(), controls=semantic_items, configured_renderer=renderer), indent=2), encoding="utf-8")
         w.capture_as_image().save(evidence / "feedflow-start.png")
     finally:
         before_cleanup = p.poll()
@@ -106,7 +113,7 @@ def feedflow():
                         clean = re.sub(r"https?://\S+", "(url)", line)
                         clean = re.sub(r"(?i)[A-Z]:[\\/][^\r\n]*", "(runner path)", clean)
                         collected.append(clean[:300])
-        diagnostics = {"process_exit_before_cleanup":before_cleanup, "process_exit_after_cleanup":p.poll(), "safe_startup_events":collected[-30:], "observed": observed,
+        diagnostics = {"process_exit_before_cleanup":before_cleanup, "process_exit_after_cleanup":p.poll(), "configured_renderer":renderer, "safe_startup_events":collected[-30:], "observed": observed,
                        "java_runtime_exists":(exe.parent / "runtime").is_dir()}
         (evidence / "feedflow-diagnostics.json").write_text(
             json.dumps(diagnostics, indent=2), encoding="utf-8")
