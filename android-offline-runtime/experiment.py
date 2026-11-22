@@ -16,6 +16,10 @@ SOURCES = {"BBC": "BBC News — World", "NASA": "NASA News Releases", "WordPress
 FEEDER_ADV = "Fetch full articles by default"
 FLOW_ADV = "Make offline copies when feeds refresh"
 FLOW_MENU = ("drawer_menu_button", "Open navigation menu")
+LOCKED_URLS = {
+    "BBC": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+    "WordPress": "ae7d2e88a3321cb46db673780d940e2e06ba473a34d8c5099069b2da69c5ee82",
+}
 STEPS = []
 WIDTH, HEIGHT = [int(x) for x in shell("wm", "size").splitlines()[-1].split()[-1].split("x")]
 
@@ -418,22 +422,18 @@ def measure_route(package, condition, round_num, candidates, selected):
 def main():
     candidates = load_items()
     selected = {}
-    bbc_verified = []
-    for item in candidates["BBC"][:5]:
-        try:
-            item.prove_origin()
-        except (OSError, ValueError):
-            continue
-        bbc_verified.append(item)
-    assert bbc_verified, "Cloud runner could not verify BBC original article body"
-    candidates["BBC"] = bbc_verified
+    for source, url_hash in LOCKED_URLS.items():
+        candidates[source] = [x for x in candidates[source] if digest(x.url) == url_hash]
+        assert len(candidates[source]) == 1, "The exact live comparison item is no longer available: " + source
+    candidates["BBC"][0].prove_origin()
     note("public-source-reference-controls", candidates={source: len(items) for source, items in candidates.items()})
     package = os.environ["BREW_TEST_PACKAGE"]
     assert package in APPS
-    for round_number in (1, 2):
-        for condition in ("baseline", "prefetch"):
-            note("begin-clean-profile", package=package, condition=condition, round=round_number)
-            measure_route(package, condition, round_number, candidates, selected)
+    round_number = int(os.environ["BREW_TEST_ROUND"])
+    assert round_number in (1, 2)
+    for condition in ("baseline", "prefetch"):
+        note("begin-clean-profile", package=package, condition=condition, round=round_number)
+        measure_route(package, condition, round_number, candidates, selected)
 
 
 if __name__ == "__main__":
