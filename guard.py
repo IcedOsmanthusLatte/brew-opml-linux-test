@@ -108,7 +108,7 @@ def bounds(node):
 
 def move(node):
     box = bounds(node)
-    xdo("mousemove", "--sync", box.x + box.width // 2, box.y + box.height // 2)
+    xdo("mousemove", box.x + box.width // 2, box.y + box.height // 2)
 
 
 def click(node, count=1):
@@ -200,7 +200,7 @@ def disable_online_metadata(dialog):
         return
     group = find("Fetch online metadata", root=dialog, enabled=False)
     box = bounds(group)
-    xdo("mousemove", "--sync", box.x + 12, box.y + 8)
+    xdo("mousemove", box.x + 12, box.y + 8)
     xdo("click", 1)
     wait_for(
         "Fetch online metadata is still enabled",
