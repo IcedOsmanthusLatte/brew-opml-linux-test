@@ -5,4 +5,5 @@
   <application android:debuggable="true" android:label="Brew guest network control">
     <activity android:name=".Probe" android:exported="true" />
   </application>
+  <instrumentation android:name=".UiProbe" android:targetPackage="lab.brew.netprobe" />
 </manifest>

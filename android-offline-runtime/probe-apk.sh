@@ -5,7 +5,7 @@ p="$RUNNER_TEMP/brew-android-probe"
 mkdir -p "$p/classes" "$p/dex"
 tools="$(find "$ANDROID_HOME/build-tools" -name aapt -type f | sort -V | tail -1 | xargs dirname)"
 android="$ANDROID_HOME/platforms/android-35/android.jar"
-javac -source 8 -target 8 -cp "$android" -d "$p/classes" "$d/Probe.java"
+javac -source 8 -target 8 -cp "$android" -d "$p/classes" "$d/Probe.java" "$d/UiProbe.java"
 "$tools/d8" --lib "$android" --output "$p/dex" $(find "$p/classes" -name '*.class')
 cp "$d/ProbeManifest.xml" "$p/AndroidManifest.xml"
 "$tools/aapt" package -f -M "$p/AndroidManifest.xml" -I "$android" -F "$p/raw.apk"

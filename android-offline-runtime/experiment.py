@@ -2,6 +2,7 @@
 import json
 import os
 import re
+import shlex
 import subprocess
 import time
 
@@ -163,7 +164,7 @@ def source_timeline(package, source):
     raise AssertionError("Imported source could not be selected: " + source)
 
 
-def read_switch(label):
+def read_switch(package, label):
     tree = xml()
     row = find(tree, by(label))
     if row is None:
@@ -176,7 +177,11 @@ def read_switch(label):
         bounds = [int(x) for x in re.findall(r"\d+", node.get("bounds"))]
         if bounds[1] - 6 <= y <= bounds[3] + 6:
             return node.get("checked") == "true"
-    return None
+    # Feeder publishes On/Off as accessibility stateDescription; UIAutomator XML omits it.
+    raw = shell("am", "instrument", "-w", "-r", "-e", "label", shlex.quote(label), "-e", "package", package,
+                "lab.brew.netprobe/.UiProbe", timeout=22)
+    match = re.search(r"^INSTRUMENTATION_RESULT: switch_state=(on|off)$", raw, re.MULTILINE)
+    return match[1] == "on" if match else None
 
 
 def scroll_to(label):
@@ -194,11 +199,11 @@ def setup_prefetch(package, enabled):
         tap("Edit feed")
         optional(SOURCES["BBC"])
         scroll_to(FEEDER_ADV)
-        initial = read_switch(FEEDER_ADV)
+        initial = read_switch(package, FEEDER_ADV)
         assert initial is False, "Feeder fresh feed had unexpected switch state"
         if enabled:
             tap(FEEDER_ADV)
-        assert read_switch(FEEDER_ADV) == enabled
+        assert read_switch(package, FEEDER_ADV) == enabled
         tap("OK", "Save")
         label = FEEDER_ADV
     else:
@@ -206,12 +211,12 @@ def setup_prefetch(package, enabled):
         tap("settings_reading_behavior", "Reading behavior")
         # Pinned FeedFlow's fresh default is Reader (website); leave it unchanged.
         scroll_to(FLOW_ADV)
-        initial = read_switch(FLOW_ADV)
+        initial = read_switch(package, FLOW_ADV)
         assert initial is False, "FeedFlow fresh profile had unexpected switch state"
         if enabled:
             tap(FLOW_ADV)
             tap("Confirm")
-        assert read_switch(FLOW_ADV) == enabled
+        assert read_switch(package, FLOW_ADV) == enabled
         feedflow_home()
         label = FLOW_ADV
     note("verified-offline-setting", package=package, setting=label, enabled=enabled,
@@ -285,7 +290,8 @@ def measure(package, node, item):
         if not reader_context(tree, package):
             return None
         if package == FLOW:
-            ready = any(n.get("resource-id", "").startswith("reader_article_") for n in tree.iter("node"))
+            ready = any(n.get("resource-id", "").rsplit(":id/", 1)[-1].startswith("reader_article_")
+                        for n in tree.iter("node"))
             unavailable = find(tree, by("Unable to parse article", "No content available")) is not None
             if not (ready or unavailable):
                 return None
