@@ -22,7 +22,10 @@ jobs:
       - name: Set up desktop UI automation
         run: python -m pip install --disable-pip-version-check pywinauto==0.6.9 pillow==11.3.0 playwright==1.55.0
       - name: Probe Windows app UI and restore entry points
+        continue-on-error: true
         run: python windows-opml-runtime/probe.py
+      - name: Test Fluent Reader native backup against OPML-only controls
+        run: python windows-opml-runtime/fluent_experiment.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
