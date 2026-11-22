@@ -18,7 +18,10 @@ jobs:
         run: |
           test -c /dev/kvm
           sudo chmod a+rw /dev/kvm
-          emulator -accel-check
+          test -x "$ANDROID_HOME/emulator/emulator"
+          echo "$ANDROID_HOME/emulator" >> "$GITHUB_PATH"
+          echo "$ANDROID_HOME/platform-tools" >> "$GITHUB_PATH"
+          "$ANDROID_HOME/emulator/emulator" -accel-check
           mkdir -p android-offline-evidence
       - name: Retrieve verified released Android apps
         shell: bash
