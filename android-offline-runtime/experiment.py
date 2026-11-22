@@ -1,10 +1,12 @@
 """Operate the two installed readers only through their native public UI."""
 import json
 import os
+from pathlib import Path
 import re
 import shlex
 import subprocess
 import time
+from xml.etree import ElementTree as ET
 
 from bootstrap import APPS, OUT, probe, shell, wait, xml
 from source_evidence import digest, load_items, normalized
@@ -192,23 +194,55 @@ def scroll_to(label):
     raise AssertionError("Settings control not shown: " + label)
 
 
+def feeder_export():
+    tap("Open menu")
+    tap("Export feeds to OPML")
+    tree = xml()
+    if find(tree, by("Downloads", "Download")) is None:
+        tap("Show roots", "roots")
+        tap("Downloads", "Download")
+    else:
+        download = find(tree, by("Downloads", "Download"))
+        if download.get("clickable") == "true":
+            click(download)
+    filename = wait(lambda: next((x.get("text") for x in xml().iter("node")
+                                  if re.fullmatch(r"feeder-export-\d{4}-\d{2}-\d{2}-\d+\.opml",
+                                                  x.get("text", ""))), None), timeout=18)
+    tap("Save")
+    path = "/sdcard/Download/" + filename
+
+    def read_export():
+        try:
+            return ET.fromstring(shell("cat", path, check=False))
+        except ET.ParseError:
+            return None
+
+    root = wait(read_export, timeout=24)
+    fixture = ET.parse(Path(__file__).with_name("control.opml"))
+    expected = [n.get("xmlUrl") for n in fixture.iter("outline") if n.get("xmlUrl")]
+    actual = {n.get("xmlUrl"): n for n in root.iter("outline") if n.get("xmlUrl")}
+    assert set(actual) == set(expected), "Feeder native export did not match the three imported sources"
+    variant = actual[expected[0]].get("{https://nononsenseapps.com/feeder}fullTextByDefault")
+    assert variant in {"true", "false"}, "Native export omitted Feeder's full-text setting"
+    note("feeder-native-export-readback", sources=len(actual), full_text_enabled=variant == "true",
+         export_sha256=shell("sha256sum", path).split()[0])
+    return variant == "true"
+
+
 def setup_prefetch(package, enabled):
     if package == FEEDER:
-        source_timeline(package, "BBC")
-        tap("Open menu")
-        tap("Edit feed")
-        optional(SOURCES["BBC"])
-        scroll_to(FEEDER_ADV)
-        initial = read_switch(package, FEEDER_ADV)
-        assert initial is False, "Feeder fresh feed had unexpected switch state"
+        initial = feeder_export()
+        assert not initial, "Feeder fresh feed had full-text setting enabled"
         if enabled:
+            source_timeline(package, "BBC")
+            tap("Open menu")
+            tap("Edit feed")
+            optional(SOURCES["BBC"])
+            scroll_to(FEEDER_ADV)
             tap(FEEDER_ADV)
-        assert read_switch(package, FEEDER_ADV) == enabled
-        if enabled:
             scroll_to("OK")
             tap("OK")
-        else:
-            back()
+            assert feeder_export(), "Feeder did not persist full-text setting"
         label = FEEDER_ADV
     else:
         feedflow_settings()
@@ -410,11 +444,11 @@ if __name__ == "__main__":
             safe_labels = {"OK", "Done", "Confirm", "Save", "Downloads", "Recent", "Show roots", "Settings",
                            "Open menu", "Open navigation drawer", "Open navigation menu", "Reading behavior",
                            "Feeds & accounts", "Import and export", "Import feeds from OPML", "Edit feed",
-                           "Sync feeds", "Refresh feeds", FEEDER_ADV, FLOW_ADV, *SOURCES.values()}
+                           "Export feeds to OPML", "Sync feeds", "Refresh feeds", FEEDER_ADV, FLOW_ADV, *SOURCES.values()}
             rows = []
             for n in xml().iter("node"):
                 label, description, resource = fields(n)
-                if not any((label, description, resource)):
+                if not any((label, description, resource)) and n.get("checkable") != "true":
                     continue
                 if "article_row_" in resource or "reader_article_" in resource:
                     resource = "article-item-hash:" + digest(resource)
