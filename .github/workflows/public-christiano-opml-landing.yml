@@ -1,0 +1,28 @@
+name: Public Christiano OPML landing check
+on:
+  push:
+    branches: [windows-opml-reading-state]
+    paths:
+      - .github/workflows/public-christiano-opml-landing.yml
+      - verification/check-christiano-opml-landing.py
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install playwright==1.55.0
+          .venv/bin/playwright install --with-deps chromium
+      - name: Open exact heading and download sample on both devices
+        run: .venv/bin/python verification/check-christiano-opml-landing.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: christiano-landing-proof
+          path: christiano-landing-proof
+          retention-days: 14
