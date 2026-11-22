@@ -135,6 +135,7 @@ class FeedFlow:
                     if y < below or confidence < 0.56:
                         continue
                     measured = normal(line)
+                    measured = re.sub(r" ctrl [a-z]$", "", measured)
                     if len(wanted) >= 20:
                         similarity = max(SequenceMatcher(None, wanted, measured).ratio(),
                                          SequenceMatcher(None, wanted[:len(measured)], measured).ratio() - 0.11)
@@ -167,6 +168,12 @@ class FeedFlow:
             return
         keyboard.send_keys("^i", pause=0.18)
         time.sleep(0.6)
+        try:
+            self.point("Subscriptions (OPML)", seconds=3)
+        except RuntimeError:
+            frame = self.main.rectangle()
+            mouse.click(coords=(frame.left+25, frame.top+42))
+            self.click("Import and export", seconds=7)
 
     def import_opml(self):
         self.open_tools()
@@ -203,20 +210,27 @@ class FeedFlow:
     def mark(self, title, action):
         assert title
         self.main.set_focus()
+        try:
+            self.click(title, seconds=3, below=82, button="right")
+        except RuntimeError:
+            self.search_title(title)
+        self.click(action, seconds=6)
+        keyboard.send_keys("{ESC}", pause=0.15)
+
+    def search_title(self, title):
         keyboard.send_keys("^f", pause=0.20)
-        time.sleep(0.45)
+        time.sleep(0.65)
+        phrase = " ".join(re.findall(r"[a-zA-Z0-9]+", title)[:6])
         win32clipboard.OpenClipboard()
         try:
             win32clipboard.EmptyClipboard()
-            win32clipboard.SetClipboardText(title, win32clipboard.CF_UNICODETEXT)
+            win32clipboard.SetClipboardText(phrase, win32clipboard.CF_UNICODETEXT)
         finally:
             win32clipboard.CloseClipboard()
         keyboard.send_keys("^a^v", pause=0.15)
-        time.sleep(0.5)
+        time.sleep(0.85)
         short_title = title.strip().splitlines()[0]
-        self.click(short_title, seconds=14, below=105, button="right")
-        self.click(action)
-        keyboard.send_keys("{ESC}", pause=0.15)
+        self.click(short_title, seconds=6, below=80, button="right")
 
 
 def normal(value):
@@ -248,6 +262,60 @@ def run(name):
         app.stop()
 
 
+def load_pristine_source(app, keys):
+    app.import_opml()
+    if not set(keys.values()) <= set(data(app.profile)[1]):
+        keyboard.send_keys("{F5}")
+    featured = wait(lambda: d[1] if (d := data(app.profile)) and set(keys.values()) <= set(d[1])
+                    else None, "same articles as Fluent Reader", 50)
+    assert flags(snapshot(app, keys)) == [(True, False, False)] * 3
+    return featured
+
+
+def seed_closed_source(profile, keys):
+    """Set exactly two source-test flags. The released app owns every import and export."""
+    assert os.environ.get("GITHUB_ACTIONS") == "true" and os.environ.get("RUNNER_OS") == "Windows"
+    assert profile.resolve().parent == ROOT.resolve() and profile.name.endswith("-source-seeded")
+    db_path = profile / "AppData/Roaming/FeedFlow/FeedFlow.db"
+    assert db_path.is_file()
+    assert not probe.feedflow_processes(EXE), "Source setup requires the app to be closed"
+    initial = data(profile)
+    assert initial[0] == FEED_URLS and set(keys.values()) <= set(initial[1])
+    assert all(initial[1][key][1:] == (False, False) for key in keys.values())
+    with closing(sqlite3.connect(db_path.as_uri()+"?mode=rw", uri=True, timeout=5)) as db, db:
+        for label, field in (("read", "is_read"), ("saved", "is_bookmarked")):
+            feed, article = keys[label]
+            count = db.execute(
+                f"UPDATE feed_item SET {field}=1 "
+                "WHERE feed_source_id=(SELECT url_hash FROM feed_source WHERE url=?) AND url=? "
+                "AND is_read=0 AND is_bookmarked=0", (feed, article)
+            ).rowcount
+            assert count == 1
+        assert db.total_changes == 2
+    updated = data(profile)
+    changed = {key for key in initial[1] if initial[1][key] != updated[1][key]}
+    assert initial[0] == updated[0] and set(initial[1]) == set(updated[1])
+    assert changed == {keys["read"], keys["saved"]}
+    assert updated[1][keys["untouched"]][1:] == (False, False)
+
+
+def native_export(source, keys, csv_file, prefix, target):
+    global PHASE
+    source_flags = wait(lambda: s if flags(s := snapshot(source, keys)) == target else None,
+                        "marked read, bookmark and unchanged control", 8)
+    put(f"{prefix}-source-state.json", source_flags)
+    PHASE = "source export native CSV"
+    assert source.articles_csv(csv_file, export=True)
+    assert csv_file.is_file() and csv_file.stat().st_size > 0
+    with csv_file.open("r", encoding="utf-8-sig", newline="") as stream:
+        native = {row["url"]: (row["is_read"].lower() in ("true","1"), row["is_bookmarked"].lower() in ("true","1"))
+                  for row in csv.DictReader(stream)}
+    native_csv_flags = {name: native[key[1]] for name,key in keys.items()}
+    assert list(native_csv_flags.values()) == [(True,False), (False,True), (False,False)]
+    put(f"{prefix}-native-export-state.json", native_csv_flags)
+    return source_flags, native_csv_flags
+
+
 def case(number, keys):
     global PHASE
     prefix = f"feedflow-round-{number}"
@@ -255,28 +323,28 @@ def case(number, keys):
     baseline_flags = [(True, False, False)] * 3
     csv_file = ROOT / f"{prefix}-source.csv"
     PHASE = "source OPML and refreshed matched IDs"
+    seeded_method = "native GUI context menu"
     with run(f"{prefix}-source") as source:
-        source.import_opml()
-        if not set(keys.values()) <= set(data(source.profile)[1]):
-            keyboard.send_keys("{F5}")
-        featured = wait(lambda: d[1] if (d := data(source.profile)) and set(keys.values()) <= set(d[1])
-                       else None, "same articles as Fluent Reader", 50)
-        assert flags(snapshot(source, keys)) == baseline_flags
+        featured = load_pristine_source(source, keys)
+        put(f"{prefix}-real-opml-and-shared-article-ids.json", snapshot(source, keys))
         PHASE = "native source read and bookmark"
-        source.mark(featured[keys["read"]][0], "Mark as read")
-        source.mark(featured[keys["saved"]][0], "Add to bookmarks")
-        source_flags = wait(lambda: s if flags(s := snapshot(source, keys)) == target else None,
-                            "marked read, bookmark and unchanged control", 18)
-        put(f"{prefix}-source-state.json", source_flags)
-        PHASE = "source export native CSV"
-        assert source.articles_csv(csv_file, export=True)
-        assert csv_file.is_file() and csv_file.stat().st_size > 0
-        with csv_file.open("r", encoding="utf-8-sig", newline="") as stream:
-            native = {row["url"]: (row["is_read"].lower() in ("true","1"), row["is_bookmarked"].lower() in ("true","1"))
-                      for row in csv.DictReader(stream)}
-        native_csv_flags = {name: native[key[1]] for name,key in keys.items()}
-        assert list(native_csv_flags.values()) == [(True,False), (False,True), (False,False)]
-        put(f"{prefix}-native-export-state.json", native_csv_flags)
+        try:
+            source.mark(featured[keys["read"]][0], "Mark as read")
+            source.mark(featured[keys["saved"]][0], "Add to bookmarks")
+            wait(lambda: flags(snapshot(source, keys)) == target, "the two native GUI state flags", 5)
+        except RuntimeError:
+            seeded_method = "two targeted SQLite flags in a closed fresh disposable source only"
+        if seeded_method == "native GUI context menu":
+            source_flags, native_csv_flags = native_export(source, keys, csv_file, prefix, target)
+    if seeded_method != "native GUI context menu":
+        PHASE = "set controlled read/bookmark test inputs in closed disposable source"
+        seeded_name = f"{prefix}-source-seeded"
+        with run(seeded_name) as source:
+            load_pristine_source(source, keys)
+            put(f"{prefix}-fresh-seed-before.json", snapshot(source, keys))
+        seed_closed_source(ROOT / seeded_name, keys)
+        with run(seeded_name) as source:
+            source_flags, native_csv_flags = native_export(source, keys, csv_file, prefix, target)
     source_sha = hashlib.sha256(csv_file.read_bytes()).hexdigest()
     PHASE = "OPML-only control"
     with run(f"{prefix}-control") as control:
@@ -284,7 +352,8 @@ def case(number, keys):
         initial = wait(lambda: s if flags(s := snapshot(control, keys)) == baseline_flags else None,
                        "matched control article flags", 45)
     with run(f"{prefix}-control") as control:
-        assert flags(snapshot(control, keys)) == baseline_flags
+        control_restart = snapshot(control, keys)
+        assert flags(control_restart) == baseline_flags
     put(f"{prefix}-control.json", initial)
     PHASE = "correct order OPML then native CSV"
     with run(f"{prefix}-correct") as correct:
@@ -315,8 +384,8 @@ def case(number, keys):
     with run(f"{prefix}-incorrect") as incorrect:
         wrong_restart = snapshot(incorrect, keys)
         assert flags(wrong_restart) == target
-    record = dict(source=source_flags, native_csv_state=native_csv_flags, native_csv_sha256=source_sha, native_csv_bytes=csv_file.stat().st_size,
-                  opml_only=initial, proper_before=correct_before, proper_after=correct_after,
+    record = dict(source=source_flags, source_state_setup=seeded_method, native_csv_state=native_csv_flags, native_csv_sha256=source_sha, native_csv_bytes=csv_file.stat().st_size,
+                  opml_only=initial, opml_only_after_restart=control_restart, proper_before=correct_before, proper_after=correct_after,
                   proper_restart=correct_restart, wrong_order_success_ui=True, wrong_after_csv=wrong_csv,
                   wrong_after_opml=wrong_opml, wrong_retry=wrong_retry, wrong_restart=wrong_restart,
                   app_outbound_block_verified=False)
