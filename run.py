@@ -56,10 +56,11 @@ def run(args: list[str], output: Path, *, timeout: int = 40) -> None:
 def newsboat_roundtrip(source: Path, work: Path, output: Path) -> tuple[Path, Path]:
     work.mkdir()
     config = work / "config"
-    config.touch()
-    isolated = ["newsboat", "-C", str(config), "-u", str(work / "urls"), "-c", str(work / "cache.db")]
-    run(isolated + ["-i", str(source)], output / "newsboat-import.txt")
     urls = work / "urls"
+    config.touch()
+    urls.touch()
+    isolated = ["newsboat", "-C", str(config), "-u", str(urls), "-c", str(work / "cache.db")]
+    run(isolated + ["-i", str(source)], output / "newsboat-import.txt")
     (output / "newsboat-subscriptions.txt").write_bytes(urls.read_bytes())
     default = output / "newsboat-default.opml"
     tags = output / "newsboat-tags.opml"
@@ -129,7 +130,7 @@ def main() -> None:
             label: {
                 "direct_readers_differ": signatures(data["rssguard_direct"]) != signatures(data["newsboat_default"]),
                 "rssguard_reimport_modes_differ": signatures(data["rssguard_from_default"]) != signatures(data["rssguard_from_tags"]),
-                "source_paths_retained_after_tagged_round_trip": signatures(data["input"]) == signatures(data["rssguard_from_tags"]),
+                "source_signature_retained_after_tagged_round_trip": signatures(data["input"]) == signatures(data["rssguard_from_tags"]),
             }
             for label, data in cases.items()
         }
