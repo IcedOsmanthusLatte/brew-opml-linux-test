@@ -33,6 +33,18 @@ def find_windows(pid):
         if w.process_id() == pid and w.is_visible() and w.rectangle().width() > 250
     ]
 
+def feedflow_processes(exe):
+    query = (
+        "Get-CimInstance Win32_Process | Where-Object { "
+        "$_.ExecutablePath -and $_.ExecutablePath.StartsWith($env:BREW_FF_INSTALL, [StringComparison]::OrdinalIgnoreCase) "
+        "} | Select-Object Name,ProcessId,ParentProcessId | ConvertTo-Json -AsArray -Compress"
+    )
+    env = os.environ | {"BREW_FF_INSTALL": str(exe.parent) + "\\"}
+    result = subprocess.run(["pwsh", "-NoProfile", "-Command", query], env=env,
+                            capture_output=True, text=True, timeout=12,
+                            creationflags=subprocess.CREATE_NO_WINDOW)
+    return json.loads(result.stdout or "[]")
+
 
 def controls(window):
     result = []
@@ -55,17 +67,27 @@ def feedflow():
                         "SKIKO_RENDER_API": "SOFTWARE"}
     stream = (runtime / "feedflow-bootstrap.log").open("wb")
     p = subprocess.Popen([str(exe)], cwd=exe.parent, env=env, stdout=stream, stderr=stream)
+    observed = {}
     try:
         def lookup():
-            if p.poll() is not None:
-                raise RuntimeError(f"FeedFlow process exited before its first window: {p.returncode}")
-            return next(iter(find_windows(p.pid)), None)
+            processes = feedflow_processes(exe)
+            observed["processes"] = processes
+            pids = {p.pid, *(s["ProcessId"] for s in processes)}
+            wins = [w for w in Desktop(backend="win32").windows(visible_only=False)
+                    if w.process_id() in pids]
+            observed["windows"] = [{"class":w.class_name(), "visible":w.is_visible(),
+                "title_is_feedflow":w.window_text().strip().lower() == "feedflow",
+                "rect_wh":[w.rectangle().width(),w.rectangle().height()]} for w in wins]
+            possible = [w for w in wins if w.is_visible() and w.rectangle().width() > 200
+                        and (w.class_name().startswith("SunAwt") or w.window_text().strip().lower() == "feedflow")]
+            return next(iter(possible), None)
         w = wait(lookup)
         if w.rectangle().width() < 800:
             w.maximize()
         time.sleep(4)
+        uia = Desktop(backend="uia").window(handle=w.handle).wrapper_object()
         (evidence / "feedflow-start.json").write_text(json.dumps(
-            dict(title=w.window_text(), controls=controls(w)), indent=2), encoding="utf-8")
+            dict(title=w.window_text(), controls=controls(uia)), indent=2), encoding="utf-8")
         w.capture_as_image().save(evidence / "feedflow-start.png")
     finally:
         subprocess.run(["taskkill", "/pid", str(p.pid), "/t", "/f"], capture_output=True)
@@ -83,7 +105,7 @@ def feedflow():
                         clean = re.sub(r"https?://\S+", "(url)", line)
                         clean = re.sub(r"(?i)[A-Z]:[\\/][^\r\n]*", "(runner path)", clean)
                         collected.append(clean[:300])
-        diagnostics = {"process_exit":p.poll(), "safe_startup_events":collected[-30:],
+        diagnostics = {"process_exit":p.poll(), "safe_startup_events":collected[-30:], "observed": observed,
                        "java_runtime_exists":(exe.parent / "runtime").is_dir()}
         (evidence / "feedflow-diagnostics.json").write_text(
             json.dumps(diagnostics, indent=2), encoding="utf-8")

@@ -146,7 +146,7 @@ def import_opml(page, process, profile):
     enter_settings(page)
     page.get_by_role("button", name="Import", exact=True).click(timeout=9000)
     file_dialog(OPML, process.pid)
-    wait(lambda: (r := rows(profile)) and len(r[0]) >= 2 and len(r[1]) >= 3, "OPML subscriptions and refreshed articles", 70)
+    wait(lambda: (r := rows(profile)) and WANTED_FEEDS == r[0] and len(r[1]) >= 3, "all three OPML subscriptions and refreshed articles", 70)
     close_settings(page)
     time.sleep(1)
 
@@ -181,7 +181,8 @@ def block_app_network():
     try:
         check = ("$r=Get-NetFirewallRule -Name '%s' -ErrorAction Stop; "
                  "if ($r.Enabled -ne 'True' -or $r.Action -ne 'Block') {exit 1}; "
-                 "if (($r|Get-NetFirewallApplicationFilter).Program -ne $env:BREW_WIN_FLUENT) {exit 2}" % name)
+                 "if (($r|Get-NetFirewallApplicationFilter).Program -ne $env:BREW_WIN_FLUENT) {exit 2}; "
+                 "if (@(Get-NetFirewallProfile -PolicyStore ActiveStore | Where-Object Enabled -ne True).Count) {exit 3}" % name)
         subprocess.run(["pwsh", "-NoProfile", "-Command", check], check=True, capture_output=True,
                        creationflags=subprocess.CREATE_NO_WINDOW)
         yield
@@ -235,6 +236,12 @@ def main():
                 assert states(baseline) == [(True, False, False)] * 3
             finally:
                 stop(proc, 9251)
+            proc, page = start(pw, control, 9254)
+            try:
+                baseline_after_restart = snapshot(control, chosen)
+                assert states(baseline_after_restart) == states(baseline)
+            finally:
+                stop(proc, 9254)
             with block_app_network():
                 proc, page = start(pw, restore, 9252)
                 try:
@@ -255,7 +262,7 @@ def main():
                     assert after_restart == after
                 finally:
                     stop(proc, 9253)
-            round_result = dict(source=seeded, opml_only=baseline, native_restore=after,
+            round_result = dict(source=seeded, opml_only=baseline, opml_only_after_restart=baseline_after_restart, native_restore=after,
                                 native_restore_after_restart=after_restart, with_app_outbound_block=True,
                                 native_backup_sha256=sha256(backup.read_bytes()).hexdigest(),
                                 native_backup_bytes=backup.stat().st_size)
