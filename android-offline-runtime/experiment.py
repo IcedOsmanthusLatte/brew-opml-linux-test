@@ -1,5 +1,6 @@
 """Operate the two installed readers only through their native public UI."""
 import json
+import os
 import re
 import subprocess
 import time
@@ -11,7 +12,6 @@ FEEDER, FLOW = APPS
 SOURCES = {"BBC": "BBC News — World", "NASA": "NASA News Releases", "WordPress": "WordPress News"}
 FEEDER_ADV = "Fetch full articles by default"
 FLOW_ADV = "Make offline copies when feeds refresh"
-FLOW_MODE = "reading_behavior_article_open_mode"
 STEPS = []
 WIDTH, HEIGHT = [int(x) for x in shell("wm", "size").splitlines()[-1].split()[-1].split("x")]
 
@@ -203,9 +203,7 @@ def setup_prefetch(package, enabled):
     else:
         feedflow_settings()
         tap("settings_reading_behavior", "Reading behavior")
-        # Use identical website-reader mode for both profiles to isolate the cache setting.
-        tap(FLOW_MODE, "Open articles in")
-        tap("article_open_mode_full_article", "article_open_mode_website_content", "Reader (website)")
+        # Pinned FeedFlow's fresh default is Reader (website); leave it unchanged.
         scroll_to(FLOW_ADV)
         initial = read_switch(FLOW_ADV)
         assert initial is False, "FeedFlow fresh profile had unexpected switch state"
@@ -249,6 +247,9 @@ def visible_item(package, source, items):
 
 
 def reader_context(tree, package):
+    in_native_app = any(n.get("package") == package for n in tree.iter("node"))
+    if not in_native_app:
+        return False
     if package == FLOW:
         return find(tree, by("reader_back_button", "reader_bookmark_button")) is not None
     has_back = find(tree, by("Go back")) is not None
@@ -333,11 +334,12 @@ def measure_route(package, condition, round_num, candidates, selected):
 def main():
     candidates = load_items()
     selected = {}
+    package = os.environ["BREW_TEST_PACKAGE"]
+    assert package in APPS
     for round_number in (1, 2):
-        for package in APPS:
-            for condition in ("baseline", "prefetch"):
-                note("begin-clean-profile", package=package, condition=condition, round=round_number)
-                measure_route(package, condition, round_number, candidates, selected)
+        for condition in ("baseline", "prefetch"):
+            note("begin-clean-profile", package=package, condition=condition, round=round_number)
+            measure_route(package, condition, round_number, candidates, selected)
 
 
 if __name__ == "__main__":

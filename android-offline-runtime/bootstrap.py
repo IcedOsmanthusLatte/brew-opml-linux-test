@@ -24,7 +24,7 @@ def wait(check, timeout=26):
     start = time.monotonic()
     while time.monotonic() - start < timeout:
         value = check()
-        if value:
+        if value is not None and value is not False:
             return value
         time.sleep(0.6)
     raise TimeoutError("Android condition not reached")

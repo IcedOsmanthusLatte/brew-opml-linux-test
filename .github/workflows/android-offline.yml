@@ -11,6 +11,12 @@ jobs:
   android:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [com.nononsenseapps.feeder, com.prof18.feedflow]
+    env:
+      BREW_TEST_PACKAGE: ${{ matrix.app }}
     steps:
       - uses: actions/checkout@v4
       - name: Check Android and enable emulator acceleration
@@ -39,6 +45,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: android-offline-evidence
+          name: android-offline-evidence-${{ matrix.app }}
           path: android-offline-evidence/
           retention-days: 14
