@@ -1,0 +1,28 @@
+name: Public Readless editorial landing check
+on:
+  push:
+    branches: [android-opml-offline-reading]
+    paths:
+      - .github/workflows/public-readless-landing.yml
+      - verification/check-readless-landing.py
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install playwright==1.55.0
+          .venv/bin/playwright install --with-deps chromium
+      - name: Open exact six-route table and click separate direct OPML link
+        run: .venv/bin/python verification/check-readless-landing.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: readless-landing-proof
+          path: readless-landing-proof
+          retention-days: 14
