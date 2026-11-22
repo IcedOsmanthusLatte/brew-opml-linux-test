@@ -33,7 +33,6 @@ USER32.SetProcessDPIAware()
 OCR = RapidOCR(intra_op_num_threads=2, inter_op_num_threads=2)
 PHASE = "startup"
 LAST_RECOGNIZED_LABEL = None
-TRACE = []
 
 
 def put(name, data):
@@ -175,8 +174,9 @@ class FeedFlow:
             mouse.click(coords=(frame.left+25, frame.top+42))
             self.click("Import and export", seconds=7)
 
-    def import_opml(self):
-        self.open_tools()
+    def import_opml(self, panel_open=False, keep_panel=False):
+        if not panel_open:
+            self.open_tools()
         try:
             self.click("Import feed from OPML")
         except RuntimeError:
@@ -188,12 +188,14 @@ class FeedFlow:
             raise
         file_dialog(OPML, self.pid)
         self.click("OK", seconds=60)
-        self.click("Done", seconds=70)
+        if not keep_panel:
+            self.click("Done", seconds=70)
         wait(lambda: (d := data(self.profile)) and d[0] == FEED_URLS,
              "all FeedFlow expected subscriptions", 50)
 
-    def articles_csv(self, file, export=False):
-        self.open_tools()
+    def articles_csv(self, file, export=False, panel_open=False, keep_panel=False):
+        if not panel_open:
+            self.open_tools()
         if export:
             self.click("Export articles to CSV")
             self.click("Confirm")
@@ -204,7 +206,8 @@ class FeedFlow:
             file_dialog(file, self.pid)
             self.point("Articles import done", seconds=40)
         self.click("OK")
-        self.click("Done")
+        if not keep_panel:
+            self.click("Done")
         return True
 
     def mark(self, title, action):
@@ -357,9 +360,9 @@ def case(number, keys):
     put(f"{prefix}-control.json", initial)
     PHASE = "correct order OPML then native CSV"
     with run(f"{prefix}-correct") as correct:
-        correct.import_opml()
+        correct.import_opml(keep_panel=True)
         correct_before = snapshot(correct, keys)
-        assert correct.articles_csv(csv_file)
+        assert correct.articles_csv(csv_file, panel_open=True)
         correct_after = snapshot(correct, keys)
         assert flags(correct_after) == target
     with run(f"{prefix}-correct") as correct:
@@ -370,15 +373,15 @@ def case(number, keys):
     with run(f"{prefix}-incorrect") as incorrect:
         wrong_empty = snapshot(incorrect, keys)
         assert wrong_empty["article_count"] == wrong_empty["feed_count"] == 0
-        assert incorrect.articles_csv(csv_file)
+        assert incorrect.articles_csv(csv_file, keep_panel=True)
         wrong_csv = snapshot(incorrect, keys)
         assert wrong_csv["article_count"] == wrong_csv["feed_count"] == 0
         put(f"{prefix}-csv-first.json", dict(ui_import_done=True, before=wrong_empty, after=wrong_csv))
         PHASE = "wrong order then OPML and official CSV retry"
-        incorrect.import_opml()
+        incorrect.import_opml(panel_open=True, keep_panel=True)
         wrong_opml = wait(lambda: s if flags(s := snapshot(incorrect, keys)) == baseline_flags else None,
                           "OPML after skipped CSV flags", 45)
-        assert incorrect.articles_csv(csv_file)
+        assert incorrect.articles_csv(csv_file, panel_open=True)
         wrong_retry = snapshot(incorrect, keys)
         assert flags(wrong_retry) == target
     with run(f"{prefix}-incorrect") as incorrect:
