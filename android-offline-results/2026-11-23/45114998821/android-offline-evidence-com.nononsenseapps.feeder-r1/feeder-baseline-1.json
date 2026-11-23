@@ -1,0 +1,133 @@
+{
+  "round": 1,
+  "package": "com.nononsenseapps.feeder",
+  "route": "baseline",
+  "online_initial": {
+    "nonce": "77758ea4c7404e02",
+    "http_status": 200,
+    "outcome": "ok",
+    "any_active_network": true,
+    "wifi": true,
+    "cellular": false,
+    "validated": true,
+    "default_mobile_data_enabled": true,
+    "mobile_data_connection_allowed": true,
+    "airplane_mode": "0",
+    "wifi_setting": "1",
+    "mobile_data_setting": "1"
+  },
+  "offline_before_first_open": {
+    "nonce": "a3fcd776a9c51a10",
+    "http_status": 0,
+    "outcome": "UnknownHostException",
+    "any_active_network": false,
+    "wifi": false,
+    "cellular": false,
+    "validated": false,
+    "default_mobile_data_enabled": false,
+    "mobile_data_connection_allowed": false,
+    "airplane_mode": "1",
+    "wifi_setting": "0",
+    "mobile_data_setting": "0"
+  },
+  "offline_after_first_open": {
+    "nonce": "c6cfab1e58f18e83",
+    "http_status": 0,
+    "outcome": "UnknownHostException",
+    "any_active_network": false,
+    "wifi": false,
+    "cellular": false,
+    "validated": false,
+    "default_mobile_data_enabled": false,
+    "mobile_data_connection_allowed": false,
+    "airplane_mode": "1",
+    "wifi_setting": "0",
+    "mobile_data_setting": "0"
+  },
+  "reconnected": {
+    "nonce": "c76a17e3bfe36f30",
+    "http_status": 200,
+    "outcome": "ok",
+    "any_active_network": true,
+    "wifi": false,
+    "cellular": true,
+    "validated": true,
+    "default_mobile_data_enabled": true,
+    "mobile_data_connection_allowed": true,
+    "airplane_mode": "0",
+    "wifi_setting": "1",
+    "mobile_data_setting": "1"
+  },
+  "native_first_open_no_online_open": true,
+  "online_elapsed_seconds_after_refresh": 89.3,
+  "prefetch_scheduler_event_counts": {
+    "Performing full text parse work": 0,
+    "Finished full text parse work": 0,
+    "Failed to parse missing full article": 0
+  },
+  "items": {
+    "BBC": {
+      "source": "BBC",
+      "title_sha256": "47dbc0f852c054cc3c330f97ee76e934b9f71b559489ada56cd0d007d3b9c78e",
+      "url_sha256": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+      "guid_sha256": "2aac7f4f1956748767762e205eb7f097875b066c15bb5ad7eaeb8c4b441ac0f5",
+      "title_observed": true,
+      "kind": "feed-excerpt",
+      "feed_excerpt_words": 19,
+      "feed_encoded_words": 0,
+      "bbc_origin_validated": true,
+      "bbc_origin_candidate_count": 60,
+      "excerpt_marker_sha256": [
+        "095dc2f52bce0cf15862a98ed0d88e0b2d9ecd395f92161eb37fe04cae127990",
+        "df30f1081a5c3de8fc2285fc8fe8037d1c1d23e059d9109d962866533033c2ba"
+      ],
+      "feed_body_marker_sha256": [],
+      "origin_marker_sha256": [],
+      "resumed_activity": "com.nononsenseapps.feeder/.ui.MainActivity",
+      "reader_ui_controls": [
+        "Fetch full article",
+        "Go back",
+        "Open menu"
+      ],
+      "reader_feed_content_switch_selected": null,
+      "timeline_item_resource_id_sha256": null
+    },
+    "WordPress": {
+      "source": "WordPress",
+      "title_sha256": "66c790d0c97a21e7e02fee73a23b3b642fd7572bc382b926fea1b2d60989caad",
+      "url_sha256": "ae7d2e88a3321cb46db673780d940e2e06ba473a34d8c5099069b2da69c5ee82",
+      "guid_sha256": "eaa8acb52728b68b459961c7da9a467f2e2812facdc2edfc1bd8bec24d28491a",
+      "title_observed": true,
+      "kind": "feed-provided-body",
+      "feed_excerpt_words": 58,
+      "feed_encoded_words": 659,
+      "bbc_origin_validated": false,
+      "bbc_origin_candidate_count": 0,
+      "excerpt_marker_sha256": [
+        "0453db0635d86d90fe830c53304578bef94c3302ecd55666a8f312c63cfa709b",
+        "24ab18ecf14e8602105619b282791ea090272f000982baea55aa26f32336e672",
+        "36e0add3c11cec3a3c196bd3efdc76303af94ac97ccb50fff4d1858a03e461fd",
+        "37d91a9a985302c7dbea668b1e67c0cb0466d2726b250e4e1e6e547b22d02e51",
+        "59ca7db26f4659cb0ba00523048a4a9f0e733e9112491fb991a711849e8fda7f",
+        "5d17bae0d0678e82615d5369c500e806624d97208f4079b8f82d35010cbb3ca9",
+        "a0cfc7f4f17aef706091fe353591140093eff4d62e1a9990e685b93399ab733d",
+        "e392cf499ba314869c853f0a51c261eb5cad9e3e080fa137ee0c47a9fceddede"
+      ],
+      "feed_body_marker_sha256": [
+        "03d41ae23f66071538d8d168f9f75404c8871c0a1ccb492cd1a036d94e132473",
+        "478d63caea35e07efd237ea24fbf934c6ebbc25f0278367ec7c935cf6c237d20",
+        "712247c1e800ef52665f4595e3f92dd80d6b05667f5b3877f5924156c27efd5f",
+        "8fb954b2ee5566ecb7dd2320f618fb237a487b1a1b296dc2df6793def498b230"
+      ],
+      "origin_marker_sha256": [],
+      "resumed_activity": "com.nononsenseapps.feeder/.ui.MainActivity",
+      "reader_ui_controls": [
+        "Fetch full article",
+        "Go back",
+        "Open menu"
+      ],
+      "reader_feed_content_switch_selected": null,
+      "timeline_item_resource_id_sha256": null
+    }
+  }
+}

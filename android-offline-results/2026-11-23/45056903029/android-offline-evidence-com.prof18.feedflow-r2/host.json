@@ -1,0 +1,60 @@
+{
+  "avd": {
+    "api": "35",
+    "abi": "x86_64",
+    "android": "15",
+    "installed_apps": {
+      "com.nononsenseapps.feeder": {
+        "version_code": "4191",
+        "version": "2.25.0"
+      },
+      "com.prof18.feedflow": {
+        "version_code": "6239",
+        "version": "1.21.0"
+      }
+    },
+    "fixture_sha256_in_guest": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd"
+  },
+  "online": {
+    "nonce": "b7d4283e0c0b4bf3",
+    "http_status": 200,
+    "outcome": "ok",
+    "any_active_network": true,
+    "wifi": true,
+    "cellular": false,
+    "validated": true,
+    "default_mobile_data_enabled": true,
+    "mobile_data_connection_allowed": true,
+    "airplane_mode": "0",
+    "wifi_setting": "1",
+    "mobile_data_setting": "1"
+  },
+  "offline": {
+    "nonce": "ce7a8b571874de7a",
+    "http_status": 0,
+    "outcome": "UnknownHostException",
+    "any_active_network": false,
+    "wifi": false,
+    "cellular": false,
+    "validated": false,
+    "default_mobile_data_enabled": false,
+    "mobile_data_connection_allowed": false,
+    "airplane_mode": "1",
+    "wifi_setting": "0",
+    "mobile_data_setting": "0"
+  },
+  "restored": {
+    "nonce": "737fcf0d6a0bfaf2",
+    "http_status": 200,
+    "outcome": "ok",
+    "any_active_network": true,
+    "wifi": false,
+    "cellular": true,
+    "validated": true,
+    "default_mobile_data_enabled": true,
+    "mobile_data_connection_allowed": true,
+    "airplane_mode": "0",
+    "wifi_setting": "1",
+    "mobile_data_setting": "1"
+  }
+}

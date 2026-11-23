@@ -1,0 +1,36 @@
+{
+  "routes_verified": 8,
+  "samples_matched": [
+    "BBC",
+    "WordPress"
+  ],
+  "reproducible_origin_prefetch_effect": true,
+  "default_differences": [],
+  "observations": {
+    "com.nononsenseapps.feeder": {
+      "baseline": {
+        "BBC": "feed-excerpt",
+        "WordPress": "feed-provided-body"
+      },
+      "prefetch": {
+        "BBC": "origin-body-beyond-feed",
+        "WordPress": "feed-provided-body"
+      }
+    },
+    "com.prof18.feedflow": {
+      "baseline": {
+        "BBC": "feed-excerpt",
+        "WordPress": "feed-provided-body"
+      },
+      "prefetch": {
+        "BBC": "origin-body-beyond-feed",
+        "WordPress": "feed-provided-body"
+      }
+    }
+  },
+  "evidence_runs": {
+    "feeder_baseline": "45114998821",
+    "feeder_prefetch": "45117554900",
+    "feedflow": "45056903029"
+  }
+}

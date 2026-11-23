@@ -1,0 +1,145 @@
+{
+  "round": 1,
+  "package": "com.nononsenseapps.feeder",
+  "route": "prefetch",
+  "online_initial": {
+    "nonce": "bd54f6a8e6f18c15",
+    "http_status": 200,
+    "outcome": "ok",
+    "any_active_network": true,
+    "wifi": true,
+    "cellular": false,
+    "validated": true,
+    "default_mobile_data_enabled": true,
+    "mobile_data_connection_allowed": true,
+    "airplane_mode": "0",
+    "wifi_setting": "1",
+    "mobile_data_setting": "1"
+  },
+  "offline_before_first_open": {
+    "nonce": "3d7e9b5edf716b79",
+    "http_status": 0,
+    "outcome": "UnknownHostException",
+    "any_active_network": false,
+    "wifi": false,
+    "cellular": false,
+    "validated": false,
+    "default_mobile_data_enabled": false,
+    "mobile_data_connection_allowed": false,
+    "airplane_mode": "1",
+    "wifi_setting": "0",
+    "mobile_data_setting": "0"
+  },
+  "offline_after_first_open": {
+    "nonce": "ba52352310b903e3",
+    "http_status": 0,
+    "outcome": "UnknownHostException",
+    "any_active_network": false,
+    "wifi": false,
+    "cellular": false,
+    "validated": false,
+    "default_mobile_data_enabled": false,
+    "mobile_data_connection_allowed": false,
+    "airplane_mode": "1",
+    "wifi_setting": "0",
+    "mobile_data_setting": "0"
+  },
+  "reconnected": {
+    "nonce": "621d5ee2351aad72",
+    "http_status": 200,
+    "outcome": "ok",
+    "any_active_network": true,
+    "wifi": false,
+    "cellular": true,
+    "validated": true,
+    "default_mobile_data_enabled": true,
+    "mobile_data_connection_allowed": true,
+    "airplane_mode": "0",
+    "wifi_setting": "1",
+    "mobile_data_setting": "1"
+  },
+  "native_first_open_no_online_open": true,
+  "online_elapsed_seconds_after_refresh": 90.0,
+  "prefetch_scheduler_event_counts": {
+    "Performing full text parse work": 0,
+    "Finished full text parse work": 1,
+    "Failed to parse missing full article": 0
+  },
+  "items": {
+    "BBC": {
+      "source": "BBC",
+      "title_sha256": "47dbc0f852c054cc3c330f97ee76e934b9f71b559489ada56cd0d007d3b9c78e",
+      "url_sha256": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+      "guid_sha256": "2aac7f4f1956748767762e205eb7f097875b066c15bb5ad7eaeb8c4b441ac0f5",
+      "title_observed": true,
+      "kind": "origin-body-beyond-feed",
+      "feed_excerpt_words": 19,
+      "feed_encoded_words": 0,
+      "bbc_origin_validated": true,
+      "bbc_origin_candidate_count": 60,
+      "excerpt_marker_sha256": [],
+      "feed_body_marker_sha256": [],
+      "origin_marker_sha256": [
+        "23055dce3578b1c9f8fc6cd0310f6907f59028126725e88dace533bc61441668",
+        "338f928b7c8d7ac69057bd7fcfd60c2279fa7fa8e7859bdaafbb4d797deb846d",
+        "3cdb4e75cbd77136a99e216629cce0cf68fdfa860fee5f336b71e5632664fc1b",
+        "5a0816f021ff5b42b7daa8e0d322ea9e2782e817f6419b4ecfe5d5cde71914ed",
+        "66e41243b1e6b14acdfdba01b125ea0fd1454677eff1806dcc530f4212bf39bc",
+        "740ed17bcdb27af77363ff19c4a20ba66f45d46cbd53403ece3367622e50d1ca",
+        "90f55cd2e15b9f1ece79a186bd1e259f9c328116db835d65c9b0404f0713f11d",
+        "a6a6863481fec081bffa97af1eac9bc94c6cc2ee19a6602be3cfe016d1843ee5",
+        "c7072322e9d59c27f0e6b5a3d987419ddd150f8379c6f240d3ab58f571cca685",
+        "cdbe441598878e50a9a1c8a8050bee0a83ccfdd12e80091457f8fca787709000",
+        "cf5113ba3e162f4d23e24f23c5d058dce9dd29ac61c14dfac2194c59116a8daf",
+        "d6d840f41cd77267efec8d190d231a3a192f04e638a4835c7298cf1968b32eb1",
+        "d76093c3d7fbfe6d0882f87d59342d70c2b4510f0a6d766287655233091c7f16",
+        "d9e9be17d2702e4864676a5f5493c4f217d4dbc6e34452523856ed825f9f3892"
+      ],
+      "resumed_activity": "com.nononsenseapps.feeder/.ui.MainActivity",
+      "reader_ui_controls": [
+        "Fetch full article",
+        "Go back",
+        "Open menu"
+      ],
+      "reader_feed_content_switch_selected": null,
+      "timeline_item_resource_id_sha256": null
+    },
+    "WordPress": {
+      "source": "WordPress",
+      "title_sha256": "66c790d0c97a21e7e02fee73a23b3b642fd7572bc382b926fea1b2d60989caad",
+      "url_sha256": "ae7d2e88a3321cb46db673780d940e2e06ba473a34d8c5099069b2da69c5ee82",
+      "guid_sha256": "eaa8acb52728b68b459961c7da9a467f2e2812facdc2edfc1bd8bec24d28491a",
+      "title_observed": true,
+      "kind": "feed-provided-body",
+      "feed_excerpt_words": 58,
+      "feed_encoded_words": 659,
+      "bbc_origin_validated": false,
+      "bbc_origin_candidate_count": 0,
+      "excerpt_marker_sha256": [
+        "0453db0635d86d90fe830c53304578bef94c3302ecd55666a8f312c63cfa709b",
+        "24ab18ecf14e8602105619b282791ea090272f000982baea55aa26f32336e672",
+        "36e0add3c11cec3a3c196bd3efdc76303af94ac97ccb50fff4d1858a03e461fd",
+        "37d91a9a985302c7dbea668b1e67c0cb0466d2726b250e4e1e6e547b22d02e51",
+        "59ca7db26f4659cb0ba00523048a4a9f0e733e9112491fb991a711849e8fda7f",
+        "5d17bae0d0678e82615d5369c500e806624d97208f4079b8f82d35010cbb3ca9",
+        "a0cfc7f4f17aef706091fe353591140093eff4d62e1a9990e685b93399ab733d",
+        "e392cf499ba314869c853f0a51c261eb5cad9e3e080fa137ee0c47a9fceddede"
+      ],
+      "feed_body_marker_sha256": [
+        "03d41ae23f66071538d8d168f9f75404c8871c0a1ccb492cd1a036d94e132473",
+        "478d63caea35e07efd237ea24fbf934c6ebbc25f0278367ec7c935cf6c237d20",
+        "712247c1e800ef52665f4595e3f92dd80d6b05667f5b3877f5924156c27efd5f",
+        "8fb954b2ee5566ecb7dd2320f618fb237a487b1a1b296dc2df6793def498b230"
+      ],
+      "origin_marker_sha256": [],
+      "resumed_activity": "com.nononsenseapps.feeder/.ui.MainActivity",
+      "reader_ui_controls": [
+        "Fetch full article",
+        "Go back",
+        "Open menu"
+      ],
+      "reader_feed_content_switch_selected": null,
+      "timeline_item_resource_id_sha256": null
+    }
+  }
+}

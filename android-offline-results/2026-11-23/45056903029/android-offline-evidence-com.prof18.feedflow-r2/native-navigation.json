@@ -1,0 +1,94 @@
+[
+  {
+    "step": "public-source-reference-controls",
+    "candidates": {
+      "BBC": 1,
+      "NASA": 9,
+      "WordPress": 1
+    }
+  },
+  {
+    "step": "begin-clean-profile",
+    "package": "com.prof18.feedflow",
+    "condition": "baseline",
+    "round": 2
+  },
+  {
+    "step": "native-fixture-import",
+    "package": "com.prof18.feedflow"
+  },
+  {
+    "step": "verified-offline-setting",
+    "package": "com.prof18.feedflow",
+    "setting": "Make offline copies when feeds refresh",
+    "enabled": false,
+    "initial_enabled": false,
+    "common_reader_mode": "website"
+  },
+  {
+    "step": "prefetch-scheduler-observed",
+    "package": "com.prof18.feedflow",
+    "counts": {
+      "items for immediate prefetch": 0,
+      "items for background prefetch": 0,
+      "Prefetched successfully:": 0,
+      "Parse failed for:": 0
+    }
+  },
+  {
+    "step": "first-open-observed",
+    "package": "com.prof18.feedflow",
+    "condition": "baseline",
+    "source": "BBC",
+    "round": 2
+  },
+  {
+    "step": "first-open-observed",
+    "package": "com.prof18.feedflow",
+    "condition": "baseline",
+    "source": "WordPress",
+    "round": 2
+  },
+  {
+    "step": "begin-clean-profile",
+    "package": "com.prof18.feedflow",
+    "condition": "prefetch",
+    "round": 2
+  },
+  {
+    "step": "native-fixture-import",
+    "package": "com.prof18.feedflow"
+  },
+  {
+    "step": "verified-offline-setting",
+    "package": "com.prof18.feedflow",
+    "setting": "Make offline copies when feeds refresh",
+    "enabled": true,
+    "initial_enabled": false,
+    "common_reader_mode": "website"
+  },
+  {
+    "step": "prefetch-scheduler-observed",
+    "package": "com.prof18.feedflow",
+    "counts": {
+      "items for immediate prefetch": 0,
+      "items for background prefetch": 0,
+      "Prefetched successfully:": 0,
+      "Parse failed for:": 0
+    }
+  },
+  {
+    "step": "first-open-observed",
+    "package": "com.prof18.feedflow",
+    "condition": "prefetch",
+    "source": "BBC",
+    "round": 2
+  },
+  {
+    "step": "first-open-observed",
+    "package": "com.prof18.feedflow",
+    "condition": "prefetch",
+    "source": "WordPress",
+    "round": 2
+  }
+]

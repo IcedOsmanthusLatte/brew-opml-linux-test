@@ -1,0 +1,109 @@
+[
+  {
+    "step": "public-source-reference-controls",
+    "candidates": {
+      "BBC": 1,
+      "NASA": 9,
+      "WordPress": 1
+    }
+  },
+  {
+    "step": "begin-clean-profile",
+    "package": "com.nononsenseapps.feeder",
+    "condition": "baseline",
+    "round": 1
+  },
+  {
+    "step": "feeder-default-source-removed",
+    "package": "com.nononsenseapps.feeder"
+  },
+  {
+    "step": "native-fixture-import",
+    "package": "com.nononsenseapps.feeder"
+  },
+  {
+    "step": "feeder-native-export-readback",
+    "sources": 3,
+    "full_text_enabled": false,
+    "export_sha256": "6b04874fa548ed0296ec33ddc516a3793826a1a62497a4814c1f8c3c38a218b4"
+  },
+  {
+    "step": "verified-offline-setting",
+    "package": "com.nononsenseapps.feeder",
+    "setting": "Fetch full articles by default",
+    "enabled": false,
+    "initial_enabled": false,
+    "common_reader_mode": "feed default"
+  },
+  {
+    "step": "prefetch-scheduler-observed",
+    "package": "com.nononsenseapps.feeder",
+    "counts": {
+      "Performing full text parse work": 0,
+      "Finished full text parse work": 0,
+      "Failed to parse missing full article": 0
+    }
+  },
+  {
+    "step": "feeder-local-search-match",
+    "source": "BBC",
+    "title_sha256": "47dbc0f852c054cc3c330f97ee76e934b9f71b559489ada56cd0d007d3b9c78e",
+    "url_sha256": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+    "guid_sha256": "2aac7f4f1956748767762e205eb7f097875b066c15bb5ad7eaeb8c4b441ac0f5"
+  },
+  {
+    "step": "feeder-local-search-match",
+    "source": "WordPress",
+    "title_sha256": "66c790d0c97a21e7e02fee73a23b3b642fd7572bc382b926fea1b2d60989caad",
+    "url_sha256": "ae7d2e88a3321cb46db673780d940e2e06ba473a34d8c5099069b2da69c5ee82",
+    "guid_sha256": "eaa8acb52728b68b459961c7da9a467f2e2812facdc2edfc1bd8bec24d28491a"
+  },
+  {
+    "step": "feeder-local-search-match",
+    "source": "BBC",
+    "title_sha256": "47dbc0f852c054cc3c330f97ee76e934b9f71b559489ada56cd0d007d3b9c78e",
+    "url_sha256": "a9bb7c6e29da205c76d2585673e75de216fd44be94ea4ff7e50226bb8fdca5a7",
+    "guid_sha256": "2aac7f4f1956748767762e205eb7f097875b066c15bb5ad7eaeb8c4b441ac0f5"
+  },
+  {
+    "step": "first-open-observed",
+    "package": "com.nononsenseapps.feeder",
+    "condition": "baseline",
+    "source": "BBC",
+    "round": 1
+  },
+  {
+    "step": "feeder-local-search-match",
+    "source": "WordPress",
+    "title_sha256": "66c790d0c97a21e7e02fee73a23b3b642fd7572bc382b926fea1b2d60989caad",
+    "url_sha256": "ae7d2e88a3321cb46db673780d940e2e06ba473a34d8c5099069b2da69c5ee82",
+    "guid_sha256": "eaa8acb52728b68b459961c7da9a467f2e2812facdc2edfc1bd8bec24d28491a"
+  },
+  {
+    "step": "first-open-observed",
+    "package": "com.nononsenseapps.feeder",
+    "condition": "baseline",
+    "source": "WordPress",
+    "round": 1
+  },
+  {
+    "step": "begin-clean-profile",
+    "package": "com.nononsenseapps.feeder",
+    "condition": "prefetch",
+    "round": 1
+  },
+  {
+    "step": "feeder-default-source-removed",
+    "package": "com.nononsenseapps.feeder"
+  },
+  {
+    "step": "native-fixture-import",
+    "package": "com.nononsenseapps.feeder"
+  },
+  {
+    "step": "feeder-native-export-readback",
+    "sources": 3,
+    "full_text_enabled": false,
+    "export_sha256": "6b04874fa548ed0296ec33ddc516a3793826a1a62497a4814c1f8c3c38a218b4"
+  }
+]

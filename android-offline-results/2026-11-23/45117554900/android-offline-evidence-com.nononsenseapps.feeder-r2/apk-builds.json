@@ -1,0 +1,19 @@
+{
+  "fixture_sha256": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd",
+  "fdroid_repo_cert_sha256": "43238d512c1e5eb2d6569f4a3afbf5523418b82e0a3ed1552770abb9a9c9ccab",
+  "fdroid_signed_index_sha256": "2a554e8af63aeaa437946d83b3657402b6bd822f53606827fd4bdd322ca457d3",
+  "packages": {
+    "com.nononsenseapps.feeder": {
+      "version": "2.25.0",
+      "version_code": 4191,
+      "apk_sha256": "6f52c11138b230d81ccaf2a73ffa1d8fcf036e6be90be8622dfa3ae2d8aee2f8",
+      "apk_signer_sha256": "a80df8170d6c891ec9a055211df640a855d451052307bf29cdce3fef9afa94fd"
+    },
+    "com.prof18.feedflow": {
+      "version": "1.21.0",
+      "version_code": 6239,
+      "apk_sha256": "43f1fc2b11db83969163fa62bc7b26fb606582416f8aaad87ba4ffd0662f2fb1",
+      "apk_signer_sha256": "90efeb4f04236a1dd48b830e5b530e47406453935a16b2bdc4f111a483a8147d"
+    }
+  }
+}
