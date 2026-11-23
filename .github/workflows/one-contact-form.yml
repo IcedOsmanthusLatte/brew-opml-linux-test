@@ -1,0 +1,178 @@
+name: Authorized contact form receipt
+on:
+  push:
+    branches: [one-contact-form-20261124]
+    paths: [.github/workflows/one-contact-form.yml]
+permissions:
+  contents: read
+jobs:
+  contact:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    if: github.run_attempt == 1
+    steps:
+      - name: Prepare a one-use encrypted input
+        run: |
+          install -d -m 700 "$RUNNER_TEMP/contact-key" request-transport
+          openssl genpkey -quiet -algorithm RSA -pkeyopt rsa_keygen_bits:3072 -out "$RUNNER_TEMP/contact-key/private.pem"
+          openssl pkey -in "$RUNNER_TEMP/contact-key/private.pem" -pubout -out request-transport/public.pem
+      - uses: actions/upload-artifact@v4
+        with:
+          name: contact-request-public-key
+          path: request-transport/public.pem
+          retention-days: 1
+      - name: Prepare browser
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install playwright==1.55.0 cryptography==46.0.3
+          .venv/bin/playwright install chromium
+      - name: Wait for the authorized request and use the normal contact form
+        run: |
+          set -eu
+          endpoint="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/one-contact-form-20261124/.contact-requests/${GITHUB_RUN_ID}.json"
+          deadline=$((SECONDS + 490))
+          while (( SECONDS < deadline )); do
+            if curl --silent --fail --max-time 8 "$endpoint?stamp=$(date +%s)" -o "$RUNNER_TEMP/contact-key/request.json"; then
+              break
+            fi
+            sleep 4
+          done
+          test -s "$RUNNER_TEMP/contact-key/request.json"
+          .venv/bin/python - "$RUNNER_TEMP/contact-key/private.pem" "$RUNNER_TEMP/contact-key/request.json" <<'PYTHON'
+          import base64
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import sys
+          from urllib.parse import unquote_plus, urlsplit
+          
+          from cryptography.fernet import Fernet
+          from cryptography.hazmat.primitives import hashes, serialization
+          from cryptography.hazmat.primitives.asymmetric import padding
+          from playwright.sync_api import Error, sync_playwright
+          
+          private_key_path, input_path = map(Path, sys.argv[1:])
+          key = serialization.load_pem_private_key(private_key_path.read_bytes(), password=None)
+          capsule = json.loads(input_path.read_text(encoding="utf-8"))
+          session_key = key.decrypt(base64.b64decode(capsule["key"]), padding.OAEP(
+              mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None
+          ))
+          private_key_path.unlink()
+          config = json.loads(Fernet(session_key).decrypt(capsule["cipher"].encode("ascii")))
+          assert config["url"] == "https://www.jordanmcmahon.com/contact"
+          assert config["run_id"] == os.environ["GITHUB_RUN_ID"] and os.environ["GITHUB_RUN_ATTEMPT"] == "1"
+          assert config["landing"] in config["body"] and config["article"] in config["body"]
+          out = Path("contact-form-evidence")
+          out.mkdir(exist_ok=True)
+          result = {"run_id": os.environ["GITHUB_RUN_ID"], "target": config["url"],
+                    "form_clicked": False, "accepted": False, "matching_post_responses": [],
+                    "message_sha256": hashlib.sha256(config["body"].encode()).hexdigest()}
+          
+          
+          def challenge_visible(page):
+              shown = page.get_by_text(re.compile(r"verify (you are|that you are) (a )?human|i.m not a robot", re.I))
+              if any(el.is_visible() for el in shown.all()[:10]):
+                  return True
+              for frame in page.locator('iframe[src*="recaptcha"],iframe[src*="hcaptcha"],iframe[src*="turnstile"]').all():
+                  rect = frame.bounding_box()
+                  if rect and rect["width"] >= 100 and rect["height"] >= 65:
+                      return True
+              return False
+          
+          
+          def form_state(wrapper):
+              text = wrapper.inner_text(timeout=5000)
+              return {
+                  "confirmation": bool(re.search(r"thank\s+you|message\s+(?:has been\s+)?(?:sent|received|submitted)|successfully submitted", text, re.I)),
+                  "validation": bool(re.search(r"unable to (?:submit|send)|form submission failed|an error occurred|please (?:correct|fix|try again)|invalid email|field is required", text, re.I)),
+              }
+          
+          
+          def fill_and_submit(page):
+              response = page.goto(config["url"], wait_until="domcontentloaded", timeout=30000)
+              result["contact_http"] = response.status
+              if response.status != 200 or page.url.rstrip("/") != config["url"]:
+                  return "contact_unavailable"
+              form = page.locator("form").filter(has=page.locator("textarea"))
+              form.first.wait_for(state="visible", timeout=15000)
+              if form.count() != 1:
+                  return "form_not_unique"
+              if challenge_visible(page):
+                  return "human_verification_before_entry"
+              wrapper = form.locator("xpath=ancestor::*[contains(@class, 'sqs-block-form')][1]")
+              if wrapper.count() != 1:
+                  wrapper = form.locator("..")
+              fields = [
+                  (form.get_by_role("textbox", name=re.compile(r"first name", re.I)), config["first_name"]),
+                  (form.get_by_role("textbox", name=re.compile(r"last name", re.I)), config["last_name"]),
+                  (form.locator('input[type="email"]'), config["email"]),
+                  (form.get_by_role("textbox", name=re.compile(r"^subject", re.I)), config["subject"]),
+                  (form.locator("textarea"), config["body"]),
+              ]
+              if any(field.count() != 1 or not field.is_visible() for field, _ in fields):
+                  result["visible_textbox_labels"] = form.get_by_role("textbox").evaluate_all(
+                      "(fields) => fields.map(f => f.getAttribute('aria-label') || f.labels?.[0]?.textContent?.trim() || f.placeholder).filter(Boolean)"
+                  )
+                  return "unexpected_form_fields"
+              for field, value in fields:
+                  field.fill(value)
+              if challenge_visible(page):
+                  return "human_verification_before_submit"
+              if not all(field.input_value().replace("\r\n", "\n") == value for field, value in fields):
+                  return "form_values_did_not_match"
+              if not form.evaluate("form => form.checkValidity()"):
+                  return "native_form_validation_failed"
+              initial = form_state(wrapper)
+              if initial["confirmation"]:
+                  return "ambiguous_initial_confirmation"
+              submit = form.get_by_role("button", name=re.compile(r"^(submit|send)\b", re.I))
+              if submit.count() != 1 or not submit.is_enabled():
+                  return "submit_not_available"
+          
+              def observe(res):
+                  req = res.request
+                  if req.method != "POST":
+                      return
+                  host = urlsplit(res.url).hostname
+                  if host not in {"www.jordanmcmahon.com", "jordanmcmahon.com", "forms.squarespace.com"}:
+                      return
+                  body = unquote_plus(req.post_data or "")
+                  if config["subject"] in body and config["landing"] in body:
+                      result["matching_post_responses"].append({"http": res.status, "path": urlsplit(res.url).path})
+          
+              page.on("response", observe)
+              result["form_clicked"] = True
+              submit.click(timeout=10000)
+              for _ in range(24):
+                  page.wait_for_timeout(500)
+                  if challenge_visible(page):
+                      return "human_verification_after_click"
+                  state = form_state(wrapper)
+                  if state["validation"]:
+                      return "explicit_form_validation_error"
+                  if state["confirmation"]:
+                      result["confirmation_visible"] = True
+                      result["accepted"] = True
+                      return "accepted_on_author_form"
+              return "no_confirmed_acceptance"
+          
+          
+          try:
+              with sync_playwright() as pw, pw.chromium.launch() as browser:
+                  with browser.new_context() as context:
+                      result["status"] = fill_and_submit(context.new_page())
+          except Error as error:
+              result["status"] = "browser_error_after_click" if result["form_clicked"] else "browser_error_before_submit"
+              result["error_type"] = type(error).__name__
+          (out/"receipt.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+          print(json.dumps(result))
+          PYTHON
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: author-contact-form-receipt
+          path: contact-form-evidence/receipt.json
+          if-no-files-found: warn
+          retention-days: 7
