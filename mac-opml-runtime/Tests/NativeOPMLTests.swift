@@ -44,6 +44,8 @@ final class NativeOPMLTests: XCTestCase {
         app.terminate()
         app.launch()
         XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 15))
+        app.activate()
+        dismissFirstRunIfPresent(in: app)
         try revealFixtureFolders(in: app, mode: plan.mode)
         saveTree(of: app, name: "restarted")
         saveWindow(of: app, name: "restarted")
@@ -141,12 +143,13 @@ final class NativeOPMLTests: XCTestCase {
     @MainActor
     private func dismissFirstRunIfPresent(in app: XCUIApplication) {
         let options = ["Don't Check", "Don’t Check", "Check Manually", "Not Now", "Maybe Later", "Skip", "Continue", "OK"]
-        for _ in 0..<2 {
-            let scoped = [app.sheets.firstMatch, app.dialogs.firstMatch]
+        for _ in 0..<3 {
+            let scoped = [app.sheets.firstMatch, app.dialogs.firstMatch] + app.windows.allElementsBoundByIndex
             for area in scoped where area.exists {
                 let button = namedButton(area, options: options)
                 if button.exists && button.isEnabled && button.isHittable { button.click() }
             }
+            Thread.sleep(forTimeInterval: 0.25)
         }
     }
 
@@ -188,7 +191,7 @@ final class NativeOPMLTests: XCTestCase {
 
     @MainActor
     private func sidebarText(in app: XCUIApplication) throws -> [(String, CGRect)] {
-        let window = app.windows.firstMatch
+        let window = mainWindow(in: app)
         let request = VNRecognizeTextRequest()
         request.recognitionLevel = .accurate
         request.recognitionLanguages = ["en-US"]
@@ -207,7 +210,7 @@ final class NativeOPMLTests: XCTestCase {
 
     @MainActor
     private func rowCoordinate(in app: XCUIApplication, box: CGRect) -> XCUICoordinate {
-        app.windows.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: box.midX, dy: 1 - box.midY))
+        mainWindow(in: app).coordinate(withNormalizedOffset: CGVector(dx: box.midX, dy: 1 - box.midY))
     }
 
     @MainActor
@@ -297,12 +300,18 @@ final class NativeOPMLTests: XCTestCase {
 
     @MainActor
     private func saveWindow(of app: XCUIApplication, name: String) {
-        let element = app.windows.firstMatch
+        let element = mainWindow(in: app)
         guard element.exists else { return }
         let artifact = XCTAttachment(screenshot: element.screenshot())
         artifact.name = "brew-" + name + "-window"
         artifact.lifetime = .keepAlways
         add(artifact)
+    }
+
+    @MainActor
+    private func mainWindow(in app: XCUIApplication) -> XCUIElement {
+        let named = app.windows.matching(identifier: "mainWindow").firstMatch
+        return named.exists ? named : app.windows.firstMatch
     }
 
     private func attachText(_ text: String, name: String) {

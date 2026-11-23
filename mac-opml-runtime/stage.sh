@@ -45,4 +45,7 @@ build="$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' "$info")"
 codesign --verify --deep --strict "$bundle"
 codesign -dv --verbose=2 "$bundle" 2>&1 | grep -E '^(Identifier|Authority|TeamIdentifier)=' > "$proof/signature.txt"
 file "$bundle/Contents/MacOS/"* > "$proof/architecture.txt"
+# Keep this disposable experiment on its verified release and avoid a startup consent window.
+defaults write "$bundle_id" SUEnableAutomaticChecks -bool false
+defaults read "$bundle_id" SUEnableAutomaticChecks > "$proof/automatic-updates-setting.txt"
 python3 mac-opml-runtime/fixtures.py "$scratch" "$proof" "$app" "$mode" "$round" "$bundle" "$bundle_id" "$version" "$build" "$url" "$digest"

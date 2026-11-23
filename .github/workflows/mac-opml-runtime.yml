@@ -14,14 +14,22 @@ jobs:
     timeout-minutes: 14
     strategy:
       fail-fast: false
+      max-parallel: 6
       matrix:
         app: [netnewswire, vienna]
+        mode: [baseline, nested]
+        trial: [1, 2]
+        include:
+          - {app: vienna, mode: unique, trial: 1}
+          - {app: vienna, mode: unique, trial: 2}
+          - {app: netnewswire, mode: flattened, trial: 1}
+          - {app: netnewswire, mode: flattened, trial: 2}
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
     steps:
       - uses: actions/checkout@v4
       - name: Verify official install and prepare OPML samples
-        run: bash mac-opml-runtime/stage.sh ${{ matrix.app }} nested 1
+        run: bash mac-opml-runtime/stage.sh ${{ matrix.app }} ${{ matrix.mode }} ${{ matrix.trial }}
       - name: Run native OPML workflow with Xcode UI tests
         shell: bash
         run: |
@@ -50,6 +58,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: mac-opml-${{ matrix.app }}-nested-1
+          name: mac-opml-${{ matrix.app }}-${{ matrix.mode }}-${{ matrix.trial }}
           path: proof/
           retention-days: 14
