@@ -247,7 +247,7 @@ def mark_article(publisher, before, data_dir, evidence, meta):
 
     entry, target_before, item_node = guard.wait_for(f"No visible unread duplicate for {publisher}", one_unread_pair, seconds=14)
     guard.click(item_node)
-    guard.xdo("key", "--clearmodifiers", "ctrl+shift+r")
+    guard.click(guard.find("Mark articles read", guard.BUTTONS))
     key = entry["key"]
 
     def one_or_more_read():
@@ -261,7 +261,7 @@ def mark_article(publisher, before, data_dir, evidence, meta):
         raise RuntimeError("Mark read changed the number of article entries")
     guard.capture(evidence, "marked-" + publisher.lower())
     return {"publisher": publisher, "original_url": entry["url"], "title": entry["title"],
-            "selection": feed_title, "command": "Ctrl+Shift+R",
+            "selection": feed_title, "native_action": "Select the RSS-side article, then use Mark articles read",
             "before": target_before, "after": target_after}
 
 
@@ -273,7 +273,6 @@ def test_mode(app, directory, server, meta, mode):
         title: "Ubuntu RSS" if title == "Ubuntu Atom" and meta[title]["kind"] == "RSS" else title
         for title in selected
     }
-    aggregate = {entry["key"] for title in content_titles.values() for entry in meta[title]["entries"]}
     expected_requests = {urlsplit(address).path for address in selected.values()}
     if content_titles.get("Ubuntu Atom") == "Ubuntu RSS":
         expected_requests.add("/ubuntu-rss.xml")
@@ -301,19 +300,19 @@ def test_mode(app, directory, server, meta, mode):
                 write_json(directory / "requested-fixture-routes.json", {"expected": sorted(expected_requests)})
 
 
-                def matching_rows():
-                    rows = read_messages(data_dir, directory / "database-schema.json")
-                    fetched = expected_requests <= set(server.fetched_paths)
-                    return rows if fetched and aggregate <= {row["key"] for row in rows} else None
-
-                before = guard.wait_for("Application did not store all fixture entries", matching_rows, seconds=27)
+                guard.wait_for("The reader did not request every expected fixture",
+                               lambda: expected_requests <= set(server.fetched_paths), seconds=24)
+                stop = guard.find("Stop ongoing fetching", guard.BUTTONS, enabled=False)
+                guard.wait_for("The reader still reports an active refresh",
+                               lambda: not stop.getState().contains(guard.pyatspi.STATE_ENABLED), seconds=18)
                 time.sleep(1)
-                before = matching_rows()
-                if not before:
-                    raise RuntimeError("Fetched entries disappeared before measurement")
+                before = read_messages(data_dir, directory / "database-schema.json")
+                if not before and not (directory / "database-schema.json").is_file():
+                    raise RuntimeError("The native local database is missing")
                 operation = "enumerate before marking"
                 write_json(directory / "articles-before.json", before)
                 guard.capture(directory, "fetched")
+                guard.record_accessibility_tree(directory / "window-before-mark.txt")
                 operation = "marking selected duplicate read in the native interface"
                 marks = [mark_article(publisher, before, data_dir, directory, meta)
                          for publisher in PUBLISHERS] if mode == "both" else []
@@ -329,7 +328,8 @@ def test_mode(app, directory, server, meta, mode):
                           "frozen_sha256": {title: meta[content_titles[title]]["sha256"] for title in selected},
                           "served_actual_kinds": {title: meta[content_titles[title]]["kind"] for title in selected},
                           "counts": counts, "read_checks": marks,
-                          "requested_fixture_paths": sorted(set(server.fetched_paths))}
+                          "requested_fixture_paths": sorted(set(server.fetched_paths)),
+                          "native_refresh_idle": True}
                 write_json(directory / "result.json", result)
                 print(json.dumps(result), flush=True)
                 return result
