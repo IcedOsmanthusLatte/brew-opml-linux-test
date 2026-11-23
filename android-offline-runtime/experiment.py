@@ -8,7 +8,7 @@ import subprocess
 import time
 from xml.etree import ElementTree as ET
 
-from bootstrap import APPS, OUT, probe, shell, wait, xml
+from bootstrap import APPS, OUT, adb, probe, shell, wait, xml
 from source_evidence import digest, load_items, normalized
 
 FEEDER, FLOW = APPS
@@ -88,15 +88,15 @@ def dismiss_system_dialog():
     optional("Don't allow", "Don’t allow", "permission_deny_button", "Dismiss")
 
 
-def fixture_picker():
-    if not optional("brew-control.opml"):
+def fixture_picker(filename="brew-control.opml"):
+    if not optional(filename):
         if not optional("Downloads", "Download"):
             tap("Show roots", "roots")
             tap("Downloads", "Download")
-        if not optional("brew-control.opml"):
+        if not optional(filename):
             tap("Search", "option_menu_search")
-            shell("input", "text", "brew-control.opml")
-            tap("brew-control.opml", timeout=16)
+            shell("input", "text", filename)
+            tap(filename, timeout=16)
 
 
 def feedflow_home():
@@ -219,17 +219,28 @@ def scroll_to(label):
     raise AssertionError("Settings control not shown: " + label)
 
 
-def save_feeder_form():
-    for _ in range(12):
-        if optional("OK"):
-            return
-        response = shell("am", "instrument", "-w", "-r", "-e", "scroll_form", "true",
-                         "-e", "package", FEEDER, "lab.brew.netprobe/.UiProbe", timeout=22)
-        if "form_scrolled=true" not in response:
-            x = str(WIDTH * 93 // 100)
-            shell("input", "swipe", x, str(HEIGHT * 83 // 100), x, str(HEIGHT * 32 // 100), "400")
-        time.sleep(0.45)
-    raise AssertionError("The enabled Feeder edit form save button was not reachable")
+def enable_feeder_full_articles():
+    # Feeder's importer updates the existing feed by URL. Keep the original three feed
+    # entries and change only the BBC subscription's documented per-feed attribute.
+    fixture = ET.parse(Path(__file__).with_name("control.opml"))
+    bbc, = [node for node in fixture.iter("outline") if node.get("text") == SOURCES["BBC"]]
+    namespace = "https://nononsenseapps.com/feeder"
+    ET.register_namespace("feeder", namespace)
+    bbc.set(f"{{{namespace}}}fullTextByDefault", "true")
+    override = OUT / "brew-feeder-full-article.opml"
+    guest = "/sdcard/Download/" + override.name
+    fixture.write(override, encoding="utf-8", xml_declaration=True)
+    try:
+        adb("push", str(override), guest)
+        shell("am", "broadcast", "-a", "android.intent.action.MEDIA_SCANNER_SCAN_FILE", "-d", "file://" + guest)
+        tap("Open menu")
+        tap("Import feeds from OPML")
+        fixture_picker(override.name)
+        wait(lambda: spot(by("Open navigation drawer")), timeout=30)
+        note("feeder-native-setting-import", setting="fullTextByDefault", source="BBC",
+             override_sha256=shell("sha256sum", guest).split()[0])
+    finally:
+        override.unlink(missing_ok=True)
 
 
 def feeder_export():
@@ -277,13 +288,7 @@ def setup_prefetch(package, enabled):
         initial = feeder_export()
         assert not initial, "Feeder fresh feed had full-text setting enabled"
         if enabled:
-            source_timeline(package, "BBC")
-            tap("Open menu")
-            tap("Edit feed")
-            optional(SOURCES["BBC"])
-            scroll_to(FEEDER_ADV)
-            tap(FEEDER_ADV)
-            save_feeder_form()
+            enable_feeder_full_articles()
             assert feeder_export(), "Feeder did not persist full-text setting"
         label = FEEDER_ADV
     else:
