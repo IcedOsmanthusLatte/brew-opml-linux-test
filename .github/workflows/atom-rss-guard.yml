@@ -1,0 +1,51 @@
+name: Atom and RSS under identical inputs
+
+on:
+  push:
+    branches: [atom-rss-guard-same-feeds-20261123]
+    paths:
+      - 'atom-rss-guard/**'
+      - '.github/workflows/atom-rss-guard.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install the cloud desktop tooling
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            xvfb xauth dbus-x11 at-spi2-core python3-pyatspi xdotool imagemagick openbox fonts-dejavu-core \
+            libxcb-cursor0 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0
+          mkdir -p evidence
+          cat /etc/os-release > evidence/os-release.txt
+      - name: Verify and extract the upstream RSS Guard build
+        run: |
+          set -euo pipefail
+          installer="$RUNNER_TEMP/rssguard-5.3.0.AppImage"
+          curl --fail --show-error --silent --location --retry 3 --max-time 120 \
+            https://github.com/martinrotter/rssguard/releases/download/5.3.0/rssguard-5.3.0-text-qt5-linux64.AppImage \
+            --output "$installer"
+          printf '%s  %s\n' '82d16bc36c2e87f407818b294fcf44f4071413f097e84dba2311378143bd8ccc' "$installer" | sha256sum -c | tee evidence/app-version.txt
+          chmod +x "$installer"
+          cd "$RUNNER_TEMP"
+          "$installer" --appimage-extract >/dev/null
+      - name: Run two matched rounds in six clean profiles
+        run: |
+          xvfb-run -a -s '-screen 0 1440x1000x24' dbus-run-session -- \
+            env PYTHONPATH="$PWD" /usr/bin/python3 atom-rss-guard/experiment.py "$RUNNER_TEMP/squashfs-root/AppRun" evidence
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: atom-rss-guard-evidence
+          path: evidence/
+          if-no-files-found: warn
+          retention-days: 7
