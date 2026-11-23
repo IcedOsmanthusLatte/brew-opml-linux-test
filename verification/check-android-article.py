@@ -50,13 +50,23 @@ def check(browser, url, phase):
                     ui_theme: document.documentElement.dataset.theme,
                     overflow: document.documentElement.scrollWidth > innerWidth + 1
                 })""")
-                okay = (all(cover_info.values()) and table_info["fits"] and table_info["rows"] in (3, 4, 5, 6, 8)
-                        and table_info["headers"] >= 2 and table_info["h1"] == 1
-                        and table_info["ui_theme"] == theme and not table_info["overflow"])
-                states.append({"width": width, "theme": theme, "cover": cover_info, "table": table_info, "passed": okay})
                 if phase == "live" and (width, theme) in ((390, "light"), (1440, "dark")):
                     page.screenshot(path=str(OUT / f"{width}-{theme}-top.jpg"), type="jpeg", quality=80)
-                    table.scroll_into_view_if_needed()
+                anchor_heading = body.locator("#offline-first-open-results")
+                heading_info = anchor_heading.evaluate("""heading => {
+                    heading.scrollIntoView({block: 'start', behavior: 'instant'});
+                    const box = heading.getBoundingClientRect();
+                    const hit = document.elementFromPoint(box.left + Math.min(12, box.width / 2),
+                                                          box.top + box.height / 2);
+                    return {top: Math.round(box.top), unobscured: Boolean(hit && heading.contains(hit))};
+                }""")
+                okay = (all(cover_info.values()) and table_info["fits"] and table_info["rows"] in (3, 4, 5, 6, 8)
+                        and table_info["headers"] >= 2 and table_info["h1"] == 1
+                        and table_info["ui_theme"] == theme and not table_info["overflow"]
+                        and heading_info["unobscured"])
+                states.append({"width": width, "theme": theme, "cover": cover_info, "table": table_info,
+                               "comparison_heading": heading_info, "passed": okay})
+                if phase == "live" and (width, theme) in ((390, "light"), (1440, "dark")):
                     page.screenshot(path=str(OUT / f"{width}-{theme}-table.jpg"), type="jpeg", quality=80)
         page.set_viewport_size({"width": 320, "height": 760})
         narrow_fit = table.evaluate("table => document.documentElement.scrollWidth <= innerWidth + 1 && table.getBoundingClientRect().right <= innerWidth + 1")
