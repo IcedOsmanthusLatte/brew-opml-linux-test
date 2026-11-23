@@ -13,6 +13,7 @@ from source_evidence import digest, load_items, normalized
 
 FEEDER, FLOW = APPS
 SOURCES = {"BBC": "BBC News — World", "NASA": "NASA News Releases", "WordPress": "WordPress News"}
+FEEDER_DEFAULT = "Feeder News"
 FEEDER_ADV = "Fetch full articles by default"
 FLOW_ADV = "Make offline copies when feeds refresh"
 FLOW_MENU = ("drawer_menu_button", "Open navigation menu")
@@ -111,13 +112,33 @@ def feedflow_settings():
     tap("drawer_settings_button", "Settings")
 
 
+def remove_feeder_default():
+    # Feeder seeds its own news feed on first launch, independently of the fixture.
+    tap("Open menu", timeout=30)
+    tap("Delete feed", timeout=30)
+    wait(lambda: spot(by("OK")), timeout=20)
+    tap(FEEDER_DEFAULT, timeout=25)
+    tap("OK")
+    wait(lambda: spot(by("Open navigation drawer")) and spot(by(FEEDER_DEFAULT)) is False, timeout=30)
+    note("feeder-default-source-removed", package=FEEDER)
+
+
+def feeder_import_ready():
+    tree = xml()
+    return all(find(tree, by(category)) is not None for category in ("News", "Science and technology"))
+
+
 def import_fixture(package):
     if package == FEEDER:
+        remove_feeder_default()
         tap("Open menu")
         tap("Import feeds from OPML")
         fixture_picker()
         dismiss_system_dialog()
-        wait(lambda: spot(by("Open navigation drawer")), timeout=30)
+        tap("Open navigation drawer", timeout=30)
+        wait(feeder_import_ready, timeout=45)
+        back()
+        wait(lambda: spot(by("Open menu")), timeout=20)
     else:
         feedflow_settings()
         tap("settings_feeds_accounts", "Feeds & accounts")
@@ -224,8 +245,13 @@ def feeder_export():
     root = wait(read_export, timeout=24)
     fixture = ET.parse(Path(__file__).with_name("control.opml"))
     expected = [n.get("xmlUrl") for n in fixture.iter("outline") if n.get("xmlUrl")]
-    actual = {n.get("xmlUrl"): n for n in root.iter("outline") if n.get("xmlUrl")}
-    assert set(actual) == set(expected), "Feeder native export did not match the three imported sources"
+    exported = [n for n in root.iter("outline") if n.get("xmlUrl")]
+    actual = {n.get("xmlUrl"): n for n in exported}
+    missing, unexpected = sorted(set(expected) - set(actual)), sorted(set(actual) - set(expected))
+    if missing or unexpected or len(exported) != len(actual):
+        note("feeder-native-export-source-mismatch", missing=missing, unexpected=unexpected,
+             duplicate_count=len(exported) - len(actual))
+        raise AssertionError("Feeder native export did not match the three imported sources")
     variant = actual[expected[0]].get("{https://nononsenseapps.com/feeder}fullTextByDefault")
     assert variant in {"true", "false"}, "Native export omitted Feeder's full-text setting"
     note("feeder-native-export-readback", sources=len(actual), full_text_enabled=variant == "true",
@@ -444,6 +470,7 @@ if __name__ == "__main__":
             safe_labels = {"OK", "Done", "Confirm", "Save", "Downloads", "Recent", "Show roots", "Settings",
                            "Open menu", "Open navigation drawer", "Open navigation menu", "Reading behavior",
                            "Feeds & accounts", "Import and export", "Import feeds from OPML", "Edit feed",
+                           "Delete feed", "All feeds", FEEDER_DEFAULT, "News", "Science and technology",
                            "Export feeds to OPML", "Sync feeds", "Refresh feeds", FEEDER_ADV, FLOW_ADV, *SOURCES.values()}
             rows = []
             for n in xml().iter("node"):
