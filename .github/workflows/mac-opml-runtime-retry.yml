@@ -1,4 +1,4 @@
-name: Mac OPML native NetNewsWire nested retry
+name: Mac OPML native exact-case retry
 on:
   push:
     branches: [mac-opml-folder-migration]
@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - {app: netnewswire, mode: nested, trial: 2}
+          - {app: netnewswire, mode: baseline, trial: 1}
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
     steps:
