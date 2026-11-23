@@ -22,11 +22,13 @@ final class NativeOPMLTests: XCTestCase {
         let plan = try Plan.read()
         let app = XCUIApplication(url: URL(fileURLWithPath: plan.bundle_path))
         app.launch()
-        defer { saveTree(of: app, name: "final") }
+        defer { attachText(String(app.debugDescription.prefix(42_000)), name: "final-tree") }
         XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 25))
+        app.activate()
         dismissFirstRunIfPresent(in: app)
         expandSidebar(in: app)
         saveTree(of: app, name: "before-import")
+        saveWindow(of: app, name: "before-import")
         try nativeMenu(app, section: "File", prefixOptions: ["Import Subscriptions", "Import OPML"])
         try chooseInput(in: app, path: plan.fixture_path)
         finishImportIfPresent(in: app)
@@ -58,23 +60,20 @@ final class NativeOPMLTests: XCTestCase {
         let fileMenu = app.menuBars.firstMatch.menuBarItems[section]
         XCTAssertTrue(fileMenu.waitForExistence(timeout: 12), "No native File menu")
         fileMenu.click()
-        let queries = [fileMenu.descendants(matching: .menuItem), app.descendants(matching: .menuItem)]
-        var item: XCUIElement?
-        for items in queries {
-            for prefix in prefixOptions {
-                let found = items.matching(NSPredicate(format: "label BEGINSWITH[c] %@", prefix)).firstMatch
-                if found.exists && found.isEnabled {
-                    item = found
-                    break
-                }
-            }
-            if item != nil { break }
+        let items = fileMenu.descendants(matching: .menuItem).allElementsBoundByIndex
+        let names = items.map { item in
+            [item.title, item.label, item.identifier].filter { !$0.isEmpty }
         }
-        let labels = fileMenu.descendants(matching: .menuItem).allElementsBoundByIndex.map(\.label)
         let op = prefixOptions.first?.lowercased().hasPrefix("import") == true ? "import" : "export"
-        print("BREW_MENU_\(op): \(labels)")
-        attachText(labels.joined(separator: "\n"), name: op + "-menu")
-        try XCTUnwrap(item, "Native item missing or disabled: \(prefixOptions). Saw: \(labels)").click()
+        print("BREW_MENU_\(op): \(names)")
+        attachText(String(fileMenu.debugDescription.prefix(25_000)), name: op + "-menu")
+        let options = prefixOptions + (op == "import" ? ["Import Feeds"] : ["Export Feeds"])
+        let selected = zip(items, names).first { item, attributes in
+            item.isEnabled && attributes.contains { name in
+                options.contains { name.lowercased().hasPrefix($0.lowercased()) }
+            }
+        }?.0
+        try XCTUnwrap(selected, "Native item missing or disabled: \(options). Saw: \(names)").click()
     }
 
     @MainActor
@@ -98,7 +97,7 @@ final class NativeOPMLTests: XCTestCase {
 
     @MainActor
     private func chooseInput(in app: XCUIApplication, path: String) throws {
-        let button = app.buttons["Open"].firstMatch
+        let button = namedButton(app, options: ["Open", "Import", "Import OPML"])
         if !button.waitForExistence(timeout: 7) {
             let chooser = app.buttons["Choose File"].firstMatch
             if chooser.exists && chooser.isEnabled { chooser.click() }
@@ -110,8 +109,7 @@ final class NativeOPMLTests: XCTestCase {
 
     @MainActor
     private func chooseOutput(in app: XCUIApplication, directory: String) throws {
-        let save = app.buttons.matching(NSPredicate(format: "label ==[c] %@ OR label ==[c] %@",
-                                                    "Save", "Export OPML")).firstMatch
+        let save = namedButton(app, options: ["Save", "Export", "Export OPML"])
         XCTAssertTrue(save.waitForExistence(timeout: 8), "Native save dialog did not appear")
         let group = app.checkBoxes.matching(NSPredicate(format: "label CONTAINS[c] %@", "group")).firstMatch
         if group.exists, let value = group.value as? String, value == "0" { group.click() }
@@ -132,11 +130,12 @@ final class NativeOPMLTests: XCTestCase {
 
     @MainActor
     private func dismissFirstRunIfPresent(in app: XCUIApplication) {
-        for label in ["Not Now", "Continue", "OK"] {
-            let dialogButton = app.sheets.firstMatch.buttons[label]
-            if dialogButton.exists && dialogButton.isEnabled {
-                dialogButton.click()
-                Thread.sleep(forTimeInterval: 0.3)
+        let options = ["Don't Check", "Don’t Check", "Check Manually", "Not Now", "Maybe Later", "Skip", "Continue", "OK"]
+        for _ in 0..<2 {
+            let scoped = [app.sheets.firstMatch, app.dialogs.firstMatch]
+            for area in scoped where area.exists {
+                let button = namedButton(area, options: options)
+                if button.exists && button.isEnabled && button.isHittable { button.click() }
             }
         }
     }
@@ -145,12 +144,18 @@ final class NativeOPMLTests: XCTestCase {
     private func finishImportIfPresent(in app: XCUIApplication) {
         Thread.sleep(forTimeInterval: 2)
         for label in ["OK", "Done"] {
-            let candidates = [app.sheets.firstMatch.buttons[label], app.dialogs.firstMatch.buttons[label]]
+            let candidates = [namedButton(app.sheets.firstMatch, options: [label]),
+                              namedButton(app.dialogs.firstMatch, options: [label])]
             for button in candidates where button.exists && button.isEnabled {
                 button.click()
                 return
             }
         }
+    }
+
+    @MainActor
+    private func namedButton(_ element: XCUIElement, options: [String]) -> XCUIElement {
+        element.buttons.matching(NSPredicate(format: "label IN %@ OR title IN %@", options, options)).firstMatch
     }
 
     @MainActor

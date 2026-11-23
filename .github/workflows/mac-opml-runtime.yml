@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Verify official install and prepare OPML samples
-        run: bash mac-opml-runtime/stage.sh ${{ matrix.app }} baseline 1
+        run: bash mac-opml-runtime/stage.sh ${{ matrix.app }} nested 1
       - name: Run native OPML workflow with Xcode UI tests
         shell: bash
         run: |
@@ -50,6 +50,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: mac-opml-${{ matrix.app }}-baseline-1
+          name: mac-opml-${{ matrix.app }}-nested-1
           path: proof/
           retention-days: 14
