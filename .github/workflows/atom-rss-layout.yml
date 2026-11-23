@@ -1,0 +1,66 @@
+name: Atom RSS article and editorial layout
+on:
+  push:
+    branches: [atom-rss-layout-20261123]
+    paths:
+      - .github/workflows/atom-rss-layout.yml
+      - verification/check-atom-rss.py
+      - verification/check-kate-landing.py
+      - verification/atom-rss-live.txt
+permissions:
+  contents: read
+jobs:
+  layout:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare one-time preview key
+        if: ${{ !contains(github.event.head_commit.message, 'Verify published article') && !contains(github.event.head_commit.message, 'Verify public Kate landing') }}
+        run: |
+          install -d -m 700 "$RUNNER_TEMP/brew-key" layout-transport
+          openssl genpkey -quiet -algorithm RSA -pkeyopt rsa_keygen_bits:3072 -out "$RUNNER_TEMP/brew-key/preview.pem"
+          openssl pkey -in "$RUNNER_TEMP/brew-key/preview.pem" -pubout -out layout-transport/preview-public.pem
+      - uses: actions/upload-artifact@v4
+        if: ${{ !contains(github.event.head_commit.message, 'Verify published article') && !contains(github.event.head_commit.message, 'Verify public Kate landing') }}
+        with:
+          name: brew-atom-preview-public-key
+          path: layout-transport/preview-public.pem
+          retention-days: 1
+      - name: Install browser
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install playwright==1.55.0
+          .venv/bin/playwright install chromium
+      - name: Check selected article viewports
+        env:
+          LIVE: ${{ contains(github.event.head_commit.message, 'Verify published article') && !contains(github.event.head_commit.message, 'Verify public Kate landing') }}
+          KATE: ${{ contains(github.event.head_commit.message, 'Verify public Kate landing') }}
+        run: |
+          if [[ "$KATE" == true ]]; then
+            .venv/bin/python verification/check-kate-landing.py
+          elif [[ "$LIVE" == true ]]; then
+            .venv/bin/python verification/check-atom-rss.py live
+          else
+            set -eu
+            capsule="$RUNNER_TEMP/brew-key/preview.enc"
+            deadline=$((SECONDS + 510))
+            endpoint="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/atom-rss-layout-20261123/.qa-requests/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.enc"
+            while (( SECONDS < deadline )); do
+              if curl --fail --silent --max-time 6 "$endpoint?stamp=$(date +%s)" -o "$capsule"; then
+                if openssl pkeyutl -decrypt -inkey "$RUNNER_TEMP/brew-key/preview.pem" -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -in "$capsule" -out "$RUNNER_TEMP/brew-key/input"; then
+                  rm -- "$RUNNER_TEMP/brew-key/preview.pem"
+                  .venv/bin/python verification/check-atom-rss.py preview "$RUNNER_TEMP/brew-key/input"
+                  exit 0
+                fi
+              fi
+              sleep 5
+            done
+            exit 2
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brew-atom-rss-layout
+          path: layout-proof
+          retention-days: 7
