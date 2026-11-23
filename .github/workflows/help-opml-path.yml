@@ -15,11 +15,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Install cloud Chromium
+      - name: Install cloud Chromium and WebKit
         run: |
           python -m venv .venv
           .venv/bin/pip install playwright==1.55.0
-          .venv/bin/playwright install chromium
+          .venv/bin/playwright install --with-deps chromium webkit
       - name: Click the Help route and download all three samples
         run: .venv/bin/python help-opml-path/check.py "$(cat help-opml-path/phase.txt)"
       - uses: actions/upload-artifact@v4

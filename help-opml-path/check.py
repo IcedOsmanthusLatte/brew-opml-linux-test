@@ -11,8 +11,8 @@ from playwright.sync_api import sync_playwright
 ROOT = "https://getbrew.app"
 HELP = ROOT + "/help/"
 ARTICLE = ROOT + "/blog/feedly-export-opml-iphone/"
-ANCHOR = "#2-open-the-add-menu-in-brew"
-GUIDE = ARTICLE + ANCHOR
+ANCHOR = "2-open-the-add-menu-in-brew"
+GUIDE = ARTICLE + "#2-open-the-add-menu-in-brew:~:text=Open%20the%20add%20menu%20in%20Brew"
 OPML = ROOT + "/blog/opml-file/"
 LABEL = "OPML import steps for iPhone"
 SAMPLES = {
@@ -24,7 +24,7 @@ OUT = Path("help-opml-proof")
 OUT.mkdir(exist_ok=True)
 
 
-def open_route(page, width, theme, samples):
+def open_route(page, width, theme, samples, prefix=""):
     response = page.goto(HELP, wait_until="domcontentloaded", timeout=20000)
     assert response and response.status == 200
     assert page.locator("link[rel=canonical]").get_attribute("href") == HELP
@@ -49,14 +49,13 @@ def open_route(page, width, theme, samples):
       };
     }""")
     if (width, theme) in ((390, "light"), (1440, "dark")):
-        page.screenshot(path=OUT / f"help-{width}-{theme}.jpg", type="jpeg", quality=76)
+        page.screenshot(path=OUT / f"{prefix}help-{width}-{theme}.jpg", type="jpeg", quality=76)
     with page.expect_navigation(wait_until="domcontentloaded", timeout=20000) as navigation:
         link.click()
     response = navigation.value
-    page.wait_for_url(GUIDE, timeout=8000)
-    assert response and response.status == 200 and page.url == GUIDE
+    assert response and response.status == 200 and page.url.split("#")[0] == ARTICLE
     assert page.locator("link[rel=canonical]").get_attribute("href") == ARTICLE
-    heading = page.locator(f'[id="{ANCHOR[1:]}"]')
+    heading = page.locator(f'[id="{ANCHOR}"]')
     assert heading.count() == 1 and "Open the add menu in Brew" in heading.inner_text()
     page.evaluate("document.fonts.ready")
     page.wait_for_timeout(250)
@@ -74,7 +73,7 @@ def open_route(page, width, theme, samples):
       };
     }""")
     if (width, theme) in ((390, "light"), (1440, "dark")):
-        page.screenshot(path=OUT / f"guide-{width}-{theme}.jpg", type="jpeg", quality=76)
+        page.screenshot(path=OUT / f"{prefix}guide-{width}-{theme}.jpg", type="jpeg", quality=76)
     passed = (help_layout["fits"] and help_layout["reachable"] and help_layout["underline"]
               and help_layout["theme"] == theme and guide_layout["heading_visible"]
               and guide_layout["next_visible"] and guide_layout["fits"])
@@ -93,7 +92,7 @@ def open_route(page, width, theme, samples):
             file = ET.fromstring(raw)
             urls = [item.attrib["xmlUrl"] for item in file.iter("outline") if "xmlUrl" in item.attrib]
             observed = hashlib.sha256(raw).hexdigest(), len(urls), len(set(urls))
-            assert file.tag == "opml" and observed == expected and download.suggested_filename == name
+            assert file.tag == "opml" and observed == expected and download.suggested_filename == "brew-" + name, (name, observed, download.suggested_filename)
             samples[name] = {"filename":download.suggested_filename, "sha256":observed[0],
                              "items":observed[1], "unique_sources":observed[2]}
     return {"width":width,"theme":theme,"help":help_layout,"guide":guide_layout,"passed":passed}
@@ -132,7 +131,23 @@ def main():
                         context.close()
         finally:
             browser.close()
-    results["passed"] = len(results["samples"]) == 3 and all(row["passed"] for row in results["states"])
+        webkit = pw.webkit.launch()
+        try:
+            context = webkit.new_context(viewport={"width":390,"height":900}, color_scheme="light",
+                                         is_mobile=True, has_touch=True, reduced_motion="reduce")
+            if candidate:
+                context.route(HELP, lambda route: route.fulfill(
+                    status=200, content_type="text/html; charset=utf-8", body=candidate))
+            try:
+                results["webkit_mobile"] = open_route(context.new_page(), 390, "light", None, "webkit-")
+            except Exception as exc:
+                results["webkit_mobile"] = {"passed":False,"error":str(exc)[:600]}
+            finally:
+                context.close()
+        finally:
+            webkit.close()
+    results["passed"] = (len(results["samples"]) == 3 and all(row["passed"] for row in results["states"])
+                         and results["webkit_mobile"]["passed"])
     (OUT / "verification.json").write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(results))
     return 0 if results["passed"] else 2
