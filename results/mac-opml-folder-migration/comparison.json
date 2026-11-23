@@ -1,0 +1,1180 @@
+{
+  "complete_required_matrix": true,
+  "missing": [],
+  "complete_adaptations": true,
+  "untested_adaptations": [],
+  "runs": [
+    {
+      "run_id": 45193632899,
+      "artifact_id": 14827651488,
+      "artifact_sha256": "a8049939a07fa1ce48638f2f6998632167012bf452fe8f81398976649de6d8bc",
+      "app": "netnewswire",
+      "release": "7.3.1",
+      "build": "7242",
+      "mode": "baseline",
+      "trial": 1,
+      "release_sha256": "280ffd15e2df86a39146410d362f2bafca2c559f33cab78cd538669e96245ab9",
+      "architecture": "arm64",
+      "macos": [
+        "ProductName:\t\tmacOS",
+        "ProductVersion:\t\t15.8.2",
+        "BuildVersion:\t\t24H232"
+      ],
+      "fixture_sha256": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd",
+      "fixture_title": "Brew OPML migration exercise — normal",
+      "input_metadata": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": {
+          "text": "BBC News — World",
+          "title": "BBC News — World",
+          "type": "rss",
+          "xmlUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "htmlUrl": "https://www.bbc.com/news/world"
+        },
+        "https://www.nasa.gov/news-release/feed/": {
+          "text": "NASA News Releases",
+          "title": "NASA News Releases",
+          "type": "rss",
+          "xmlUrl": "https://www.nasa.gov/news-release/feed/",
+          "htmlUrl": "https://www.nasa.gov/"
+        },
+        "https://wordpress.org/news/feed/": {
+          "text": "WordPress News",
+          "title": "WordPress News",
+          "type": "rss",
+          "xmlUrl": "https://wordpress.org/news/feed/",
+          "htmlUrl": "https://wordpress.org/news/"
+        }
+      },
+      "screenshot_sha256": {
+        "before-import": "61fba9ecb69a7dc47841a2e253c1b0ca49dbc2600d388c62ddad3f02207c7332",
+        "imported": "6b6baccc1188740f262ebbe6b194856b0e12a76307b20c60fda41ef0ee66fa0e",
+        "restarted": "a8e65625df07e57c858dbd293c9f22e60843edf450671a457ff26c7e15853b9b"
+      },
+      "expected_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "News"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Science and technology"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Science and technology"
+        ]
+      },
+      "native_export_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "News"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Science and technology"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Science and technology"
+        ]
+      },
+      "expected_groups": [
+        [
+          "News"
+        ],
+        [
+          "Science and technology"
+        ]
+      ],
+      "native_export_groups": [
+        [
+          "News"
+        ],
+        [
+          "Science and technology"
+        ]
+      ],
+      "preserved_every_path": true
+    },
+    {
+      "run_id": 45190410478,
+      "artifact_id": 14824783676,
+      "artifact_sha256": "eccf74264576f1b083f4b69b823f756bad0ae8ea0e73efa4e680062f6cc5eb43",
+      "app": "netnewswire",
+      "release": "7.3.1",
+      "build": "7242",
+      "mode": "baseline",
+      "trial": 2,
+      "release_sha256": "280ffd15e2df86a39146410d362f2bafca2c559f33cab78cd538669e96245ab9",
+      "architecture": "arm64",
+      "macos": [
+        "ProductName:\t\tmacOS",
+        "ProductVersion:\t\t15.8.2",
+        "BuildVersion:\t\t24H232"
+      ],
+      "fixture_sha256": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd",
+      "fixture_title": "Brew OPML migration exercise — normal",
+      "input_metadata": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": {
+          "text": "BBC News — World",
+          "title": "BBC News — World",
+          "type": "rss",
+          "xmlUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "htmlUrl": "https://www.bbc.com/news/world"
+        },
+        "https://www.nasa.gov/news-release/feed/": {
+          "text": "NASA News Releases",
+          "title": "NASA News Releases",
+          "type": "rss",
+          "xmlUrl": "https://www.nasa.gov/news-release/feed/",
+          "htmlUrl": "https://www.nasa.gov/"
+        },
+        "https://wordpress.org/news/feed/": {
+          "text": "WordPress News",
+          "title": "WordPress News",
+          "type": "rss",
+          "xmlUrl": "https://wordpress.org/news/feed/",
+          "htmlUrl": "https://wordpress.org/news/"
+        }
+      },
+      "screenshot_sha256": {
+        "before-import": "6620ea3d9a8b6815350f4baad36cb50b54322e8f821828ac8a2c6e4c153be0cf",
+        "imported": "f1d77372a9d8e5b829bc06c12e03838af932eff7197f943e59dd5d492cdf9a2b",
+        "restarted": "bac442981bb75d18d8e8eac8c5b100beef4f5327ec6a5f18ee4d3a69c713e6cc"
+      },
+      "expected_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "News"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Science and technology"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Science and technology"
+        ]
+      },
+      "native_export_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "News"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Science and technology"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Science and technology"
+        ]
+      },
+      "expected_groups": [
+        [
+          "News"
+        ],
+        [
+          "Science and technology"
+        ]
+      ],
+      "native_export_groups": [
+        [
+          "News"
+        ],
+        [
+          "Science and technology"
+        ]
+      ],
+      "preserved_every_path": true
+    },
+    {
+      "run_id": 45190410478,
+      "artifact_id": 14827078196,
+      "artifact_sha256": "4a2373fd77f95340c94d542bf8dfb1ce48e461c98cada7f65492e8f922ec6aa1",
+      "app": "netnewswire",
+      "release": "7.3.1",
+      "build": "7242",
+      "mode": "flattened",
+      "trial": 1,
+      "release_sha256": "280ffd15e2df86a39146410d362f2bafca2c559f33cab78cd538669e96245ab9",
+      "architecture": "arm64",
+      "macos": [
+        "ProductName:\t\tmacOS",
+        "ProductVersion:\t\t15.8.2",
+        "BuildVersion:\t\t24H232"
+      ],
+      "fixture_sha256": "6b62dddc3354d6f3e2a44db03babe07171609f3ceb5652622df0e24a334a7edd",
+      "fixture_title": "Brew OPML migration exercise — normal",
+      "input_metadata": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": {
+          "text": "BBC News — World",
+          "title": "BBC News — World",
+          "type": "rss",
+          "xmlUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "htmlUrl": "https://www.bbc.com/news/world"
+        },
+        "https://www.nasa.gov/news-release/feed/": {
+          "text": "NASA News Releases",
+          "title": "NASA News Releases",
+          "type": "rss",
+          "xmlUrl": "https://www.nasa.gov/news-release/feed/",
+          "htmlUrl": "https://www.nasa.gov/"
+        },
+        "https://wordpress.org/news/feed/": {
+          "text": "WordPress News",
+          "title": "WordPress News",
+          "type": "rss",
+          "xmlUrl": "https://wordpress.org/news/feed/",
+          "htmlUrl": "https://wordpress.org/news/"
+        }
+      },
+      "screenshot_sha256": {
+        "before-import": "1cf19e02ec8a855fd1f746850f0a3f135d8aa23e574ec75c0c218b6e1375768e",
+        "imported": "c0159ccdec01aa5c5ee59ee29de844978ea8693209e1f6e4e8add909d2868f56",
+        "restarted": "40d7c141a2ebda5b3fdfab55c8bc2347215d65effd91accce829d88f076d4c09"
+      },
+      "expected_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha - Brew Shared"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta - Brew Shared"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "native_export_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha - Brew Shared"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta - Brew Shared"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "expected_groups": [
+        [
+          "Brew Alpha - Brew Shared"
+        ],
+        [
+          "Brew Beta - Brew Shared"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "native_export_groups": [
+        [
+          "Brew Alpha - Brew Shared"
+        ],
+        [
+          "Brew Beta - Brew Shared"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "preserved_every_path": true
+    },
+    {
+      "run_id": 45190410478,
+      "artifact_id": 14827247202,
+      "artifact_sha256": "aeda3350fc8a2f050b5399a48cd880c13beef9a1b0fa04bd27bb0d316f6e8e3e",
+      "app": "netnewswire",
+      "release": "7.3.1",
+      "build": "7242",
+      "mode": "flattened",
+      "trial": 2,
+      "release_sha256": "280ffd15e2df86a39146410d362f2bafca2c559f33cab78cd538669e96245ab9",
+      "architecture": "arm64",
+      "macos": [
+        "ProductName:\t\tmacOS",
+        "ProductVersion:\t\t15.8.2",
+        "BuildVersion:\t\t24H232"
+      ],
+      "fixture_sha256": "6b62dddc3354d6f3e2a44db03babe07171609f3ceb5652622df0e24a334a7edd",
+      "fixture_title": "Brew OPML migration exercise — normal",
+      "input_metadata": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": {
+          "text": "BBC News — World",
+          "title": "BBC News — World",
+          "type": "rss",
+          "xmlUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "htmlUrl": "https://www.bbc.com/news/world"
+        },
+        "https://www.nasa.gov/news-release/feed/": {
+          "text": "NASA News Releases",
+          "title": "NASA News Releases",
+          "type": "rss",
+          "xmlUrl": "https://www.nasa.gov/news-release/feed/",
+          "htmlUrl": "https://www.nasa.gov/"
+        },
+        "https://wordpress.org/news/feed/": {
+          "text": "WordPress News",
+          "title": "WordPress News",
+          "type": "rss",
+          "xmlUrl": "https://wordpress.org/news/feed/",
+          "htmlUrl": "https://wordpress.org/news/"
+        }
+      },
+      "screenshot_sha256": {
+        "before-import": "22654ac16346549be5340d3a705f4b151209e4e85c1d817017d18fda00c721f3",
+        "imported": "d74d24d163183df35d95cf2d3b2779a69098350dd97ba734a949bc417f674274",
+        "restarted": "c193385e46a4b9a326a7aa77a88cb162fde60250ef6f7e9c22d06176971fc8aa"
+      },
+      "expected_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha - Brew Shared"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta - Brew Shared"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "native_export_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha - Brew Shared"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta - Brew Shared"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "expected_groups": [
+        [
+          "Brew Alpha - Brew Shared"
+        ],
+        [
+          "Brew Beta - Brew Shared"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "native_export_groups": [
+        [
+          "Brew Alpha - Brew Shared"
+        ],
+        [
+          "Brew Beta - Brew Shared"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "preserved_every_path": true
+    },
+    {
+      "run_id": 45190410478,
+      "artifact_id": 14825614060,
+      "artifact_sha256": "5c2f3dfd9f30cd48c56673db35e3def8cd6d284bece23b11356973fa8a6577dc",
+      "app": "netnewswire",
+      "release": "7.3.1",
+      "build": "7242",
+      "mode": "nested",
+      "trial": 1,
+      "release_sha256": "280ffd15e2df86a39146410d362f2bafca2c559f33cab78cd538669e96245ab9",
+      "architecture": "arm64",
+      "macos": [
+        "ProductName:\t\tmacOS",
+        "ProductVersion:\t\t15.8.2",
+        "BuildVersion:\t\t24H232"
+      ],
+      "fixture_sha256": "d4fcb29b25f290042b9cd38441878ead9e4d9f0b289437b7861bfe0c68a810d7",
+      "fixture_title": "Brew OPML migration exercise — normal",
+      "input_metadata": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": {
+          "text": "BBC News — World",
+          "title": "BBC News — World",
+          "type": "rss",
+          "xmlUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "htmlUrl": "https://www.bbc.com/news/world"
+        },
+        "https://www.nasa.gov/news-release/feed/": {
+          "text": "NASA News Releases",
+          "title": "NASA News Releases",
+          "type": "rss",
+          "xmlUrl": "https://www.nasa.gov/news-release/feed/",
+          "htmlUrl": "https://www.nasa.gov/"
+        },
+        "https://wordpress.org/news/feed/": {
+          "text": "WordPress News",
+          "title": "WordPress News",
+          "type": "rss",
+          "xmlUrl": "https://wordpress.org/news/feed/",
+          "htmlUrl": "https://wordpress.org/news/"
+        }
+      },
+      "screenshot_sha256": {
+        "before-import": "6b229da1f1ecfcbc3a6e945204b7c542c067d350e9c1494b77ac05329ac558e3",
+        "imported": "d63771fb5460c3c9c9f893a149de9a859d99ed043c03ff136fbc17c8cff65011",
+        "restarted": "3ff55835a36d56aac677dd6b5740eac032726e40f3e2222d2abad568be5c3ef1"
+      },
+      "expected_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta",
+          "Brew Shared"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "native_export_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "expected_groups": [
+        [
+          "Brew Alpha"
+        ],
+        [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        [
+          "Brew Beta"
+        ],
+        [
+          "Brew Beta",
+          "Brew Shared"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "native_export_groups": [
+        [
+          "Brew Alpha"
+        ],
+        [
+          "Brew Beta"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "preserved_every_path": false
+    },
+    {
+      "run_id": 45193450187,
+      "artifact_id": 14826698781,
+      "artifact_sha256": "86d346a9d4db59ff97818201c04c334e62fcf2eb094242ec51e2c9ba85593680",
+      "app": "netnewswire",
+      "release": "7.3.1",
+      "build": "7242",
+      "mode": "nested",
+      "trial": 2,
+      "release_sha256": "280ffd15e2df86a39146410d362f2bafca2c559f33cab78cd538669e96245ab9",
+      "architecture": "arm64",
+      "macos": [
+        "ProductName:\t\tmacOS",
+        "ProductVersion:\t\t15.8.2",
+        "BuildVersion:\t\t24H232"
+      ],
+      "fixture_sha256": "d4fcb29b25f290042b9cd38441878ead9e4d9f0b289437b7861bfe0c68a810d7",
+      "fixture_title": "Brew OPML migration exercise — normal",
+      "input_metadata": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": {
+          "text": "BBC News — World",
+          "title": "BBC News — World",
+          "type": "rss",
+          "xmlUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "htmlUrl": "https://www.bbc.com/news/world"
+        },
+        "https://www.nasa.gov/news-release/feed/": {
+          "text": "NASA News Releases",
+          "title": "NASA News Releases",
+          "type": "rss",
+          "xmlUrl": "https://www.nasa.gov/news-release/feed/",
+          "htmlUrl": "https://www.nasa.gov/"
+        },
+        "https://wordpress.org/news/feed/": {
+          "text": "WordPress News",
+          "title": "WordPress News",
+          "type": "rss",
+          "xmlUrl": "https://wordpress.org/news/feed/",
+          "htmlUrl": "https://wordpress.org/news/"
+        }
+      },
+      "screenshot_sha256": {
+        "before-import": "b4a56b849329cbfcea28c553054bddd0ad3b976993fe4b2cd4dee24b6d6003bd",
+        "imported": "fc58b0647abbaf461880512d608dbeb38487eb689feb0075d37d0d72497bd947",
+        "restarted": "edb1862cdc9a326a33b3217007f87ebb3220f733516bc079f4626fca168b0faf"
+      },
+      "expected_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta",
+          "Brew Shared"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "native_export_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "expected_groups": [
+        [
+          "Brew Alpha"
+        ],
+        [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        [
+          "Brew Beta"
+        ],
+        [
+          "Brew Beta",
+          "Brew Shared"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "native_export_groups": [
+        [
+          "Brew Alpha"
+        ],
+        [
+          "Brew Beta"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "preserved_every_path": false
+    },
+    {
+      "run_id": 45190410478,
+      "artifact_id": 14826262237,
+      "artifact_sha256": "fdca5e51df55e94d7c35cfd6b1b2702b2f6f0a092b6744bbf9868e59d311ac7d",
+      "app": "vienna",
+      "release": "3.10.8 :0294d207:",
+      "build": "9196",
+      "mode": "baseline",
+      "trial": 1,
+      "release_sha256": "6833fecb70c23c1ba98868086e2245c9a05a4f5a4960b019b64ca3728aaa85bd",
+      "architecture": "arm64",
+      "macos": [
+        "ProductName:\t\tmacOS",
+        "ProductVersion:\t\t15.8.2",
+        "BuildVersion:\t\t24H232"
+      ],
+      "fixture_sha256": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd",
+      "fixture_title": "Brew OPML migration exercise — normal",
+      "input_metadata": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": {
+          "text": "BBC News — World",
+          "title": "BBC News — World",
+          "type": "rss",
+          "xmlUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "htmlUrl": "https://www.bbc.com/news/world"
+        },
+        "https://www.nasa.gov/news-release/feed/": {
+          "text": "NASA News Releases",
+          "title": "NASA News Releases",
+          "type": "rss",
+          "xmlUrl": "https://www.nasa.gov/news-release/feed/",
+          "htmlUrl": "https://www.nasa.gov/"
+        },
+        "https://wordpress.org/news/feed/": {
+          "text": "WordPress News",
+          "title": "WordPress News",
+          "type": "rss",
+          "xmlUrl": "https://wordpress.org/news/feed/",
+          "htmlUrl": "https://wordpress.org/news/"
+        }
+      },
+      "screenshot_sha256": {
+        "before-import": "aba4b8eb4e8fa153102074c4fa21381c50466c804ddf64c346ad38dc09213952",
+        "imported": "01673585e4bcb9717b1bccdbf1099aa4a142a7ebfe0c08ea4c7c3dde5222694a",
+        "restarted": "bd8515351563e65b4ba49426d9af8293e299019a256c74703275776a50e9a5a8"
+      },
+      "expected_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "News"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Science and technology"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Science and technology"
+        ]
+      },
+      "native_export_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "News"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Science and technology"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Science and technology"
+        ]
+      },
+      "expected_groups": [
+        [
+          "News"
+        ],
+        [
+          "Science and technology"
+        ]
+      ],
+      "native_export_groups": [
+        [
+          "News"
+        ],
+        [
+          "Science and technology"
+        ]
+      ],
+      "preserved_every_path": true
+    },
+    {
+      "run_id": 45190410478,
+      "artifact_id": 14825633008,
+      "artifact_sha256": "fb27296f36c57ec070fa9845059e36e1510d34befc6325111a33db2c2267e9f4",
+      "app": "vienna",
+      "release": "3.10.8 :0294d207:",
+      "build": "9196",
+      "mode": "baseline",
+      "trial": 2,
+      "release_sha256": "6833fecb70c23c1ba98868086e2245c9a05a4f5a4960b019b64ca3728aaa85bd",
+      "architecture": "arm64",
+      "macos": [
+        "ProductName:\t\tmacOS",
+        "ProductVersion:\t\t15.8.2",
+        "BuildVersion:\t\t24H232"
+      ],
+      "fixture_sha256": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd",
+      "fixture_title": "Brew OPML migration exercise — normal",
+      "input_metadata": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": {
+          "text": "BBC News — World",
+          "title": "BBC News — World",
+          "type": "rss",
+          "xmlUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "htmlUrl": "https://www.bbc.com/news/world"
+        },
+        "https://www.nasa.gov/news-release/feed/": {
+          "text": "NASA News Releases",
+          "title": "NASA News Releases",
+          "type": "rss",
+          "xmlUrl": "https://www.nasa.gov/news-release/feed/",
+          "htmlUrl": "https://www.nasa.gov/"
+        },
+        "https://wordpress.org/news/feed/": {
+          "text": "WordPress News",
+          "title": "WordPress News",
+          "type": "rss",
+          "xmlUrl": "https://wordpress.org/news/feed/",
+          "htmlUrl": "https://wordpress.org/news/"
+        }
+      },
+      "screenshot_sha256": {
+        "before-import": "01be4781c3282ee2118ebf69a3bb49e0f416d1ffeb6fa798e19b2fb1a28c1d1f",
+        "imported": "32bf7add03d58d3e8bedf3a19ebf363bc984f1cf70f7a1dee789a2c2bd22e0f8",
+        "restarted": "2b5bf4c5b947455fb2de002d977de3b9dda61e3159f38c7a9c22d517ed137979"
+      },
+      "expected_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "News"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Science and technology"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Science and technology"
+        ]
+      },
+      "native_export_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "News"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Science and technology"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Science and technology"
+        ]
+      },
+      "expected_groups": [
+        [
+          "News"
+        ],
+        [
+          "Science and technology"
+        ]
+      ],
+      "native_export_groups": [
+        [
+          "News"
+        ],
+        [
+          "Science and technology"
+        ]
+      ],
+      "preserved_every_path": true
+    },
+    {
+      "run_id": 45190410478,
+      "artifact_id": 14827322293,
+      "artifact_sha256": "2b3686020f2d03262b81d86fbc9b76f774ddecd097e79431884e08cf1a4b3ebb",
+      "app": "vienna",
+      "release": "3.10.8 :0294d207:",
+      "build": "9196",
+      "mode": "nested",
+      "trial": 1,
+      "release_sha256": "6833fecb70c23c1ba98868086e2245c9a05a4f5a4960b019b64ca3728aaa85bd",
+      "architecture": "arm64",
+      "macos": [
+        "ProductName:\t\tmacOS",
+        "ProductVersion:\t\t15.8.2",
+        "BuildVersion:\t\t24H232"
+      ],
+      "fixture_sha256": "d4fcb29b25f290042b9cd38441878ead9e4d9f0b289437b7861bfe0c68a810d7",
+      "fixture_title": "Brew OPML migration exercise — normal",
+      "input_metadata": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": {
+          "text": "BBC News — World",
+          "title": "BBC News — World",
+          "type": "rss",
+          "xmlUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "htmlUrl": "https://www.bbc.com/news/world"
+        },
+        "https://www.nasa.gov/news-release/feed/": {
+          "text": "NASA News Releases",
+          "title": "NASA News Releases",
+          "type": "rss",
+          "xmlUrl": "https://www.nasa.gov/news-release/feed/",
+          "htmlUrl": "https://www.nasa.gov/"
+        },
+        "https://wordpress.org/news/feed/": {
+          "text": "WordPress News",
+          "title": "WordPress News",
+          "type": "rss",
+          "xmlUrl": "https://wordpress.org/news/feed/",
+          "htmlUrl": "https://wordpress.org/news/"
+        }
+      },
+      "screenshot_sha256": {
+        "before-import": "04caebc105f4ba19a6cda77e92b873ba0a70691705b2b82a0d729fc65b8059a9",
+        "imported": "21a8d58d1928d083b976c5841ecd8efad2c03c347d25c5fae5cd43701eea663e",
+        "restarted": "00f3b2f2d803bd9965f3ca2d72a4e82a3deadc424cb6f7518373b2ee59fcb0fc"
+      },
+      "expected_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta",
+          "Brew Shared"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "native_export_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "expected_groups": [
+        [
+          "Brew Alpha"
+        ],
+        [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        [
+          "Brew Beta"
+        ],
+        [
+          "Brew Beta",
+          "Brew Shared"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "native_export_groups": [
+        [
+          "Brew Alpha"
+        ],
+        [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        [
+          "Brew Beta"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "preserved_every_path": false
+    },
+    {
+      "run_id": 45190410478,
+      "artifact_id": 14827063202,
+      "artifact_sha256": "7c6cfe4b519c31c8e97958bfc1bc67d068e80f26976e319bfb493d87571d77a4",
+      "app": "vienna",
+      "release": "3.10.8 :0294d207:",
+      "build": "9196",
+      "mode": "nested",
+      "trial": 2,
+      "release_sha256": "6833fecb70c23c1ba98868086e2245c9a05a4f5a4960b019b64ca3728aaa85bd",
+      "architecture": "arm64",
+      "macos": [
+        "ProductName:\t\tmacOS",
+        "ProductVersion:\t\t15.8.2",
+        "BuildVersion:\t\t24H232"
+      ],
+      "fixture_sha256": "d4fcb29b25f290042b9cd38441878ead9e4d9f0b289437b7861bfe0c68a810d7",
+      "fixture_title": "Brew OPML migration exercise — normal",
+      "input_metadata": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": {
+          "text": "BBC News — World",
+          "title": "BBC News — World",
+          "type": "rss",
+          "xmlUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "htmlUrl": "https://www.bbc.com/news/world"
+        },
+        "https://www.nasa.gov/news-release/feed/": {
+          "text": "NASA News Releases",
+          "title": "NASA News Releases",
+          "type": "rss",
+          "xmlUrl": "https://www.nasa.gov/news-release/feed/",
+          "htmlUrl": "https://www.nasa.gov/"
+        },
+        "https://wordpress.org/news/feed/": {
+          "text": "WordPress News",
+          "title": "WordPress News",
+          "type": "rss",
+          "xmlUrl": "https://wordpress.org/news/feed/",
+          "htmlUrl": "https://wordpress.org/news/"
+        }
+      },
+      "screenshot_sha256": {
+        "before-import": "3fa72744bb285bbbe88d33a2444f06bcbebb3924dc7f3a3434f518a169c9426e",
+        "imported": "1394155667d5d40e78eb0629bbc9902d4b1faf6ffc8f4ae77186f200b4e77c6a",
+        "restarted": "e9d8187a08ed55064890f20569421d79f3830cdce969ae8cf11b874f353b321a"
+      },
+      "expected_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta",
+          "Brew Shared"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "native_export_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "expected_groups": [
+        [
+          "Brew Alpha"
+        ],
+        [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        [
+          "Brew Beta"
+        ],
+        [
+          "Brew Beta",
+          "Brew Shared"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "native_export_groups": [
+        [
+          "Brew Alpha"
+        ],
+        [
+          "Brew Alpha",
+          "Brew Shared"
+        ],
+        [
+          "Brew Beta"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "preserved_every_path": false
+    },
+    {
+      "run_id": 45190410478,
+      "artifact_id": 14827721744,
+      "artifact_sha256": "fdee6e0833fb65b4ff573f5a87fd667a9d7c2f45f312c76b39fc4fd4ed5cd5c9",
+      "app": "vienna",
+      "release": "3.10.8 :0294d207:",
+      "build": "9196",
+      "mode": "unique",
+      "trial": 1,
+      "release_sha256": "6833fecb70c23c1ba98868086e2245c9a05a4f5a4960b019b64ca3728aaa85bd",
+      "architecture": "arm64",
+      "macos": [
+        "ProductName:\t\tmacOS",
+        "ProductVersion:\t\t15.8.2",
+        "BuildVersion:\t\t24H232"
+      ],
+      "fixture_sha256": "e74637305e6142be24cd94ee556d8a2bfe3efdb52d69a418e263ddee75dd6b65",
+      "fixture_title": "Brew OPML migration exercise — normal",
+      "input_metadata": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": {
+          "text": "BBC News — World",
+          "title": "BBC News — World",
+          "type": "rss",
+          "xmlUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "htmlUrl": "https://www.bbc.com/news/world"
+        },
+        "https://www.nasa.gov/news-release/feed/": {
+          "text": "NASA News Releases",
+          "title": "NASA News Releases",
+          "type": "rss",
+          "xmlUrl": "https://www.nasa.gov/news-release/feed/",
+          "htmlUrl": "https://www.nasa.gov/"
+        },
+        "https://wordpress.org/news/feed/": {
+          "text": "WordPress News",
+          "title": "WordPress News",
+          "type": "rss",
+          "xmlUrl": "https://wordpress.org/news/feed/",
+          "htmlUrl": "https://wordpress.org/news/"
+        }
+      },
+      "screenshot_sha256": {
+        "before-import": "2f1c77f8919d1659ffa2b2b99329b03faa2efda561e677df9509c147dca49e00",
+        "imported": "0563b043a32108eab8f7479df92a83ab9bd57448ff66915a410fcd557ff26ab9",
+        "restarted": "db876ae26c3ecc8ae138e53fadbee55346b769dd837a1cbeb23f537c6658173e"
+      },
+      "expected_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha",
+          "Brew Shared A"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta",
+          "Brew Shared B"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "native_export_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha",
+          "Brew Shared A"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta",
+          "Brew Shared B"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "expected_groups": [
+        [
+          "Brew Alpha"
+        ],
+        [
+          "Brew Alpha",
+          "Brew Shared A"
+        ],
+        [
+          "Brew Beta"
+        ],
+        [
+          "Brew Beta",
+          "Brew Shared B"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "native_export_groups": [
+        [
+          "Brew Alpha"
+        ],
+        [
+          "Brew Alpha",
+          "Brew Shared A"
+        ],
+        [
+          "Brew Beta"
+        ],
+        [
+          "Brew Beta",
+          "Brew Shared B"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "preserved_every_path": true
+    },
+    {
+      "run_id": 45190410478,
+      "artifact_id": 14825968991,
+      "artifact_sha256": "9513fc31f42ef672a95873861de1d7f5a90e8c8fb65097c6165e3b0bf43c3397",
+      "app": "vienna",
+      "release": "3.10.8 :0294d207:",
+      "build": "9196",
+      "mode": "unique",
+      "trial": 2,
+      "release_sha256": "6833fecb70c23c1ba98868086e2245c9a05a4f5a4960b019b64ca3728aaa85bd",
+      "architecture": "arm64",
+      "macos": [
+        "ProductName:\t\tmacOS",
+        "ProductVersion:\t\t15.8.2",
+        "BuildVersion:\t\t24H232"
+      ],
+      "fixture_sha256": "e74637305e6142be24cd94ee556d8a2bfe3efdb52d69a418e263ddee75dd6b65",
+      "fixture_title": "Brew OPML migration exercise — normal",
+      "input_metadata": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": {
+          "text": "BBC News — World",
+          "title": "BBC News — World",
+          "type": "rss",
+          "xmlUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "htmlUrl": "https://www.bbc.com/news/world"
+        },
+        "https://www.nasa.gov/news-release/feed/": {
+          "text": "NASA News Releases",
+          "title": "NASA News Releases",
+          "type": "rss",
+          "xmlUrl": "https://www.nasa.gov/news-release/feed/",
+          "htmlUrl": "https://www.nasa.gov/"
+        },
+        "https://wordpress.org/news/feed/": {
+          "text": "WordPress News",
+          "title": "WordPress News",
+          "type": "rss",
+          "xmlUrl": "https://wordpress.org/news/feed/",
+          "htmlUrl": "https://wordpress.org/news/"
+        }
+      },
+      "screenshot_sha256": {
+        "before-import": "0ffbf1118167cc8ed2c579481a98130d910b080aa4cc071579298286d1652fac",
+        "imported": "a910b286ebb1d2f71636d82a6b4e40dd8d680dfc96ad2bcfc11e2fd80a18f673",
+        "restarted": "3bd2bad4d20ace280ecd09eb75dc6d430e97ce2845cb4e8f3b6087f560fcf848"
+      },
+      "expected_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha",
+          "Brew Shared A"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta",
+          "Brew Shared B"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "native_export_paths": {
+        "https://feeds.bbci.co.uk/news/world/rss.xml": [
+          "Brew Alpha",
+          "Brew Shared A"
+        ],
+        "https://www.nasa.gov/news-release/feed/": [
+          "Brew Beta",
+          "Brew Shared B"
+        ],
+        "https://wordpress.org/news/feed/": [
+          "Brew Shallow"
+        ]
+      },
+      "expected_groups": [
+        [
+          "Brew Alpha"
+        ],
+        [
+          "Brew Alpha",
+          "Brew Shared A"
+        ],
+        [
+          "Brew Beta"
+        ],
+        [
+          "Brew Beta",
+          "Brew Shared B"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "native_export_groups": [
+        [
+          "Brew Alpha"
+        ],
+        [
+          "Brew Alpha",
+          "Brew Shared A"
+        ],
+        [
+          "Brew Beta"
+        ],
+        [
+          "Brew Beta",
+          "Brew Shared B"
+        ],
+        [
+          "Brew Shallow"
+        ]
+      ],
+      "preserved_every_path": true
+    }
+  ]
+}

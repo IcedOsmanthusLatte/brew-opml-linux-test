@@ -1,0 +1,17 @@
+{
+  "app": "vienna",
+  "mode": "baseline",
+  "trial": 1,
+  "bundle_id": "uk.co.opencommunity.vienna2",
+  "version": "3.10.8 :0294d207:",
+  "build": "9196",
+  "release_url": "https://github.com/ViennaRSS/vienna-rss/releases/download/v/3.10.8/Vienna3.10.8.dmg",
+  "release_sha256": "6833fecb70c23c1ba98868086e2245c9a05a4f5a4960b019b64ca3728aaa85bd",
+  "original_sha256": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd",
+  "fixture_sha256": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd",
+  "titles": [
+    "BBC News \u2014 World",
+    "NASA News Releases",
+    "WordPress News"
+  ]
+}

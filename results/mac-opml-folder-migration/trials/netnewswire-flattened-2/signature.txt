@@ -1,0 +1,5 @@
+Identifier=com.ranchero.NetNewsWire-Evergreen
+Authority=Developer ID Application: Brent Simmons (M8L2WTLA8W)
+Authority=Developer ID Certification Authority
+Authority=Apple Root CA
+TeamIdentifier=M8L2WTLA8W

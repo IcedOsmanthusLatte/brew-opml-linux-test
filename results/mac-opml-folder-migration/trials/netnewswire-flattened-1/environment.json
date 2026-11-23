@@ -1,0 +1,17 @@
+{
+  "app": "netnewswire",
+  "mode": "flattened",
+  "trial": 1,
+  "bundle_id": "com.ranchero.NetNewsWire-Evergreen",
+  "version": "7.3.1",
+  "build": "7242",
+  "release_url": "https://github.com/Ranchero-Software/NetNewsWire/releases/download/mac-7.3.1/NetNewsWire7.3.1.zip",
+  "release_sha256": "280ffd15e2df86a39146410d362f2bafca2c559f33cab78cd538669e96245ab9",
+  "original_sha256": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd",
+  "fixture_sha256": "6b62dddc3354d6f3e2a44db03babe07171609f3ceb5652622df0e24a334a7edd",
+  "titles": [
+    "BBC News \u2014 World",
+    "NASA News Releases",
+    "WordPress News"
+  ]
+}

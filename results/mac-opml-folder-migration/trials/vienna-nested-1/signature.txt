@@ -1,0 +1,5 @@
+Identifier=uk.co.opencommunity.vienna2
+Authority=Developer ID Application: Barijaona Ramaholimihaso (KUU2LM7U9K)
+Authority=Developer ID Certification Authority
+Authority=Apple Root CA
+TeamIdentifier=KUU2LM7U9K

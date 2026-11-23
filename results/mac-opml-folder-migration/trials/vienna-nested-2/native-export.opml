@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<opml version="1.0">
+    <head>
+        <title>Vienna Subscriptions</title>
+        <dateCreated>2026-11-23 14:29:49 +0000</dateCreated>
+    </head>
+    <body>
+        <outline text="Brew Alpha">
+            <outline text="Brew Shared">
+                <outline htmlUrl="https://www.bbc.co.uk/news/world" xmlUrl="https://feeds.bbci.co.uk/news/world/rss.xml" type="rss" description="BBC News - World" text="BBC News — World"/>
+                <outline htmlUrl="https://www.nasa.gov" xmlUrl="https://www.nasa.gov/news-release/feed/" type="rss" description="Official National Aeronautics and Space Administration Website" text="NASA News Releases"/>
+            </outline>
+        </outline>
+        <outline text="Brew Beta"/>
+        <outline text="Brew Shallow">
+            <outline htmlUrl="https://wordpress.org/news" xmlUrl="https://wordpress.org/news/feed/" type="rss" description="The latest news about WordPress and the WordPress community" text="WordPress News"/>
+        </outline>
+    </body>
+</opml>
