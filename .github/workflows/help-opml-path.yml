@@ -1,0 +1,30 @@
+name: Brew Help OPML click path
+on:
+  push:
+    branches: [help-opml-path-20261123]
+    paths:
+      - help-opml-path/**
+      - .github/workflows/help-opml-path.yml
+permissions:
+  contents: read
+jobs:
+  layout:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install cloud Chromium
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install playwright==1.55.0
+          .venv/bin/playwright install chromium
+      - name: Click the Help route and download all three samples
+        run: .venv/bin/python help-opml-path/check.py "$(cat help-opml-path/phase.txt)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brew-help-opml-layout
+          path: help-opml-proof/
+          retention-days: 7
