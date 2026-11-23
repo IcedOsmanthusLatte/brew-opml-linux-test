@@ -104,17 +104,21 @@ final class NativeOPMLTests: XCTestCase {
         }
         XCTAssertTrue(button.waitForExistence(timeout: 10), "Native file open dialog did not appear")
         goToPath(path, in: app)
-        if button.exists && button.isEnabled { button.click() }
+        attachText(String(app.debugDescription.prefix(38_000)), name: "file-chooser")
+        if button.exists && button.isEnabled {
+            app.typeKey(XCUIKeyboardKey.return, modifierFlags: [])
+        }
     }
 
     @MainActor
     private func chooseOutput(in app: XCUIApplication, directory: String) throws {
         let save = namedButton(app, options: ["Save", "Export", "Export OPML"])
         XCTAssertTrue(save.waitForExistence(timeout: 8), "Native save dialog did not appear")
-        let group = app.checkBoxes.matching(NSPredicate(format: "label CONTAINS[c] %@", "group")).firstMatch
+        let group = app.windows.firstMatch.checkBoxes.matching(
+            NSPredicate(format: "label CONTAINS[c] %@ OR title CONTAINS[c] %@", "group", "group")
+        ).firstMatch
         if group.exists, let value = group.value as? String, value == "0" { group.click() }
         if group.exists, let value = group.value as? NSNumber, value.intValue == 0 { group.click() }
-        goToPath(directory, in: app)
         let named = app.sheets.firstMatch.textFields.firstMatch
         if named.exists && named.isHittable {
             named.click()
@@ -124,8 +128,10 @@ final class NativeOPMLTests: XCTestCase {
             app.typeKey("a", modifierFlags: [.command])
             paste("native-export.opml", into: app)
         }
+        goToPath(directory, in: app)
+        attachText(String(app.debugDescription.prefix(38_000)), name: "save-chooser")
         XCTAssertTrue(save.exists && save.isEnabled)
-        save.click()
+        app.typeKey(XCUIKeyboardKey.return, modifierFlags: [])
     }
 
     @MainActor

@@ -8,7 +8,8 @@ from pathlib import Path
 src, dst = map(Path, sys.argv[1:3])
 items = json.loads((src / "manifest.json").read_text(encoding="utf-8"))
 names = ("before-import-tree", "before-import-window", "imported-tree", "restarted-tree",
-         "final-tree", "import-menu", "export-menu", "imported-window", "restarted-window")
+         "final-tree", "import-menu", "export-menu", "file-chooser", "save-chooser",
+         "imported-window", "restarted-window")
 pattern = re.compile(r"^brew-(" + "|".join(names) + r")(?:$|[_.-])")
 for test in items:
     for attachment in test.get("attachments", []):
