@@ -28,7 +28,9 @@ def feed_paths(p):
 before = feed_paths(proof / "fixture.opml")
 assert len(before) == 3
 after = feed_paths(proof / "native-export.opml")
-assert not set(before) - set(after), {"missing": sorted(set(before) - set(after))}
+assert set(before) == set(after), {"missing": sorted(set(before) - set(after)),
+                                  "extra": sorted(set(after) - set(before))}
+assert all(len(paths) == 1 for paths in after.values()), {"unexpected URL repetitions": after}
 read = {key: after[key] for key in before}
 result = {"expected_paths": before, "actual_paths": read, "native_extras": sorted(set(after) - set(before)),
           "all_folders_preserved": read == before}

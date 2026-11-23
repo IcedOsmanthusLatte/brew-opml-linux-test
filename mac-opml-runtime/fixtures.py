@@ -16,14 +16,15 @@ source = [node for node in root.iter("outline") if node.get("xmlUrl")]
 assert len(source) == 3 and len({node.get("xmlUrl") for node in source}) == 3
 
 chosen = normal
-if mode in {"nested", "flattened"}:
+if mode in {"nested", "flattened", "unique"}:
     body = root.find("body")
     body.clear()
-    if mode == "nested":
+    if mode in {"nested", "unique"}:
         parents = []
-        for outer in ("Brew Alpha", "Brew Beta"):
+        for outer, suffix in (("Brew Alpha", " A"), ("Brew Beta", " B")):
             group = ET.SubElement(body, "outline", {"text": outer})
-            parents.append(ET.SubElement(group, "outline", {"text": "Brew Shared"}))
+            label = "Brew Shared" + (suffix if mode == "unique" else "")
+            parents.append(ET.SubElement(group, "outline", {"text": label}))
     else:
         parents = [
             ET.SubElement(body, "outline", {"text": f"{outer} - Brew Shared"})
@@ -32,7 +33,6 @@ if mode in {"nested", "flattened"}:
     parents.append(ET.SubElement(body, "outline", {"text": "Brew Shallow"}))
     for parent, leaf in zip(parents, source, strict=True):
         parent.append(copy.deepcopy(leaf))
-    root.find("head/title").text = f"Brew OPML folder test — {mode}"
     ET.indent(root, space="  ")
     chosen = ET.tostring(root, encoding="utf-8", xml_declaration=True) + b"\n"
 

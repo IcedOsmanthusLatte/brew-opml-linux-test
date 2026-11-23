@@ -1,9 +1,11 @@
 import AppKit
 import Foundation
+import Vision
 import XCTest
 
 private struct Plan: Decodable {
     let app: String
+    let mode: String
     let bundle_path: String
     let fixture_path: String
     let export_dir: String
@@ -26,24 +28,26 @@ final class NativeOPMLTests: XCTestCase {
         XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 25))
         app.activate()
         dismissFirstRunIfPresent(in: app)
+        saveWindow(of: app, name: "default-starters")
+        try removeDefaultFeeds(from: app, kind: plan.app)
         expandSidebar(in: app)
         saveTree(of: app, name: "before-import")
         saveWindow(of: app, name: "before-import")
         try nativeMenu(app, section: "File", prefixOptions: ["Import Subscriptions", "Import OPML"])
         try chooseInput(in: app, path: plan.fixture_path)
         finishImportIfPresent(in: app)
-        expandSidebar(in: app)
+        try revealFixtureFolders(in: app, mode: plan.mode)
         saveTree(of: app, name: "imported")
         saveWindow(of: app, name: "imported")
-        assertFixtureRows(in: app, titles: plan.titles)
+        try assertFixtureRows(in: app, titles: plan.titles, stage: "imported")
 
         app.terminate()
         app.launch()
         XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 15))
-        expandSidebar(in: app)
+        try revealFixtureFolders(in: app, mode: plan.mode)
         saveTree(of: app, name: "restarted")
         saveWindow(of: app, name: "restarted")
-        assertFixtureRows(in: app, titles: plan.titles)
+        try assertFixtureRows(in: app, titles: plan.titles, stage: "restarted")
 
         try nativeMenu(app, section: "File", prefixOptions: ["Export Subscriptions", "Export OPML"])
         try chooseOutput(in: app, directory: plan.export_dir)
@@ -56,7 +60,7 @@ final class NativeOPMLTests: XCTestCase {
     }
 
     @MainActor
-    private func nativeMenu(_ app: XCUIApplication, section: String, prefixOptions: [String]) throws {
+    private func nativeMenu(_ app: XCUIApplication, section: String, prefixOptions: [String], operation: String? = nil) throws {
         let fileMenu = app.menuBars.firstMatch.menuBarItems[section]
         XCTAssertTrue(fileMenu.waitForExistence(timeout: 12), "No native File menu")
         fileMenu.click()
@@ -64,7 +68,7 @@ final class NativeOPMLTests: XCTestCase {
         let names = items.map { item in
             [item.title, item.label, item.identifier].filter { !$0.isEmpty }
         }
-        let op = prefixOptions.first?.lowercased().hasPrefix("import") == true ? "import" : "export"
+        let op = operation ?? (prefixOptions.first?.lowercased().hasPrefix("import") == true ? "import" : "export")
         print("BREW_MENU_\(op): \(names)")
         attachText(String(fileMenu.debugDescription.prefix(25_000)), name: op + "-menu")
         let options = prefixOptions + (op == "import" ? ["Import Feeds"] : ["Export Feeds"])
@@ -183,14 +187,104 @@ final class NativeOPMLTests: XCTestCase {
     }
 
     @MainActor
-    private func assertFixtureRows(in app: XCUIApplication, titles: [String]) {
+    private func sidebarText(in app: XCUIApplication) throws -> [(String, CGRect)] {
+        let window = app.windows.firstMatch
+        let request = VNRecognizeTextRequest()
+        request.recognitionLevel = .accurate
+        request.recognitionLanguages = ["en-US"]
+        let input = VNImageRequestHandler(data: window.screenshot().pngRepresentation)
+        try input.perform([request])
+        return (request.results ?? []).compactMap { row in
+            guard row.boundingBox.midX < 0.32, row.boundingBox.midY < 0.93,
+                  row.boundingBox.midY > 0.09, let text = row.topCandidates(1).first else { return nil }
+            return (text.string, row.boundingBox)
+        }.sorted { $0.1.midY > $1.1.midY }
+    }
+
+    private func textKey(_ value: String) -> String {
+        value.lowercased().filter { $0.isLetter || $0.isNumber }
+    }
+
+    @MainActor
+    private func rowCoordinate(in app: XCUIApplication, box: CGRect) -> XCUICoordinate {
+        app.windows.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: box.midX, dy: 1 - box.midY))
+    }
+
+    @MainActor
+    private func removeDefaultFeeds(from app: XCUIApplication, kind: String) throws {
+        Thread.sleep(forTimeInterval: 1.0)
+        let vienna = kind == "vienna"
+        let starterNames = vienna
+            ? ["It's Nice That", "Nomadic Matt", "Xkcd", "Vienna Support", "A Working Library",
+               "Vienna Developer Blog", "Cool Hunting", "BBC World News", "Amusing Planet",
+               "Ars Technica", "Six Colors", "Apple News", "Kottke", "Astronomy Picture of the Day"]
+            : ["Craig Hockenberry", "Daring Fireball", "inessential", "Jason Kottke", "Julia Evans",
+               "Manton Reece", "Michael Tsai", "NetNewsWire Blog", "Scripting News", "Six Colors"]
+        let starting = try sidebarText(in: app)
+        let starterKeys = starterNames.map(textKey)
+        func isStarter(_ row: (String, CGRect)) -> Bool {
+            let key = textKey(row.0)
+            return starterKeys.contains { key.contains($0) }
+        }
+        let starters = starting.filter(isStarter)
+        XCTAssertGreaterThanOrEqual(starters.count, starterNames.count - 2,
+                                    "The standard starter subscription block could not be located")
+        let top = try XCTUnwrap(starters.first)
+        let bottom = try XCTUnwrap(starters.last)
+        attachText(starting.map { $0.0 }.joined(separator: "\n"), name: "default-sidebar")
+        rowCoordinate(in: app, box: top.1).click()
+        XCUIElement.perform(withKeyModifiers: [.shift]) {
+            rowCoordinate(in: app, box: bottom.1).click()
+        }
+        try nativeMenu(app, section: vienna ? "Folder" : "Edit", prefixOptions: ["Delete"], operation: "clear")
+        Thread.sleep(forTimeInterval: 0.7)
+        let options = ["Delete", "Remove", "Unsubscribe"]
+        let dialogs = [app.sheets.firstMatch, app.dialogs.firstMatch]
+        for dialog in dialogs where dialog.exists {
+            let action = namedButton(dialog, options: options)
+            if action.exists && action.isEnabled && action.isHittable {
+                action.click()
+                break
+            }
+        }
+        Thread.sleep(forTimeInterval: 1.2)
+        let cleared = try sidebarText(in: app)
+        attachText(cleared.map { $0.0 }.joined(separator: "\n"), name: "before-import-sidebar")
+        XCTAssertFalse(cleared.contains(where: isStarter),
+                       "Starter subscriptions remain in the isolated profile: \(cleared.map { $0.0 })")
+        XCTAssertTrue(cleared.contains { textKey($0.0).contains(vienna ? "unreadarticles" : "allunread") },
+                      "Cleared account sidebar was not legible")
+    }
+
+    @MainActor
+    private func revealFixtureFolders(in app: XCUIApplication, mode: String) throws {
+        expandSidebar(in: app)
+        let labels: [String]
+        switch mode {
+        case "baseline": labels = ["News", "Science and technology"]
+        case "flattened": labels = ["Brew Alpha - Brew Shared", "Brew Beta - Brew Shared", "Brew Shallow"]
+        case "unique": labels = ["Brew Alpha", "Brew Beta", "Brew Shared A", "Brew Shared B", "Brew Shallow"]
+        default: labels = ["Brew Alpha", "Brew Beta", "Brew Shared", "Brew Shallow"]
+        }
+        for label in labels {
+            let hits = try sidebarText(in: app).filter { textKey($0.0) == textKey(label) }
+            for hit in hits {
+                rowCoordinate(in: app, box: hit.1).click()
+                app.typeKey(XCUIKeyboardKey.rightArrow, modifierFlags: [])
+            }
+        }
+    }
+
+    @MainActor
+    private func assertFixtureRows(in app: XCUIApplication, titles: [String], stage: String) throws {
         let outline = app.outlines.firstMatch
         XCTAssertTrue(outline.waitForExistence(timeout: 10), "No native subscriptions sidebar")
-        let tree = outline.debugDescription.lowercased()
+        let rows = try sidebarText(in: app).map { $0.0 }
+        attachText(rows.joined(separator: "\n"), name: stage + "-sidebar")
         let names = ["bbc", "nasa", "wordpress"]
         XCTAssertEqual(titles.count, names.count)
         for name in names {
-            XCTAssertTrue(tree.contains(name), "Sidebar has no imported entry for \(name)")
+            XCTAssertTrue(rows.contains { textKey($0).contains(name) }, "Sidebar has no imported entry for \(name)")
         }
     }
 

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 app="$1"; mode="$2"; round="$3"
-case "$mode" in baseline|nested|flattened) ;; *) exit 2 ;; esac
+case "$mode" in baseline|nested|flattened|unique) ;; *) exit 2 ;; esac
 [[ "$round" = 1 || "$round" = 2 ]]
 scratch=/tmp/brew-opml-runtime
 proof="$GITHUB_WORKSPACE/proof"
