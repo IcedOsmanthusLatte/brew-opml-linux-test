@@ -221,7 +221,7 @@ def scroll_to(label):
 
 def enable_feeder_full_articles():
     # Feeder's importer updates the existing feed by URL. Keep the original three feed
-    # entries and change only the BBC subscription's documented per-feed attribute.
+    # entries and change only the BBC subscription's native per-feed attribute.
     fixture = ET.parse(Path(__file__).with_name("control.opml"))
     bbc, = [node for node in fixture.iter("outline") if node.get("text") == SOURCES["BBC"]]
     namespace = "https://nononsenseapps.com/feeder"
@@ -255,10 +255,12 @@ def feeder_export():
         if download.get("clickable") == "true":
             click(download)
     filename = wait(lambda: next((x.get("text") for x in xml().iter("node")
-                                  if re.fullmatch(r"feeder-export-\d{4}-\d{2}-\d{2}-\d+\.opml",
-                                                  x.get("text", ""))), None), timeout=18)
-    tap("Save")
+                                  if x.get("class") == "android.widget.EditText"
+                                  and re.fullmatch(r"feeder-export-\d{4}-\d{2}-\d{2}-\d+\.opml",
+                                                   x.get("text", ""))), None), timeout=18)
     path = "/sdcard/Download/" + filename
+    assert not shell("stat", "-c", "%s", path, check=False), "Export would reuse an existing file"
+    tap("Save")
 
     def read_export():
         try:
@@ -279,7 +281,7 @@ def feeder_export():
     variant = actual[expected[0]].get("{https://nononsenseapps.com/feeder}fullTextByDefault")
     assert variant in {"true", "false"}, "Native export omitted Feeder's full-text setting"
     note("feeder-native-export-readback", sources=len(actual), full_text_enabled=variant == "true",
-         export_sha256=shell("sha256sum", path).split()[0])
+         filename=filename, export_sha256=shell("sha256sum", path).split()[0])
     return variant == "true"
 
 
