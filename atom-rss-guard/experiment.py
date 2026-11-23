@@ -143,7 +143,7 @@ def run_fixture_server(fixtures):
     return server
 
 
-def make_opml(path, server, mode):
+def make_opml(path, server, mode, meta):
     root = ET.Element("opml", version="2.0")
     ET.SubElement(ET.SubElement(root, "head"), "title").text = "Same-publisher frozen sample"
     body = ET.SubElement(root, "body")
@@ -153,8 +153,10 @@ def make_opml(path, server, mode):
             continue
         fixture = "http://127.0.0.1:" + str(server.server_port) + "/" + title.lower().replace(" ", "-") + ".xml"
         chosen[title] = fixture
-        ET.SubElement(body, "outline", text=title, title=title, type="rss", xmlUrl=fixture,
-                      htmlUrl=origin.rsplit("/", 1)[0])
+        # RSS Guard 5.3.0 reads its OPML version attribute when online
+        # discovery is disabled. Feed type must follow the returned XML format.
+        ET.SubElement(body, "outline", text=title, title=title, type="rss", version=meta[title]["kind"].upper(),
+                      xmlUrl=fixture, htmlUrl=origin.rsplit("/", 1)[0])
     ET.ElementTree(root).write(path, encoding="UTF-8", xml_declaration=True)
     return chosen
 
@@ -246,9 +248,15 @@ def mark_article(publisher, before, data_dir, evidence, meta):
         return None
 
     entry, target_before, item_node = guard.wait_for(f"No visible unread duplicate for {publisher}", one_unread_pair, seconds=14)
-    guard.click(item_node)
-    guard.click(guard.find("Mark articles read", guard.BUTTONS))
     key = entry["key"]
+    guard.click(item_node)
+    time.sleep(0.3)
+    after_select = groups(read_rows()).get(key, [])
+    if any(row["is_read"] for row in after_select):
+        action = "Select the RSS-side article (automatic mark read)"
+    else:
+        action = "Select the RSS-side article, then use Mark articles read"
+        guard.click(guard.find("Mark articles read", guard.BUTTONS))
 
     def one_or_more_read():
         pair = groups(read_rows()).get(key, [])
@@ -261,14 +269,14 @@ def mark_article(publisher, before, data_dir, evidence, meta):
         raise RuntimeError("Mark read changed the number of article entries")
     guard.capture(evidence, "marked-" + publisher.lower())
     return {"publisher": publisher, "original_url": entry["url"], "title": entry["title"],
-            "selection": feed_title, "native_action": "Select the RSS-side article, then use Mark articles read",
+            "selection": feed_title, "native_action": action,
             "before": target_before, "after": target_after}
 
 
 def test_mode(app, directory, server, meta, mode):
     directory.mkdir(parents=True)
     opml = directory / "fixture.opml"
-    selected = make_opml(opml, server, mode)
+    selected = make_opml(opml, server, mode, meta)
     content_titles = {
         title: "Ubuntu RSS" if title == "Ubuntu Atom" and meta[title]["kind"] == "RSS" else title
         for title in selected
