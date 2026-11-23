@@ -16,7 +16,7 @@ import tempfile
 import threading
 import time
 from urllib.parse import urlsplit, urlunsplit
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener
 import xml.etree.ElementTree as ET
 
 import guard
@@ -43,20 +43,31 @@ def url_key(value):
     return urlunsplit((parts.scheme.casefold(), parts.netloc.casefold(), path, parts.query, ""))
 
 
+class RedirectLog(HTTPRedirectHandler):
+    def __init__(self):
+        self.events = []
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        self.events.append({"status": code, "location": newurl})
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
 def fetch_source(source):
     title, (url, kind) = source
     request = Request(url, headers={"User-Agent": "BrewFeedAudit/1.0 (+https://getbrew.app/)", "Accept": "application/rss+xml,application/atom+xml,application/xml,text/xml;q=0.9,*/*;q=0.1"})
     last_error = None
     for attempt in range(3):
         try:
-            with urlopen(request, timeout=18) as response:
+            redirects = RedirectLog()
+            with build_opener(redirects).open(request, timeout=18) as response:
                 raw = response.read(5_000_001)
                 if len(raw) > 5_000_000:
                     raise ValueError(f"Feed too large: {title}")
                 meta = {"url": url, "final_url": response.url, "status": response.status,
                         "content_type": response.headers.get_content_type(),
                         "sha256": sha256(raw).hexdigest(),
-                        "fetched_at_utc": datetime.now(timezone.utc).isoformat()}
+                        "fetched_at_utc": datetime.now(timezone.utc).isoformat(),
+                        "redirects": redirects.events}
             break
         except OSError as exc:
             last_error = exc
@@ -66,8 +77,13 @@ def fetch_source(source):
 
     root = ET.fromstring(raw)
     expected = {"RSS": "rss", "Atom": ATOM + "feed"}[kind]
+    requested_kind = kind
     if root.tag != expected:
-        raise ValueError(f"{title}: unexpected root {root.tag!r}")
+        if (title == "Ubuntu Atom" and root.tag == "rss" and meta["final_url"] == SOURCES["Ubuntu RSS"][0]
+                and len(meta["redirects"]) == 1):
+            kind = "RSS"
+        else:
+            raise ValueError(f"{title}: unexpected root {root.tag!r}")
     entries = []
     for item in root.findall("./channel/item" if kind == "RSS" else ATOM + "entry"):
         if kind == "RSS":
@@ -87,7 +103,7 @@ def fetch_source(source):
                         "summary_chars": len(summary), "content_chars": len(content)})
     if not entries:
         raise ValueError(f"{title}: source is empty")
-    return title, {**meta, "kind": kind, "count": len(entries), "entries": entries}, raw
+    return title, {**meta, "kind": kind, "requested_kind": requested_kind, "count": len(entries), "entries": entries}, raw
 
 
 def run_fixture_server(fixtures):
@@ -104,6 +120,12 @@ def run_fixture_server(fixtures):
                 return
             meta, data = value
             fetched_paths.append(self.path)
+            if self.path == "/ubuntu-atom.xml" and meta["kind"] == "RSS":
+                self.send_response(meta["redirects"][0]["status"])
+                self.send_header("Location", "/ubuntu-rss.xml")
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+                return
             mime = "application/rss+xml" if meta["kind"] == "RSS" else "application/atom+xml"
             self.send_response(200)
             self.send_header("Content-Type", mime)
@@ -247,8 +269,14 @@ def test_mode(app, directory, server, meta, mode):
     directory.mkdir(parents=True)
     opml = directory / "fixture.opml"
     selected = make_opml(opml, server, mode)
-    aggregate = {entry["key"] for title in selected for entry in meta[title]["entries"]}
+    content_titles = {
+        title: "Ubuntu RSS" if title == "Ubuntu Atom" and meta[title]["kind"] == "RSS" else title
+        for title in selected
+    }
+    aggregate = {entry["key"] for title in content_titles.values() for entry in meta[title]["entries"]}
     expected_requests = {urlsplit(address).path for address in selected.values()}
+    if content_titles.get("Ubuntu Atom") == "Ubuntu RSS":
+        expected_requests.add("/ubuntu-rss.xml")
     server.fetched_paths.clear()
     with tempfile.TemporaryDirectory(prefix="rssguard-brew-atom-") as profile:
         data_dir = Path(profile) / "rssguard-data"
@@ -289,12 +317,13 @@ def test_mode(app, directory, server, meta, mode):
                 counts = {}
                 for publisher in PUBLISHERS:
                     keys = {entry["key"] for title in selected if title.startswith(publisher)
-                            for entry in meta[title]["entries"]}
+                            for entry in meta[content_titles[title]]["entries"]}
                     rows = [row for row in before if row["key"] in keys]
                     counts[publisher] = {"rows": len(rows), "unique_original_urls": len(groups(rows)),
                                          "duplicate_original_urls": sum(len(copies) > 1 for copies in groups(rows).values())}
                 result = {"mode": mode, "profile_started_empty": True, "import_status": status,
-                          "frozen_sha256": {title: meta[title]["sha256"] for title in selected},
+                          "frozen_sha256": {title: meta[content_titles[title]]["sha256"] for title in selected},
+                          "served_actual_kinds": {title: meta[content_titles[title]]["kind"] for title in selected},
                           "counts": counts, "read_checks": marks,
                           "requested_fixture_paths": sorted(set(server.fetched_paths))}
                 write_json(directory / "result.json", result)
