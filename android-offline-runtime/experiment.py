@@ -310,8 +310,34 @@ def title_node(tree, items):
     return None
 
 
+def feeder_find_locked_item(source, item):
+    # Feeder's feed-list search filters the imported database without opening an article.
+    # The token only narrows the local list. A full title match still gates each tap.
+    token = max(item.title.split(), key=len)
+    assert len(token) >= 4 and token.isascii() and token.isalnum()
+    tap("Search")
+    editor = wait(lambda: spot(lambda n: n.get("package") == FEEDER
+                               and n.get("class") == "android.widget.EditText"), timeout=15)
+    click(editor)
+    shell("input", "text", token)
+    try:
+        match = wait(lambda: title_node(xml(), [item]), timeout=25)
+    except TimeoutError:
+        note("feeder-local-search-miss", source=source, title_sha256=digest(item.title),
+             url_sha256=digest(item.url), guid_sha256=digest(item.guid), token_sha256=digest(token))
+        raise AssertionError("Locked article not observed in Feeder's native search: " + source) from None
+    note("feeder-local-search-match", source=source, title_sha256=digest(item.title),
+         url_sha256=digest(item.url), guid_sha256=digest(item.guid))
+    return match
+
+
 def visible_item(package, source, items):
+    if package == FEEDER:
+        optional("Cancel search")
     source_timeline(package, source)
+    if package == FEEDER:
+        assert len(items) == 1, "The Feeder sample must be locked before looking for it"
+        return title_node(xml(), items) or feeder_find_locked_item(source, items[0])
     for _ in range(7):
         match = title_node(xml(), items)
         if match:
@@ -471,7 +497,8 @@ if __name__ == "__main__":
                            "Open menu", "Open navigation drawer", "Open navigation menu", "Reading behavior",
                            "Feeds & accounts", "Import and export", "Import feeds from OPML", "Edit feed",
                            "Delete feed", "All feeds", FEEDER_DEFAULT, "News", "Science and technology",
-                           "Export feeds to OPML", "Sync feeds", "Refresh feeds", FEEDER_ADV, FLOW_ADV, *SOURCES.values()}
+                           "Export feeds to OPML", "Sync feeds", "Refresh feeds", "Search", "Cancel search",
+                           FEEDER_ADV, FLOW_ADV, *SOURCES.values()}
             rows = []
             for n in xml().iter("node"):
                 label, description, resource = fields(n)

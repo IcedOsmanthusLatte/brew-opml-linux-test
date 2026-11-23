@@ -14,7 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [com.nononsenseapps.feeder, com.prof18.feedflow]
+        # FeedFlow's two exact-sample repeats are preserved in Actions run 45056903029.
+        app: [com.nononsenseapps.feeder]
         round: [1, 2]
     env:
       BREW_TEST_PACKAGE: ${{ matrix.app }}
