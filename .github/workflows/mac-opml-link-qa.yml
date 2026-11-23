@@ -1,0 +1,112 @@
+name: Verify public Mac OPML comparison link
+on:
+  push:
+    branches: [mac-opml-link-qa-20261124]
+    paths: [.github/workflows/mac-opml-link-qa.yml]
+permissions:
+  contents: read
+jobs:
+  public-landing:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    steps:
+      - name: Install Chromium
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install playwright==1.55.0
+          .venv/bin/playwright install chromium
+      - name: Verify both viewports and downloadable OPML
+        run: |
+          .venv/bin/python - <<'PYTHON'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          from xml.etree import ElementTree as ET
+          
+          from playwright.sync_api import sync_playwright
+          
+          LANDING = "https://getbrew.app/blog/mac-rss-reader-opml/#mac-folder-test-results"
+          SAMPLE = "https://getbrew.app/collections/downloads/opml-migration-normal.opml"
+          EXPECTED = {
+              "normal": "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd",
+              "netnewswire-nested-1": "d4fcb29b25f290042b9cd38441878ead9e4d9f0b289437b7861bfe0c68a810d7",
+              "vienna-unique-2": "e74637305e6142be24cd94ee556d8a2bfe3efdb52d69a418e263ddee75dd6b65",
+              "netnewswire-flattened-1": "6b62dddc3354d6f3e2a44db03babe07171609f3ceb5652622df0e24a334a7edd",
+          }
+          OUT = Path("landing-evidence")
+          OUT.mkdir(exist_ok=True)
+          
+          def validate_file(data, key):
+              checksum = hashlib.sha256(data).hexdigest()
+              entries = [el.get("xmlUrl") for el in ET.fromstring(data).iter("outline") if el.get("xmlUrl")]
+              assert checksum == EXPECTED[key] and len(entries) == len(set(entries)) == 3, key
+              return {"sha256": checksum, "distinct_feeds": len(set(entries))}
+          
+          def check(browser, width, height, mobile):
+              with browser.new_context(viewport={"width": width, "height": height},
+                                       is_mobile=mobile, has_touch=mobile, accept_downloads=True,
+                                       reduced_motion="reduce", service_workers="block") as context:
+                  page = context.new_page()
+                  response = page.goto(LANDING, wait_until="load", timeout=30000)
+                  page.wait_for_function("document.fonts.status === 'loaded'")
+                  heading = page.locator("#mac-folder-test-results")
+                  heading.wait_for(state="visible")
+                  page.wait_for_timeout(300)
+                  heading_info = heading.evaluate("""el => {
+                      const r = el.getBoundingClientRect();
+                      return {top: Math.round(r.top), visible: r.top >= 0 && r.bottom < innerHeight,
+                              unobscured: el.contains(document.elementFromPoint(r.left + 8, r.top + r.height / 2))};
+                  }""")
+                  assert response.status == 200 and page.url == LANDING and heading_info["visible"] and heading_info["unobscured"], heading_info
+                  page.screenshot(path=OUT / f"{width}-arrival.jpg", type="jpeg", quality=76, animations="disabled")
+                  table = page.locator("article.article-body table")
+                  table.scroll_into_view_if_needed()
+                  rows = [[cell.strip() for cell in row.locator("th,td").all_inner_texts()]
+                          for row in table.locator("tr").all()]
+                  assert rows == [
+                      ["Feed", "NetNewsWire", "Vienna"],
+                      ["BBC World", "Brew Alpha", "Brew Alpha / Brew Shared"],
+                      ["NASA News Releases", "Brew Beta", "Brew Alpha / Brew Shared"],
+                      ["WordPress News", "Brew Shallow", "Brew Shallow"],
+                  ], rows
+                  assert table.evaluate("""el => {
+                      const r = el.getBoundingClientRect();
+                      return r.left >= 0 && r.right <= innerWidth + 1 &&
+                          r.top >= 0 && r.bottom <= innerHeight &&
+                          [...el.querySelectorAll('td, th')].every(cell => cell.scrollWidth <= cell.clientWidth + 1);
+                  }"""), "table exceeds viewport"
+                  page.screenshot(path=OUT / f"{width}-comparison.jpg", type="jpeg", quality=76, animations="disabled")
+                  sample = page.locator(f'article.article-body a[href^="{SAMPLE}"]')
+                  with page.expect_download(timeout=15000) as event:
+                      sample.tap() if mobile else sample.click()
+                  download = event.value
+                  assert download.suggested_filename.lower().endswith(".opml")
+                  reports = {"normal": {"browser_download": True, "filename": download.suggested_filename,
+                                        **validate_file(download.path().read_bytes(), "normal")}}
+                  for key in EXPECTED:
+                      if key == "normal":
+                          continue
+                      link = page.locator(f'article.article-body a[href*="/{key}/fixture.opml"]')
+                      href = link.evaluate("el => el.href")
+                      assert href.startswith("https://raw.githubusercontent.com/IcedOsmanthusLatte/brew-opml-linux-test/"), href
+                      linked = context.request.get(href, timeout=20000)
+                      assert linked.status == 200 and linked.url == href, (href, linked.status, linked.url)
+                      reports[key] = {"link": href, "http": linked.status, **validate_file(linked.body(), key)}
+                  return {"viewport": [width, height], "mobile_emulation": mobile,
+                          "exact_landing": page.url, "heading": heading_info, "rows": rows, "samples": reports}
+          
+          with sync_playwright() as playwright, playwright.chromium.launch() as browser:
+              checks = [check(browser, 390, 844, True), check(browser, 1440, 900, False)]
+              result = {"pass": True, "run_id": os.environ["GITHUB_RUN_ID"], "browser": browser.version,
+                        "anonymous": True, "views": checks}
+              (OUT / "verification.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+              print(json.dumps(result))
+          PYTHON
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mac-opml-landing-evidence
+          path: landing-evidence
+          if-no-files-found: warn
+          retention-days: 7
