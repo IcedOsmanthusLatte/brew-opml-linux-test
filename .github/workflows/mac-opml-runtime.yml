@@ -34,6 +34,17 @@ jobs:
             -derivedDataPath "$RUNNER_TEMP/brew-opml-build" \
             -resultBundlePath "$RUNNER_TEMP/brew-opml.xcresult" \
             CODE_SIGN_IDENTITY=- | tee "$GITHUB_WORKSPACE/proof/xc-test.log"
+      - name: Collect Xcode test attachments
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          result="$RUNNER_TEMP/brew-opml.xcresult"
+          if [[ -d "$result" ]]; then
+            dest="$RUNNER_TEMP/brew-opml-attachments"
+            xcrun xcresulttool export attachments --path "$result" --output-path "$dest"
+            python3 mac-opml-runtime/attachments.py "$dest" proof
+          fi
       - name: Verify fixture URLs and export structure
         run: python3 mac-opml-runtime/evidence.py
       - uses: actions/upload-artifact@v4

@@ -6,7 +6,6 @@ private struct Plan: Decodable {
     let app: String
     let bundle_path: String
     let fixture_path: String
-    let proof_path: String
     let export_dir: String
     let titles: [String]
 
@@ -22,28 +21,29 @@ final class NativeOPMLTests: XCTestCase {
         continueAfterFailure = false
         let plan = try Plan.read()
         let app = XCUIApplication(url: URL(fileURLWithPath: plan.bundle_path))
-        let output = URL(fileURLWithPath: plan.proof_path)
         app.launch()
-        defer { saveTree(of: app, into: output, name: "final") }
+        defer { saveTree(of: app, name: "final") }
         XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 25))
         dismissFirstRunIfPresent(in: app)
-        try nativeMenu(app, section: "File", prefixOptions: ["Import Subscriptions", "Import OPML"], into: output)
+        expandSidebar(in: app)
+        saveTree(of: app, name: "before-import")
+        try nativeMenu(app, section: "File", prefixOptions: ["Import Subscriptions", "Import OPML"])
         try chooseInput(in: app, path: plan.fixture_path)
         finishImportIfPresent(in: app)
         expandSidebar(in: app)
-        saveTree(of: app, into: output, name: "imported")
-        saveWindow(of: app, into: output, name: "imported")
+        saveTree(of: app, name: "imported")
+        saveWindow(of: app, name: "imported")
         assertFixtureRows(in: app, titles: plan.titles)
 
         app.terminate()
         app.launch()
         XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 15))
         expandSidebar(in: app)
-        saveTree(of: app, into: output, name: "restarted")
-        saveWindow(of: app, into: output, name: "restarted")
+        saveTree(of: app, name: "restarted")
+        saveWindow(of: app, name: "restarted")
         assertFixtureRows(in: app, titles: plan.titles)
 
-        try nativeMenu(app, section: "File", prefixOptions: ["Export Subscriptions", "Export OPML"], into: output)
+        try nativeMenu(app, section: "File", prefixOptions: ["Export Subscriptions", "Export OPML"])
         try chooseOutput(in: app, directory: plan.export_dir)
         let expected = URL(fileURLWithPath: plan.export_dir).appendingPathComponent("native-export.opml")
         for _ in 0..<20 {
@@ -54,7 +54,7 @@ final class NativeOPMLTests: XCTestCase {
     }
 
     @MainActor
-    private func nativeMenu(_ app: XCUIApplication, section: String, prefixOptions: [String], into output: URL) throws {
+    private func nativeMenu(_ app: XCUIApplication, section: String, prefixOptions: [String]) throws {
         let fileMenu = app.menuBars.firstMatch.menuBarItems[section]
         XCTAssertTrue(fileMenu.waitForExistence(timeout: 12), "No native File menu")
         fileMenu.click()
@@ -72,8 +72,8 @@ final class NativeOPMLTests: XCTestCase {
         }
         let labels = fileMenu.descendants(matching: .menuItem).allElementsBoundByIndex.map(\.label)
         let op = prefixOptions.first?.lowercased().hasPrefix("import") == true ? "import" : "export"
-        try labels.joined(separator: "\n").write(to: output.appendingPathComponent(op + "-menu.txt"),
-                                                   atomically: true, encoding: .utf8)
+        print("BREW_MENU_\(op): \(labels)")
+        attachText(labels.joined(separator: "\n"), name: op + "-menu")
         try XCTUnwrap(item, "Native item missing or disabled: \(prefixOptions). Saw: \(labels)").click()
     }
 
@@ -110,15 +110,15 @@ final class NativeOPMLTests: XCTestCase {
 
     @MainActor
     private func chooseOutput(in app: XCUIApplication, directory: String) throws {
-        let save = app.buttons["Save"].firstMatch
+        let save = app.buttons.matching(NSPredicate(format: "label ==[c] %@ OR label ==[c] %@",
+                                                    "Save", "Export OPML")).firstMatch
         XCTAssertTrue(save.waitForExistence(timeout: 8), "Native save dialog did not appear")
         let group = app.checkBoxes.matching(NSPredicate(format: "label CONTAINS[c] %@", "group")).firstMatch
         if group.exists, let value = group.value as? String, value == "0" { group.click() }
         if group.exists, let value = group.value as? NSNumber, value.intValue == 0 { group.click() }
         goToPath(directory, in: app)
-        let fields = app.sheets.firstMatch.textFields
-        let named = fields.matching(NSPredicate(format: "label CONTAINS[c] %@", "Save As")).firstMatch
-        if named.exists {
+        let named = app.sheets.firstMatch.textFields.firstMatch
+        if named.exists && named.isHittable {
             named.click()
             named.typeKey("a", modifierFlags: [.command])
             paste("native-export.opml", into: named)
@@ -184,18 +184,26 @@ final class NativeOPMLTests: XCTestCase {
     }
 
     @MainActor
-    private func saveTree(of app: XCUIApplication, into output: URL, name: String) {
+    private func saveTree(of app: XCUIApplication, name: String) {
         let outline = app.outlines.firstMatch
         let value = outline.exists ? outline.debugDescription : app.debugDescription
-        try? String(value.prefix(36_000)).write(to: output.appendingPathComponent(name + "-tree.txt"),
-                                                atomically: true, encoding: .utf8)
+        attachText(String(value.prefix(36_000)), name: name + "-tree")
     }
 
     @MainActor
-    private func saveWindow(of app: XCUIApplication, into output: URL, name: String) {
+    private func saveWindow(of app: XCUIApplication, name: String) {
         let element = app.windows.firstMatch
         guard element.exists else { return }
-        let image = element.screenshot().pngRepresentation
-        try? image.write(to: output.appendingPathComponent(name + "-window.png"), options: .atomic)
+        let artifact = XCTAttachment(screenshot: element.screenshot())
+        artifact.name = "brew-" + name + "-window"
+        artifact.lifetime = .keepAlways
+        add(artifact)
+    }
+
+    private func attachText(_ text: String, name: String) {
+        let artifact = XCTAttachment(string: text)
+        artifact.name = "brew-" + name
+        artifact.lifetime = .keepAlways
+        add(artifact)
     }
 }
