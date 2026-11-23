@@ -1,0 +1,29 @@
+name: Verify Tad editorial landing
+on:
+  push:
+    branches: [mac-opml-folder-migration]
+    paths:
+      - .github/workflows/tad-editorial-landing.yml
+      - verification/check-tad-landing.py
+permissions:
+  contents: read
+jobs:
+  landing:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Chromium test runtime
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install playwright==1.55.0
+          .venv/bin/playwright install chromium
+      - name: Check the public comparison from the email
+        run: .venv/bin/python verification/check-tad-landing.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brew-tad-landing-proof
+          path: tad-landing-proof
+          if-no-files-found: warn
+          retention-days: 7
