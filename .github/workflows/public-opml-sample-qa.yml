@@ -1,0 +1,143 @@
+name: Verify public OPML sample links
+on:
+  push:
+    branches: [public-opml-sample-qa-20261124]
+    paths: [.github/workflows/public-opml-sample-qa.yml]
+permissions:
+  contents: read
+jobs:
+  public-links:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    steps:
+      - name: Install Chromium
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install playwright==1.55.0
+          .venv/bin/playwright install chromium
+      - name: Verify link arrivals and sample downloads
+        run: |
+          .venv/bin/python - <<'PYTHON'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          from urllib.parse import urlsplit
+          from xml.etree import ElementTree as ET
+          
+          from playwright.sync_api import Error, sync_playwright
+          
+          LANDINGS = {"guide": "https://getbrew.app/blog/opml-file/#test-an-opml-import", "migration": "https://getbrew.app/blog/self-hosted-rss-reader-opml/#opml-migration-test-results"}
+          FORMS = {"jordan": "https://www.jordanmcmahon.com/contact", "ssd": "https://www.ssdnodes.com/contact/"}
+          SAMPLE_PATH = "/collections/downloads/opml-migration-normal.opml"
+          EXPECTED = "822295536b4776a25750d7dc4b707afff1fe9086d33382e6148b984195ed1afd"
+          EXPECTED_FEEDS = {
+              "https://feeds.bbci.co.uk/news/world/rss.xml",
+              "https://www.nasa.gov/news-release/feed/",
+              "https://wordpress.org/news/feed/",
+          }
+          EXPECTED_ROUTES = [
+              ["FreshRSS → FreshRSS", "Kept", "Paused"],
+              ["FreshRSS → Miniflux", "Kept", "Active"],
+              ["Miniflux → FreshRSS", "Kept", "Active"],
+              ["Miniflux → Miniflux", "Kept", "Paused"],
+          ]
+          OUT = Path("opml-preparation-evidence")
+          OUT.mkdir(exist_ok=True)
+          
+          
+          def section_visible(locator):
+              return locator.evaluate("""el => {
+                  const r = el.getBoundingClientRect();
+                  return r.top >= 0 && r.bottom <= innerHeight &&
+                      el.contains(document.elementFromPoint(r.left + 8, r.top + r.height / 2));
+              }""")
+          
+          
+          def landing_check(browser, name, url, width, height, mobile):
+              with browser.new_context(viewport={"width": width, "height": height},
+                                       is_mobile=mobile, has_touch=mobile, accept_downloads=True,
+                                       reduced_motion="reduce", service_workers="block") as context:
+                  page = context.new_page()
+                  response = page.goto(url, wait_until="load", timeout=30000)
+                  assert response.status == 200 and page.url == url
+                  page.wait_for_function("document.fonts.status === 'loaded'")
+                  section = page.locator("#" + urlsplit(url).fragment)
+                  section.wait_for(state="visible")
+                  assert section_visible(section), "The heading is not visible on arrival"
+                  sample = page.locator(f'article.article-body a[href*="{SAMPLE_PATH}"]')
+                  assert sample.count() == 1
+                  assert sample.evaluate("el => new URL(el.href).origin === location.origin")
+                  cells = []
+                  if name == "guide":
+                      paragraph = sample.locator("xpath=ancestor::li[1]")
+                      assert "three unique feed addresses" in paragraph.inner_text()
+                      assert section_visible(sample), "The normal sample link is not visible on arrival"
+                  else:
+                      table = page.locator("article.article-body table")
+                      cells = [[cell.strip() for cell in row.locator("th,td").all_inner_texts()]
+                               for row in table.locator("tr").all()]
+                      assert cells[1:] == EXPECTED_ROUTES, cells
+                      assert table.evaluate("""el => {
+                          const r = el.getBoundingClientRect();
+                          return r.left >= 0 && r.right <= innerWidth + 1 && r.top >= 0 && r.bottom <= innerHeight;
+                      }"""), "Comparison table is not fully readable on arrival"
+                  page.screenshot(path=OUT / f"{name}-{width}.jpg", type="jpeg", quality=76, animations="disabled")
+                  with page.expect_download(timeout=15000) as event:
+                      sample.tap() if mobile else sample.click()
+                  result = event.value
+                  data = result.path().read_bytes()
+                  digest = hashlib.sha256(data).hexdigest()
+                  urls = [el.get("xmlUrl") for el in ET.fromstring(data).iter("outline") if el.get("xmlUrl")]
+                  assert result.suggested_filename.endswith(".opml") and digest == EXPECTED
+                  assert len(urls) == 3 and set(urls) == EXPECTED_FEEDS
+                  return {"exact_landing": page.url, "viewport": [width, height], "mobile_emulation": mobile,
+                          "heading_visible_on_arrival": True, "expected_routes": cells[1:],
+                          "browser_download": True, "filename": result.suggested_filename,
+                          "unique_feed_count": len(set(urls)), "sha256": digest}
+          
+          
+          def public_form(browser, url):
+              try:
+                  with browser.new_context(service_workers="block") as ctx:
+                      page = ctx.new_page()
+                      res = page.goto(url, wait_until="domcontentloaded", timeout=22000)
+                      page.wait_for_timeout(1700)
+                      attrs = []
+                      captcha_urls = []
+                      for frame in page.frames:
+                          url_parts = urlsplit(frame.url)
+                          if "recaptcha" in frame.url or "hcaptcha" in frame.url or "turnstile" in frame.url:
+                              captcha_urls.append(url_parts.netloc + url_parts.path)
+                          for form in frame.locator("form").all():
+                              if form.locator("textarea").count():
+                                  attrs.append({
+                                      "frame_host": url_parts.netloc,
+                                      "text_fields": form.locator("input:not([type=hidden]),textarea").count(),
+                                      "visible_submit": any(b.is_visible() for b in form.locator('button[type=submit],input[type=submit],button:not([type])').all()),
+                                      "topics": form.locator("select option").all_text_contents(),
+                                      "visible_captcha_iframes": form.locator('iframe[src*="recaptcha"]:visible,iframe[src*="hcaptcha"]:visible').count(),
+                                  })
+                      return {"http": res.status, "final_url": page.url, "message_form": attrs,
+                              "captcha_frames": captcha_urls, "method": "read-only browser navigation"}
+              except Error as exc:
+                  return {"error": type(exc).__name__, "method": "read-only browser navigation"}
+          
+          
+          with sync_playwright() as playwright, playwright.chromium.launch() as browser:
+              proof = {name: [landing_check(browser, name, url, w, h, m)
+                              for w, h, m in ((390, 844, True), (1440, 900, False))]
+                       for name, url in LANDINGS.items()}
+              forms = {name: public_form(browser, url) for name, url in FORMS.items()}
+              content = {"passed": True, "anonymous": True, "run_id": os.environ["GITHUB_RUN_ID"],
+                         "browser": browser.version, "landings": proof, "target_forms": forms}
+              (OUT/"verification.json").write_text(json.dumps(content, indent=2) + "\n", encoding="utf-8")
+              print(json.dumps(content))
+          PYTHON
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: public-opml-sample-qa
+          path: opml-preparation-evidence
+          if-no-files-found: warn
+          retention-days: 7
