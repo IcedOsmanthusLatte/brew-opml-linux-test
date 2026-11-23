@@ -57,8 +57,15 @@ def open_route(page, width, theme, samples, prefix=""):
     assert page.locator("link[rel=canonical]").get_attribute("href") == ARTICLE
     heading = page.locator(f'[id="{ANCHOR}"]')
     assert heading.count() == 1 and "Open the add menu in Brew" in heading.inner_text()
+    page.wait_for_load_state("load", timeout=15000)
     page.evaluate("document.fonts.ready")
-    page.wait_for_timeout(250)
+    try:
+        page.wait_for_function("""id => {
+            const box = document.getElementById(id).getBoundingClientRect();
+            return box.top >= 72 && box.bottom < innerHeight;
+        }""", arg=ANCHOR, timeout=3500)
+    except Exception:
+        pass
     guide_layout = heading.evaluate("""el => {
       const box = el.getBoundingClientRect();
       const hit = document.elementFromPoint(box.left + 8, box.top + Math.min(14,box.height / 2));
@@ -106,7 +113,7 @@ def main():
     results = {"phase":phase,"candidate_sha256":hashlib.sha256(candidate).hexdigest() if candidate is not None else None,
                "states":[], "samples":{}, "cloud_runner":True, "run_id":os.environ.get("GITHUB_RUN_ID")}
     with sync_playwright() as pw:
-        browser = pw.chromium.launch()
+        browser = pw.chromium.launch(channel="chromium")
         try:
             for width in (390,320,1440):
                 for theme in ("light","dark"):
