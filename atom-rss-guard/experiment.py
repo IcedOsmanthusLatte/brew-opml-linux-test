@@ -295,7 +295,11 @@ def test_mode(app, directory, server, meta, mode):
                 if status != guard.IMPORT_SUCCESS:
                     raise RuntimeError(f"Unexpected import result: {status}")
                 operation = "native Fetch all"
-                guard.xdo("key", "--clearmodifiers", "shift+F5")
+                # Click the actual toolbar button. The OPML dialog can leave focus
+                # away from the main window, causing a shortcut to do nothing.
+                guard.click(guard.find("Fetch all", guard.BUTTONS))
+                write_json(directory / "requested-fixture-routes.json", {"expected": sorted(expected_requests)})
+
 
                 def matching_rows():
                     rows = read_messages(data_dir, directory / "database-schema.json")
@@ -335,6 +339,7 @@ def test_mode(app, directory, server, meta, mode):
                     guard.capture(directory, "failure")
                     guard.record_accessibility_tree(directory / "accessibility.txt")
                     write_json(directory / "articles-on-failure.json", read_messages(data_dir, directory / "database-schema.json"))
+                    write_json(directory / "requested-fixture-routes.json", {"expected": sorted(expected_requests), "observed": server.fetched_paths})
                 except Exception as diagnostic:
                     print(f"Failed diagnostic capture: {diagnostic}", flush=True)
                 raise
