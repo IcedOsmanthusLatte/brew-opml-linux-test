@@ -1,0 +1,44 @@
+name: Mac OPML native import
+on:
+  push:
+    branches: [mac-opml-folder-migration]
+    paths:
+      - mac-opml-runtime/**
+      - .github/workflows/mac-opml-runtime.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: macos-15
+    timeout-minutes: 14
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [netnewswire, vienna]
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify official install and prepare OPML samples
+        run: bash mac-opml-runtime/stage.sh ${{ matrix.app }} baseline 1
+      - name: Run native OPML workflow with Xcode UI tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v xcodegen >/dev/null || brew install xcodegen
+          cd mac-opml-runtime
+          xcodegen generate
+          xcodebuild test -project BrewOPML.xcodeproj -scheme BrewOPML \
+            -destination 'platform=macOS,arch=arm64' -parallel-testing-enabled NO \
+            -derivedDataPath "$RUNNER_TEMP/brew-opml-build" \
+            -resultBundlePath "$RUNNER_TEMP/brew-opml.xcresult" \
+            CODE_SIGN_IDENTITY=- | tee "$GITHUB_WORKSPACE/proof/xc-test.log"
+      - name: Verify fixture URLs and export structure
+        run: python3 mac-opml-runtime/evidence.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mac-opml-${{ matrix.app }}-baseline-1
+          path: proof/
+          retention-days: 14
