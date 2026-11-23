@@ -39,7 +39,8 @@ def open_route(page, width, theme, samples):
     assert link.get_attribute("href") == GUIDE.removeprefix(ROOT)
     help_layout = link.evaluate("""el => {
       const box = el.getBoundingClientRect();
-      const hit = document.elementFromPoint(box.left + 6, box.top + 5);
+      const line = el.getClientRects()[0];
+      const hit = document.elementFromPoint(line.left + Math.min(6,line.width / 2), line.top + 5);
       return {
         fits: document.documentElement.scrollWidth <= innerWidth + 1 && box.left >= 0 && box.right <= innerWidth + 1,
         reachable: !!hit && el.contains(hit),
@@ -55,7 +56,7 @@ def open_route(page, width, theme, samples):
     page.wait_for_url(GUIDE, timeout=8000)
     assert response and response.status == 200 and page.url == GUIDE
     assert page.locator("link[rel=canonical]").get_attribute("href") == ARTICLE
-    heading = page.locator(ANCHOR)
+    heading = page.locator(f'[id="{ANCHOR[1:]}"]')
     assert heading.count() == 1 and "Open the add menu in Brew" in heading.inner_text()
     page.evaluate("document.fonts.ready")
     page.wait_for_timeout(250)
@@ -112,7 +113,8 @@ def main():
                 for theme in ("light","dark"):
                     context = browser.new_context(viewport={"width":width,"height":900},
                                                   color_scheme=theme, reduced_motion="reduce",
-                                                  accept_downloads=True, service_workers="block")
+                                                  accept_downloads=True, service_workers="block",
+                                                  is_mobile=width<768, has_touch=width<768)
                     try:
                         if candidate:
                             context.route(HELP, lambda route: route.fulfill(
