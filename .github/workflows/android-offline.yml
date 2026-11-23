@@ -20,6 +20,8 @@ jobs:
     env:
       BREW_TEST_PACKAGE: ${{ matrix.app }}
       BREW_TEST_ROUND: ${{ matrix.round }}
+      # Feeder's default-setting repeats completed in Actions run 45114998821.
+      BREW_TEST_CONDITION: prefetch
     steps:
       - uses: actions/checkout@v4
       - name: Check Android and enable emulator acceleration

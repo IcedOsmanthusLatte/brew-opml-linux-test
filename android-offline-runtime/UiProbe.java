@@ -8,11 +8,13 @@ import android.view.accessibility.AccessibilityNodeInfo;
 public final class UiProbe extends Instrumentation {
     private String label;
     private String expectedPackage;
+    private boolean scrollForm;
 
     @Override public void onCreate(Bundle arguments) {
         super.onCreate(arguments);
         label = arguments.getString("label", "");
         expectedPackage = arguments.getString("package", "");
+        scrollForm = arguments.getBoolean("scroll_form", false) || "true".equals(arguments.getString("scroll_form"));
         start();
     }
 
@@ -21,6 +23,11 @@ public final class UiProbe extends Instrumentation {
         try {
             AccessibilityNodeInfo root = getUiAutomation().getRootInActiveWindow();
             if (root != null && expectedPackage.contentEquals(root.getPackageName())) {
+                if (scrollForm) {
+                    result.putString("form_scrolled", Boolean.toString(scrollForward(root)));
+                    finish(Activity.RESULT_OK, result);
+                    return;
+                }
                 String state = null;
                 for (AccessibilityNodeInfo match : root.findAccessibilityNodeInfosByText(label)) {
                     CharSequence name = match.getText();
@@ -54,5 +61,18 @@ public final class UiProbe extends Instrumentation {
             result.putString("probe_error", error.getClass().getSimpleName());
         }
         finish(Activity.RESULT_OK, result);
+    }
+
+    private boolean scrollForward(AccessibilityNodeInfo node) {
+        if (node.isScrollable() && node.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)) {
+            return true;
+        }
+        for (int i = 0; i < node.getChildCount(); i++) {
+            AccessibilityNodeInfo child = node.getChild(i);
+            if (child != null && scrollForward(child)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

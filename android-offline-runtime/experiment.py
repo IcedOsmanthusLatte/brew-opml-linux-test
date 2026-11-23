@@ -219,6 +219,19 @@ def scroll_to(label):
     raise AssertionError("Settings control not shown: " + label)
 
 
+def save_feeder_form():
+    for _ in range(12):
+        if optional("OK"):
+            return
+        response = shell("am", "instrument", "-w", "-r", "-e", "scroll_form", "true",
+                         "-e", "package", FEEDER, "lab.brew.netprobe/.UiProbe", timeout=22)
+        if "form_scrolled=true" not in response:
+            x = str(WIDTH * 93 // 100)
+            shell("input", "swipe", x, str(HEIGHT * 83 // 100), x, str(HEIGHT * 32 // 100), "400")
+        time.sleep(0.45)
+    raise AssertionError("The enabled Feeder edit form save button was not reachable")
+
+
 def feeder_export():
     tap("Open menu")
     tap("Export feeds to OPML")
@@ -270,8 +283,7 @@ def setup_prefetch(package, enabled):
             optional(SOURCES["BBC"])
             scroll_to(FEEDER_ADV)
             tap(FEEDER_ADV)
-            scroll_to("OK")
-            tap("OK")
+            save_feeder_form()
             assert feeder_export(), "Feeder did not persist full-text setting"
         label = FEEDER_ADV
     else:
@@ -483,7 +495,9 @@ def main():
     assert package in APPS
     round_number = int(os.environ["BREW_TEST_ROUND"])
     assert round_number in (1, 2)
-    for condition in ("baseline", "prefetch"):
+    only = os.environ.get("BREW_TEST_CONDITION")
+    assert only in (None, "baseline", "prefetch")
+    for condition in ((only,) if only else ("baseline", "prefetch")):
         note("begin-clean-profile", package=package, condition=condition, round=round_number)
         measure_route(package, condition, round_number, candidates, selected)
 
