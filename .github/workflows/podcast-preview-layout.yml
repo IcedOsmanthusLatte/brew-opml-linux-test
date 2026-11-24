@@ -1,0 +1,64 @@
+name: Podcast example layout
+on:
+  push:
+    branches: [podcast-preview-layout]
+    paths:
+      - .github/workflows/podcast-preview-layout.yml
+      - verification/check-podcast-preview.py
+      - verification/podcast-preview-live.json
+
+permissions:
+  contents: read
+
+jobs:
+  layout:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      LIVE: ${{ contains(github.event.head_commit.message, 'Verify published podcast example') }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare one-time preview certificate
+        if: env.LIVE != 'true'
+        run: |
+          install -d -m 700 "$RUNNER_TEMP/brew-podcast" layout-transport
+          openssl req -new -x509 -newkey rsa:3072 -nodes -days 1 -subj '/CN=Ephemeral Brew layout test' \
+            -keyout "$RUNNER_TEMP/brew-podcast/key.pem" -out layout-transport/certificate.pem 2>/dev/null
+      - uses: actions/upload-artifact@v4
+        if: env.LIVE != 'true'
+        with:
+          name: brew-podcast-preview-certificate
+          path: layout-transport/certificate.pem
+          retention-days: 1
+      - name: Install browsers
+        run: |
+          python -m venv .venv
+          .venv/bin/pip --quiet install playwright==1.55.0
+          .venv/bin/playwright install --with-deps chromium webkit
+      - name: Verify desktop and mobile layout
+        run: |
+          if [[ "$LIVE" == true ]]; then
+            .venv/bin/python verification/check-podcast-preview.py live verification/podcast-preview-live.json
+            exit
+          fi
+          set -eu
+          capsule="$RUNNER_TEMP/brew-podcast"
+          deadline=$((SECONDS + 470))
+          endpoint="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/podcast-preview-layout/.qa-requests/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.b64"
+          while (( SECONDS < deadline )); do
+            if curl --fail --silent --max-time 6 "$endpoint?stamp=$(date +%s)" -o "$capsule/input.b64" && base64 --decode "$capsule/input.b64" > "$capsule/input.der"; then
+              if openssl cms -decrypt -inform DER -inkey "$capsule/key.pem" -in "$capsule/input.der" -out "$capsule/input.json"; then
+                rm -- "$capsule/key.pem"
+                .venv/bin/python verification/check-podcast-preview.py preview "$capsule/input.json"
+                exit
+              fi
+            fi
+            sleep 5
+          done
+          exit 2
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brew-podcast-layout-proof
+          path: layout-proof
+          retention-days: 7
