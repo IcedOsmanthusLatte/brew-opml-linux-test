@@ -78,7 +78,7 @@ final class NativeOPMLTests: XCTestCase {
                                   "Expected existing empty destination after the setup import")
         rowCoordinate(in: app, box: label.1).click()
         let outline = app.outlines.firstMatch
-        let row = try XCTUnwrap(outline.descendants(matching: .row).allElementsBoundByIndex.first {
+        let row = try XCTUnwrap(outline.descendants(matching: .TableRow).allElementsBoundByIndex.first {
             [$0.label, $0.title, $0.identifier, $0.debugDescription].contains { textKey($0).contains(textKey(target)) }
                 || $0.staticTexts.containing(NSPredicate(format: "label == %@ OR title == %@ OR value == %@", target, target, target)).firstMatch.exists
         }, "Destination did not have an accessible row")
@@ -88,7 +88,7 @@ final class NativeOPMLTests: XCTestCase {
                 rowCoordinate(in: app, box: label.1).click()
             }
         }
-        let selected = outline.descendants(matching: .row).allElementsBoundByIndex.filter { $0.isSelected }
+        let selected = outline.descendants(matching: .TableRow).allElementsBoundByIndex.filter { $0.isSelected }
         let receipt = "condition=\(mode)\ntarget=\(target)\ntarget_row_selected=\(row.isSelected)\nselected_row_count=\(selected.count)"
         print("BREW_VIENNA_SELECTION: \(receipt.replacingOccurrences(of: "\n", with: " "))")
         attachText(receipt, name: "destination-selection")
