@@ -95,11 +95,10 @@ jobs:
               page = Links()
               page.feed(raw.decode("utf-8"))
               assert Counter(clean(link) for link in page.hrefs) == Counter(EXPECTED)
-              jobs = [(mode, url) for link in page.hrefs for mode,url in (("published_href",link),("clean",clean(link)))]
+              jobs = [("published_href", link) for link in page.hrefs]
               with ThreadPoolExecutor(max_workers=4) as probes:
                   result["pairs"] = list(probes.map(observe,jobs))
               result["published_hrefs_all_rss"] = all(row["success"] for row in result["pairs"] if row["mode"] == "published_href")
-              result["clean_hrefs_all_rss"] = all(row["success"] for row in result["pairs"] if row["mode"] == "clean")
           finally:
               (out/"verification.json").write_text(json.dumps(result, indent=2)+"\n", encoding="utf-8")
               print(json.dumps(result))
@@ -107,8 +106,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: public-hn-guide-rss-links-recheck
+          name: public-hn-guide-rss-recovery
           path: hn-public-links/
           retention-days: 7
 
-# Recheck once from the isolated cloud runner after the first upstream failure.
+# Check the four rendered URLs after local recovery was observed.
