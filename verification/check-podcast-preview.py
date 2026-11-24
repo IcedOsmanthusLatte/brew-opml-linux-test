@@ -61,11 +61,14 @@ def test_view(browser, width, theme, html, phase, engine):
             if (matches.length !== 1 || !actual.matches('p')) {
                 return { passed: false, matches: matches.length, original_count: publishedMatches };
             }
-            const links = element => [...element.querySelectorAll('a')].map(link => ({
-                href: link.href, text: text(link)
+            const links = (element, stripGhostRef = false) => [...element.querySelectorAll('a')].map(link => ({
+                href: stripGhostRef ? link.href.replace(/[?&]ref=getbrew[.]app$/, '') : link.href,
+                text: text(link)
             }));
             const actualLinks = [...actual.querySelectorAll('a')];
-            const exactLinks = actualLinks.length === 2 && JSON.stringify(links(actual)) === JSON.stringify(links(expected));
+            const actualLinkDetails = links(actual);
+            const exactLinks = actualLinks.length === 2 &&
+                JSON.stringify(links(actual, !preview)) === JSON.stringify(links(expected));
             actual.scrollIntoView({block: 'center', behavior: 'instant'});
             const visible = node => [...node.getClientRects()].some(rect => {
                 const y = rect.top + rect.height / 2;
@@ -93,6 +96,7 @@ def test_view(browser, width, theme, html, phase, engine):
                 passed: appearance && exactLinks && placement && content && phaseValid &&
                     canonical === location.href && !/noindex/i.test(robots),
                 canonical, robots, exact_links: exactLinks, paragraph_text_matches: content,
+                ...(preview ? {} : {rendered_outbound_links: actualLinkDetails}),
                 paragraph_above_existing_followup: actual.nextElementSibling === anchor,
                 prior_planet_money_examples: previousContext, phase_valid: phaseValid,
                 visible_links: appleLinksVisible, no_horizontal_overflow: noOverflow,
