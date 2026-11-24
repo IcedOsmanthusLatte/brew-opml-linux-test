@@ -31,6 +31,7 @@ jobs:
               "https://hnrss.org/item?id=50599458&count=25",
               "https://hnrss.org/replies?id=50627737&count=25",
           }
+          CHECK_HEADERS = ("server", "via", "x-cache", "age", "retry-after", "date")
           RSS_ACCEPT = "application/rss+xml, application/atom+xml, application/xml, text/xml, */*;q=0.1"
 
           def clean(url):
@@ -54,10 +55,12 @@ jobs:
               try:
                   with urlopen(request, timeout=9) as response:
                       return {"status":response.status,"final_url":response.url,
-                              "content_type":response.headers.get("Content-Type")},response.read(limit + 1)
+                              "content_type":response.headers.get("Content-Type"),
+                              "selected_headers": {key: response.headers[key] for key in CHECK_HEADERS if key in response.headers}},response.read(limit + 1)
               except HTTPError as reply:
                   return {"status":reply.code,"final_url":reply.url,
-                          "content_type":reply.headers.get("Content-Type")},b""
+                          "content_type":reply.headers.get("Content-Type"),
+                          "selected_headers": {key: reply.headers[key] for key in CHECK_HEADERS if key in reply.headers}},b""
               except (URLError,OSError,TimeoutError) as failure:
                   return {"status":None,"error":type(getattr(failure,"reason",failure)).__name__},b""
 
@@ -104,6 +107,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: public-hn-guide-rss-links
+          name: public-hn-guide-rss-links-recheck
           path: hn-public-links/
           retention-days: 7
+
+# Recheck once from the isolated cloud runner after the first upstream failure.
