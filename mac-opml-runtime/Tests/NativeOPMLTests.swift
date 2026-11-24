@@ -10,6 +10,7 @@ private struct Plan: Decodable {
     let fixture_path: String
     let export_dir: String
     let titles: [String]
+    let selection_mode: String?
 
     static func read() throws -> Self {
         let config = URL(fileURLWithPath: "/tmp/brew-opml-runtime/config.json")
@@ -30,6 +31,9 @@ final class NativeOPMLTests: XCTestCase {
         dismissFirstRunIfPresent(in: app)
         saveWindow(of: app, name: "default-starters")
         try removeDefaultFeeds(from: app, kind: plan.app)
+        if let selection = plan.selection_mode {
+            try arrangeViennaDestination(in: app, plan: plan, mode: selection)
+        }
         expandSidebar(in: app)
         saveTree(of: app, name: "before-import")
         saveWindow(of: app, name: "before-import")
@@ -38,7 +42,7 @@ final class NativeOPMLTests: XCTestCase {
         finishImportIfPresent(in: app)
         try revealFixtureFolders(in: app, mode: plan.mode)
         saveTree(of: app, name: "imported")
-        saveWindow(of: app, name: "imported")
+        if plan.selection_mode == nil { saveWindow(of: app, name: "imported") }
         try assertFixtureRows(in: app, titles: plan.titles, stage: "imported")
 
         app.terminate()
@@ -48,7 +52,7 @@ final class NativeOPMLTests: XCTestCase {
         dismissFirstRunIfPresent(in: app)
         try revealFixtureFolders(in: app, mode: plan.mode)
         saveTree(of: app, name: "restarted")
-        saveWindow(of: app, name: "restarted")
+        if plan.selection_mode == nil { saveWindow(of: app, name: "restarted") }
         try assertFixtureRows(in: app, titles: plan.titles, stage: "restarted")
 
         try nativeMenu(app, section: "File", prefixOptions: ["Export Subscriptions", "Export OPML"])
@@ -59,6 +63,37 @@ final class NativeOPMLTests: XCTestCase {
             Thread.sleep(forTimeInterval: 0.4)
         }
         XCTFail("Native export was not observed")
+    }
+
+    @MainActor
+    private func arrangeViennaDestination(in app: XCUIApplication, plan: Plan, mode: String) throws {
+        XCTAssertEqual(plan.app, "vienna")
+        XCTAssertTrue(["selected", "unselected"].contains(mode))
+        let target = "Brew Import Target"
+        let seed = URL(fileURLWithPath: plan.fixture_path).deletingLastPathComponent().appendingPathComponent("target-only.opml")
+        try nativeMenu(app, section: "File", prefixOptions: ["Import Subscriptions", "Import OPML"])
+        try chooseInput(in: app, path: seed.path)
+        finishImportIfPresent(in: app)
+        let label = try XCTUnwrap(try sidebarText(in: app).first { textKey($0.0) == textKey(target) },
+                                  "Expected existing empty destination after the setup import")
+        rowCoordinate(in: app, box: label.1).click()
+        let outline = app.outlines.firstMatch
+        let row = try XCTUnwrap(outline.rows.allElementsBoundByIndex.first {
+            [$0.label, $0.title, $0.identifier, $0.debugDescription].contains { textKey($0).contains(textKey(target)) }
+                || $0.staticTexts.containing(NSPredicate(format: "label == %@ OR title == %@ OR value == %@", target, target, target)).firstMatch.exists
+        }, "Destination did not have an accessible row")
+        XCTAssertTrue(row.isSelected, "Native row must recognize the selected folder")
+        if mode == "unselected" {
+            XCUIElement.perform(withKeyModifiers: [.command]) {
+                rowCoordinate(in: app, box: label.1).click()
+            }
+        }
+        let selected = outline.rows.allElementsBoundByIndex.filter { $0.isSelected }
+        let receipt = "condition=\(mode)\ntarget=\(target)\ntarget_row_selected=\(row.isSelected)\nselected_row_count=\(selected.count)"
+        print("BREW_VIENNA_SELECTION: \(receipt.replacingOccurrences(of: "\n", with: " "))")
+        attachText(receipt, name: "destination-selection")
+        XCTAssertEqual(row.isSelected, mode == "selected", "Wrong destination row state")
+        XCTAssertEqual(selected.count, mode == "selected" ? 1 : 0, "Wrong selected row count")
     }
 
     @MainActor

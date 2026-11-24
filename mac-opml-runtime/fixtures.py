@@ -2,6 +2,7 @@
 import copy
 import hashlib
 import json
+import os
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -48,6 +49,17 @@ data = {
     "export_dir": str(scratch / "export"),
     "titles": [node.attrib["title"] for node in source],
 }
+selection = os.environ.get("BREW_VIENNA_SELECTION")
+if selection:
+    assert app == "vienna" and mode == "nested" and selection in {"selected", "unselected"}
+    assert data["fixture_sha256"] == "d4fcb29b25f290042b9cd38441878ead9e4d9f0b289437b7861bfe0c68a810d7"
+    data["selection_mode"] = selection
+    (scratch / "target-only.opml").write_text(
+        '<?xml version="1.0" encoding="utf-8"?>\n'
+        '<opml version="2.0"><head><title>Setup only</title></head>'
+        '<body><outline text="Brew Import Target"/></body></opml>\n',
+        encoding="utf-8",
+    )
 (scratch / "config.json").write_text(json.dumps(data), encoding="utf-8")
 internal = {"bundle_path", "fixture_path", "proof_path", "export_dir"}
 (proof / "environment.json").write_text(json.dumps({k:v for k,v in data.items() if k not in internal}, indent=2) + "\n", encoding="utf-8")
