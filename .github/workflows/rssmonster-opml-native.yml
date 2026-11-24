@@ -16,6 +16,7 @@ jobs:
       matrix:
         case: [flat, nested1, nested2, renamed]
     env:
+      CASE: ${{ matrix.case }}
       IMAGE: rssmonster/rssmonster@sha256:cbd8f34d81a5ec57d069fdb39897c1059b242fdcec16f41a5e17a70bb35cb5c0
       APP_RELEASE_COMMIT: e6ad401e893763db7e123421a7a1128152b0563d
     steps:
@@ -45,14 +46,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mode="${ matrix.case }}"
+          mode="$CASE"
           sample=flat
           if [[ "$mode" != "flat" ]]; then sample=nested; fi
           python3 rssmonster-opml-native/roundtrip.py "$mode" "rssmonster-opml-native/$sample.opml" proof
       - if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rssmonster-native-${ matrix.case }}
+          name: rssmonster-native-${{ matrix.case }}
           path: proof
           retention-days: 3
       - if: always()
