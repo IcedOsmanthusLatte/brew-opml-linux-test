@@ -1,0 +1,83 @@
+name: Podcast Patreon link navigation
+on:
+  push:
+    branches: [podcast-preview-layout]
+    paths: [.github/workflows/podcast-patreon-link.yml]
+permissions:
+  contents: read
+jobs:
+  guard:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - name: Install Chromium on the independent runner
+        run: |
+          python -m pip --quiet install playwright==1.55.0
+          playwright install chromium
+      - name: Open the published help link and its canonical control
+        run: |
+          mkdir -p link-proof
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlsplit
+          from playwright.sync_api import sync_playwright
+
+          article = 'https://getbrew.app/blog/find-podcast-rss-feed/'
+          docs = 'https://support.patreon.com/hc/en-us/articles/360041347732-How-to-use-your-audio-RSS'
+
+          def watch(context):
+              destination_responses = []
+              def inspect(response):
+                  if response.request.is_navigation_request() and urlsplit(response.url).hostname == 'support.patreon.com':
+                      destination_responses.append({'status': response.status, 'url': response.url,
+                          'cf_mitigated': response.headers.get('cf-mitigated'), 'server': response.headers.get('server')})
+              context.on('response', inspect)
+              return destination_responses
+
+          def characterize(page, responses):
+              page.wait_for_load_state('domcontentloaded', timeout=10000)
+              body = page.locator('body').inner_text(timeout=6000).casefold()
+              title = page.title()
+              indicators = [phrase for phrase in ('verify you are human', 'verifying you are human',
+                  'enable javascript and cookies', 'security verification', 'just a moment', 'cloudflare')
+                  if phrase in body or phrase in title.casefold()]
+              return {'url': page.url, 'title': title, 'responses': list(responses),
+                  'challenge_indicators': indicators,
+                  'confirmed_challenge': any(r['cf_mitigated'] == 'challenge' for r in responses),
+                  'article_heading_visible': page.get_by_role('heading', name='How to use your audio RSS', exact=False).count() > 0}
+
+          with sync_playwright() as playwright:
+              browser = playwright.chromium.launch()
+              context = browser.new_context(viewport={'width': 390, 'height': 820}, is_mobile=True, has_touch=True)
+              page = context.new_page()
+              assert page.goto(article, wait_until='domcontentloaded', timeout=20000).status == 200
+              link = page.locator('#patreon-public-preview a[href*="support.patreon.com"]')
+              href = link.get_attribute('href')
+              assert href == docs + '?ref=getbrew.app'
+              responses = watch(context)
+              if link.get_attribute('target') == '_blank':
+                  with page.expect_popup() as popup:
+                      link.click()
+                  clicked = popup.value
+              else:
+                  link.click()
+                  clicked = page
+              clicked.wait_for_url('https://support.patreon.com/**', wait_until='domcontentloaded', timeout=20000)
+              public_result = characterize(clicked, responses)
+              responses.clear()
+              control = context.new_page()
+              opened = control.goto(docs, wait_until='domcontentloaded', timeout=20000)
+              assert opened
+              control_result = characterize(control, responses)
+              context.close()
+              browser.close()
+          result = {'link_in_published_article': href, 'via_click': public_result, 'direct_canonical': control_result}
+          Path('link-proof/patreon-navigation.json').write_text(json.dumps(result, indent=2) + '\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brew-podcast-patreon-link-proof
+          path: link-proof
+          retention-days: 7
