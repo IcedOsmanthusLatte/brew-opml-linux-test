@@ -1,0 +1,109 @@
+name: Verify the HN guide's public RSS links
+on:
+  push:
+    branches: [hn-guide-link-qa-20261125]
+    paths: [.github/workflows/hn-guide-link-qa.yml]
+permissions:
+  contents: read
+jobs:
+  rss:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Read the published hrefs and compare RSS responses
+        run: |
+          python - <<'PY'
+          import json
+          from collections import Counter
+          from concurrent.futures import ThreadPoolExecutor
+          from datetime import datetime, timezone
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.error import HTTPError, URLError
+          from urllib.parse import parse_qsl, urlencode, urlsplit
+          from urllib.request import Request, urlopen
+          from xml.etree import ElementTree
+
+          ARTICLE = "https://getbrew.app/blog/hacker-news-rss-feed/"
+          EXPECTED = {
+              "https://hnrss.org/frontpage?count=30",
+              "https://hnrss.org/frontpage?count=30&link=comments",
+              "https://hnrss.org/item?id=50599458&count=25",
+              "https://hnrss.org/replies?id=50627737&count=25",
+          }
+          RSS_ACCEPT = "application/rss+xml, application/atom+xml, application/xml, text/xml, */*;q=0.1"
+
+          def clean(url):
+              parsed = urlsplit(url)
+              query = [(key,value) for key,value in parse_qsl(parsed.query, keep_blank_values=True)
+                       if (key,value) != ("ref","getbrew.app")]
+              return parsed._replace(query=urlencode(query), fragment="").geturl()
+
+          class Links(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.hrefs = []
+              def handle_starttag(self, name, attrs):
+                  if name == "a":
+                      href = dict(attrs).get("href", "")
+                      if clean(href) in EXPECTED:
+                          self.hrefs.append(href)
+
+          def fetch(url, accept, limit):
+              request = Request(url, headers={"User-Agent": "Mozilla/5.0", "Accept": accept})
+              try:
+                  with urlopen(request, timeout=9) as response:
+                      return {"status":response.status,"final_url":response.url,
+                              "content_type":response.headers.get("Content-Type")},response.read(limit + 1)
+              except HTTPError as reply:
+                  return {"status":reply.code,"final_url":reply.url,
+                          "content_type":reply.headers.get("Content-Type")},b""
+              except (URLError,OSError,TimeoutError) as failure:
+                  return {"status":None,"error":type(getattr(failure,"reason",failure)).__name__},b""
+
+          def observe(job):
+              mode, url = job
+              observed = []
+              item_count = None
+              for _ in range(2):
+                  receipt, body = fetch(url,RSS_ACCEPT,500_000)
+                  if receipt["status"] == 200 and 0 < len(body) <= 500_000:
+                      try:
+                          root = ElementTree.fromstring(body)
+                          channel = root.find("channel")
+                          receipt["root"] = root.tag
+                          if root.tag == "rss" and channel is not None:
+                              item_count = len(channel.findall("item"))
+                              receipt["items"] = item_count
+                      except ElementTree.ParseError:
+                          receipt["xml_parse_failed"] = True
+                  observed.append(receipt)
+                  if item_count is not None:
+                      break
+              return {"mode":mode,"url":url,"success":item_count is not None and item_count > 0,
+                      "attempts":observed}
+
+          result = {"observed_at_utc":datetime.now(timezone.utc).isoformat(),"article":ARTICLE,"pairs":[]}
+          out = Path("hn-public-links")
+          out.mkdir()
+          try:
+              result["published"],raw = fetch(ARTICLE, "text/html, */*;q=0.1", 1_500_000)
+              assert result["published"]["status"] == 200 and len(raw) <= 1_500_000
+              page = Links()
+              page.feed(raw.decode("utf-8"))
+              assert Counter(clean(link) for link in page.hrefs) == Counter(EXPECTED)
+              jobs = [(mode, url) for link in page.hrefs for mode,url in (("published_href",link),("clean",clean(link)))]
+              with ThreadPoolExecutor(max_workers=4) as probes:
+                  result["pairs"] = list(probes.map(observe,jobs))
+              result["published_hrefs_all_rss"] = all(row["success"] for row in result["pairs"] if row["mode"] == "published_href")
+              result["clean_hrefs_all_rss"] = all(row["success"] for row in result["pairs"] if row["mode"] == "clean")
+          finally:
+              (out/"verification.json").write_text(json.dumps(result, indent=2)+"\n", encoding="utf-8")
+              print(json.dumps(result))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: public-hn-guide-rss-links
+          path: hn-public-links/
+          retention-days: 7
