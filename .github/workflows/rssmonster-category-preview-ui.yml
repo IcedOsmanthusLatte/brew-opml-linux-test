@@ -1,0 +1,60 @@
+name: RSSMonster released-image preview category UI
+on:
+  push:
+    branches: [rssmonster-opml-native-20261124]
+    paths:
+      - 'rssmonster-opml-ui/**'
+      - '.github/workflows/rssmonster-category-preview-ui.yml'
+permissions:
+  contents: read
+jobs:
+  interface-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    env:
+      IMAGE: rssmonster/rssmonster@sha256:cbd8f34d81a5ec57d069fdb39897c1059b242fdcec16f41a5e17a70bb35cb5c0
+      APP_RELEASE_COMMIT: e6ad401e893763db7e123421a7a1128152b0563d
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Start a fresh loopback-only released container
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p proof
+          docker pull "$IMAGE"
+          actual="$(docker image inspect "$IMAGE" --format '{{index .Config.Labels "org.opencontainers.image.revision"}}')"
+          test "$actual" = "$APP_RELEASE_COMMIT"
+          printf '%s\n' "$IMAGE" "$actual" > proof/release.txt
+          docker run -d --name brew-rssmonster-opml --init \
+            -p 127.0.0.1:3000:3000 \
+            -e NODE_ENV=production -e PORT=3000 \
+            -e DB_DIALECT=sqlite -e DB_STORAGE=/app/data/rssmonster.sqlite \
+            -e EMAIL_ENABLED=false -e TRUST_PROXY=false \
+            -e INFERENCE_AI_ENABLED=false -e SKIP_ARTICLE_CLASSIFICATION_ANALYSIS=true \
+            -e SKIP_ARTICLE_EMBEDDINGS=true -e SKIP_SEMANTIC_LABELING=true \
+            -e JWT_SECRET="$(openssl rand -hex 36)" \
+            -e FEVER_CREDENTIAL_SECRET="$(openssl rand -hex 36)" \
+            "$IMAGE"
+      - name: Verify import category selection and actual download in a headless browser
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/rssmonster-pw"
+          python="$RUNNER_TEMP/rssmonster-pw/bin/python"
+          "$python" -m pip --quiet install playwright==1.55.0
+          if command -v google-chrome; then
+            export CHROME_BINARY="$(command -v google-chrome)"
+          else
+            "$python" -m playwright install chromium
+          fi
+          "$python" rssmonster-opml-ui/ui-roundtrip.py rssmonster-opml-native/nested.opml proof
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rssmonster-native-category-ui
+          path: proof
+          retention-days: 3
+      - if: always()
+        run: docker rm -fv brew-rssmonster-opml || true
