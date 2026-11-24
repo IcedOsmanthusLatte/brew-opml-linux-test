@@ -1,0 +1,102 @@
+name: NFL guide layout
+
+on:
+  push:
+    branches: [nfl-article-layout-20261124]
+    paths:
+      - .github/workflows/nfl-article-layout.yml
+      - verification/check-nfl-layout.py
+
+permissions:
+  contents: read
+
+jobs:
+  layout:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Create one-time verification certificate
+        shell: bash
+        run: |
+          umask 077
+          install -d -m 700 "$RUNNER_TEMP/nfl-preview" request-transport
+          openssl req -new -x509 -newkey rsa:3072 -nodes -days 1 -subj '/CN=Brew NFL preview transport' \
+            -keyout "$RUNNER_TEMP/nfl-preview/key.pem" -out request-transport/certificate.pem 2>/dev/null
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: brew-nfl-preview-certificate
+          path: request-transport/certificate.pem
+          retention-days: 1
+
+      - name: Install Chromium
+        shell: bash
+        run: |
+          python -m venv .venv
+          .venv/bin/pip --quiet install playwright==1.55.0
+          .venv/bin/playwright install --with-deps chromium
+
+      - name: Verify sealed verification request
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          private_dir="$RUNNER_TEMP/nfl-preview"
+          deadline=$((SECONDS+480))
+          endpoint="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/nfl-article-layout-20261124/.qa-requests/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.b64"
+          received=false
+          while (( SECONDS < deadline )); do
+            if curl -fsS --max-time 6 "$endpoint?stamp=$(date +%s)" -o "$private_dir/request.b64" 2>/dev/null &&
+               base64 --decode "$private_dir/request.b64" > "$private_dir/request.der" 2>/dev/null &&
+               openssl cms -decrypt -binary -inform DER -recip request-transport/certificate.pem \
+                 -inkey "$private_dir/key.pem" -in "$private_dir/request.der" -out "$private_dir/request.json" 2>/dev/null; then
+              received=true
+              break
+            fi
+            sleep 5
+          done
+          if [[ "$received" != true ]]; then
+            echo 'Timed out waiting for the encrypted preview request.'
+            exit 2
+          fi
+          rm -f "$private_dir/key.pem"
+
+          .venv/bin/python - "$private_dir/request.json" "$private_dir/receiver.pem" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          try:
+              payload = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8-sig"))
+              cert = payload["receiver_certificate"]
+              assert cert.startswith("-----BEGIN CERTIFICATE-----")
+              Path(sys.argv[2]).write_text(cert, encoding="ascii")
+          except (AssertionError, KeyError, TypeError, ValueError, OSError):
+              raise SystemExit("Invalid preview receiver certificate.") from None
+          PY
+          openssl x509 -in "$private_dir/receiver.pem" -noout 2>/dev/null
+
+          result=0
+          .venv/bin/python verification/check-nfl-layout.py \
+            --request "$private_dir/request.json" --output "$private_dir/layout-proof" || result=$?
+          rm -f "$private_dir/request.json"
+          test -f "$private_dir/layout-proof/verification.json" || exit $((result>0?result:2))
+          (cd "$private_dir/layout-proof" && zip -q -r "$private_dir/proof.zip" .)
+          install -d -m 700 preview-proof
+          openssl cms -encrypt -binary -aes-256-cbc -outform DER -in "$private_dir/proof.zip" \
+            -out preview-proof/layout-proof.der "$private_dir/receiver.pem"
+          rm -f "$private_dir/proof.zip"
+          exit "$result"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brew-nfl-preview-layout-encrypted
+          path: preview-proof/layout-proof.der
+          retention-days: 3
+          if-no-files-found: warn
+
