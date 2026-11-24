@@ -40,6 +40,9 @@ jobs:
         if: always()
         with:
           name: fluent-opml-${{ matrix.condition }}-${{ matrix.repeat }}
-          path: fluent-opml-evidence
+          path: |
+            fluent-opml-evidence/environment.json
+            fluent-opml-evidence/trial.json
+            fluent-opml-evidence/native-export.opml
           if-no-files-found: error
           retention-days: 14
