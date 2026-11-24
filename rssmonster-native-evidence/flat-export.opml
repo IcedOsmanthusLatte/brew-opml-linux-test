@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>RSSMonster Feed Export</title>
+    <dateCreated>Tue, 24 Nov 2026 09:22:18 GMT</dateCreated>
+  </head>
+  <body>
+    <outline text="News" title="News">
+      <outline type="rss" text="BBC News — World" title="BBC News — World" xmlUrl="https://feeds.bbci.co.uk/news/world/rss.xml" htmlUrl="https://feeds.bbci.co.uk/news/world/rss.xml" />
+    </outline>
+    <outline text="Science and technology" title="Science and technology">
+      <outline type="rss" text="NASA News Releases" title="NASA News Releases" xmlUrl="https://www.nasa.gov/news-release/feed/" htmlUrl="https://www.nasa.gov/news-release/feed/" />
+      <outline type="rss" text="WordPress News" title="WordPress News" xmlUrl="https://wordpress.org/news/feed/" htmlUrl="https://wordpress.org/news/feed/" />
+    </outline>
+  </body>
+</opml>
