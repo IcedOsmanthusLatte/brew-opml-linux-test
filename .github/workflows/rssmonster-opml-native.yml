@@ -1,0 +1,60 @@
+name: RSSMonster released-image OPML round trip
+on:
+  push:
+    branches: [rssmonster-opml-native-20261124]
+    paths:
+      - 'rssmonster-opml-native/**'
+      - '.github/workflows/rssmonster-opml-native.yml'
+permissions:
+  contents: read
+jobs:
+  migration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        case: [flat, nested1, nested2, renamed]
+    env:
+      IMAGE: rssmonster/rssmonster@sha256:cbd8f34d81a5ec57d069fdb39897c1059b242fdcec16f41a5e17a70bb35cb5c0
+      APP_RELEASE_COMMIT: e6ad401e893763db7e123421a7a1128152b0563d
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Start the pinned official image with a fresh SQLite library
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p proof
+          docker pull "$IMAGE"
+          actual="$(docker image inspect "$IMAGE" --format '{{index .Config.Labels "org.opencontainers.image.revision"}}')"
+          test "$actual" = "$APP_RELEASE_COMMIT"
+          printf '%s\n' "$IMAGE" "$actual" > proof/release.txt
+          docker run -d --name brew-rssmonster-opml --init \
+            -p 127.0.0.1:3000:3000 \
+            -e NODE_ENV=production -e PORT=3000 \
+            -e DB_DIALECT=sqlite -e DB_STORAGE=/app/data/rssmonster.sqlite \
+            -e EMAIL_ENABLED=false -e TRUST_PROXY=false \
+            -e INFERENCE_AI_ENABLED=false -e SKIP_ARTICLE_CLASSIFICATION_ANALYSIS=true \
+            -e SKIP_ARTICLE_EMBEDDINGS=true -e SKIP_SEMANTIC_LABELING=true \
+            -e JWT_SECRET="$(openssl rand -hex 36)" \
+            -e FEVER_CREDENTIAL_SECRET="$(openssl rand -hex 36)" \
+            "$IMAGE"
+      - name: Preview, import, and download the app's own OPML export
+        shell: bash
+        run: |
+          set -euo pipefail
+          mode="${ matrix.case }}"
+          sample=flat
+          if [[ "$mode" != "flat" ]]; then sample=nested; fi
+          python3 rssmonster-opml-native/roundtrip.py "$mode" "rssmonster-opml-native/$sample.opml" proof
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rssmonster-native-${ matrix.case }}
+          path: proof
+          retention-days: 3
+      - if: always()
+        name: Remove the isolated container and its volume
+        run: docker rm -fv brew-rssmonster-opml || true
