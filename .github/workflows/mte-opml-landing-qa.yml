@@ -1,0 +1,184 @@
+name: Verify Brew OPML migration evidence
+on:
+  push:
+    branches: [mte-opml-landing-qa-20261125]
+    paths: [.github/workflows/mte-opml-landing-qa.yml]
+permissions:
+  contents: read
+jobs:
+  public-landing:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    steps:
+      - name: Install Playwright and Chromium
+        run: |
+          python -m venv .venv
+          .venv/bin/pip -q install playwright==1.55.0
+          .venv/bin/playwright install chromium
+      - name: Verify the exact deep link and sample contents
+        run: |
+          .venv/bin/python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          from urllib.parse import urlsplit
+          from xml.etree import ElementTree
+
+          from playwright.sync_api import sync_playwright
+
+          LANDING = "https://getbrew.app/blog/opml-file/#compare-opml-folder-paths"
+          ANCHOR = "#compare-opml-folder-paths"
+          SAMPLE_ROOT = (
+              "https://raw.githubusercontent.com/IcedOsmanthusLatte/brew-opml-linux-test/"
+              "c5b1d7f29caf28c48f42fa8d2c65f74d7aed2413/results/mac-opml-folder-migration/"
+              "trials/netnewswire-nested-1/"
+          )
+          EXPECTED_HASHES = {
+              "fixture.opml": "d4fcb29b25f290042b9cd38441878ead9e4d9f0b289437b7861bfe0c68a810d7",
+              "native-export.opml": "6750a791531e1a755fa885efe2a616f373dc6ed192d8398c168fea9e294d22ee",
+          }
+          EXPECTED_FEEDS = {
+              "https://feeds.bbci.co.uk/news/world/rss.xml",
+              "https://www.nasa.gov/news-release/feed/",
+              "https://wordpress.org/news/feed/",
+          }
+          TOOL = "https://getbrew.app/tools/compare-opml/"
+          OUTPUT = Path("mte-opml-qa")
+          OUTPUT.mkdir()
+
+          def bare_url(url):
+              return urlsplit(url)._replace(query="", fragment="").geturl()
+
+          def section_links(heading):
+              return heading.evaluate("""heading => {
+                  const links = [];
+                  for (let sibling = heading.nextElementSibling; sibling && sibling.tagName !== 'H2';
+                       sibling = sibling.nextElementSibling) {
+                      for (const link of sibling.querySelectorAll('a[href]')) links.push(link.href);
+                  }
+                  return links;
+              }""")
+
+          def open_landing(context):
+              page = context.new_page()
+              response = page.goto(LANDING, wait_until="domcontentloaded", timeout=25000)
+              assert response and response.status == 200 and page.url == LANDING
+              heading = page.locator(ANCHOR)
+              heading.wait_for(state="visible")
+              page.wait_for_function("document.fonts.status === 'loaded'")
+              assert heading.inner_text().strip() == "Check your folders after a move"
+              anchor_position = heading.evaluate("""element => {
+                  const rect = element.getBoundingClientRect();
+                  const centerY = (rect.top + rect.bottom) / 2;
+                  return {top: Math.round(rect.top), bottom: Math.round(rect.bottom),
+                          hit: element.contains(document.elementFromPoint(rect.left + 10, centerY)),
+                          in_viewport: rect.top >= 0 && rect.bottom <= innerHeight,
+                          page_overflow: document.documentElement.scrollWidth > innerWidth};
+              }""")
+              assert anchor_position["in_viewport"] and anchor_position["hit"], anchor_position
+              assert not anchor_position["page_overflow"], anchor_position
+              return page, heading, anchor_position
+
+          def feed_paths(raw, expected_version):
+              root = ElementTree.fromstring(raw)
+              assert root.tag == "opml" and root.get("version") == expected_version
+              paths = {}
+              def walk(node, parents):
+                  for outline in node.findall("outline"):
+                      address = outline.get("xmlUrl")
+                      if address:
+                          assert address not in paths
+                          paths[address] = parents
+                      else:
+                          name = outline.get("text") or outline.get("title")
+                          assert name
+                          walk(outline, [*parents, name])
+              walk(root.find("body"), [])
+              assert paths.keys() == EXPECTED_FEEDS
+              return paths
+
+          def click_sample(context, page, link, filename, destination, mobile):
+              target = SAMPLE_ROOT + filename
+              with context.expect_event("response", lambda response: bare_url(response.url) == target, timeout=16000) as tracked:
+                  if mobile:
+                      link.tap()
+                  else:
+                      link.click()
+              response = tracked.value
+              assert response.status == 200 and response.request.method == "GET"
+              assert response.request.is_navigation_request()
+              raw = response.body()
+              digest = hashlib.sha256(raw).hexdigest()
+              assert digest == EXPECTED_HASHES[filename], (filename, digest)
+              expected_version = "2.0" if filename == "fixture.opml" else "1.1"
+              destination.write_bytes(raw)
+              return {"exact_url": response.url, "status": response.status, "bytes": len(raw),
+                      "sha256": digest, "content_type": response.headers.get("content-type"),
+                      "content_disposition": response.headers.get("content-disposition"),
+                      "method": "clicked public link, captured and saved the browser navigation response",
+                      "version": expected_version, "feed_paths": feed_paths(raw, expected_version)}
+
+          def check(browser, width, height, mobile):
+              proof = {"viewport": [width, height], "mobile_emulation": mobile, "downloads": {}}
+              with browser.new_context(viewport={"width": width, "height": height},
+                                       is_mobile=mobile, has_touch=mobile, locale="en-US",
+                                       reduced_motion="reduce", service_workers="block") as context:
+                  proof["anonymous"] = not context.cookies()
+                  assert proof["anonymous"]
+                  for filename in EXPECTED_HASHES:
+                      page, heading, position = open_landing(context)
+                      matching = [url for url in section_links(heading) if bare_url(url) == SAMPLE_ROOT + filename]
+                      assert len(matching) == 1, matching
+                      link = page.locator("article.article-body a").and_(page.locator(f'a[href^="{SAMPLE_ROOT + filename}"]'))
+                      assert link.count() == 1
+                      if filename == "fixture.opml":
+                          proof["exact_landing"] = page.url
+                          proof["anchor"] = position
+                          page.screenshot(path=OUTPUT / f"landing-{width}.jpg", quality=78, timeout=8000)
+                      sample_path = OUTPUT / f"{width}-{filename}"
+                      proof["downloads"][filename] = click_sample(context, page, link, filename, sample_path, mobile)
+                  before, after = [proof["downloads"][filename]["feed_paths"] for filename in EXPECTED_HASHES]
+                  changed = [url for url in sorted(before) if before[url] != after[url]]
+                  assert len(changed) == 2 and before.keys() == after.keys(), (before, after)
+                  proof["folder_path_changes"] = changed
+                  page, heading, _ = open_landing(context)
+                  assert any(bare_url(url) == TOOL for url in section_links(heading))
+                  jump = page.get_by_role("link", name="Compare your two OPML files", exact=True)
+                  with page.expect_navigation(wait_until="domcontentloaded", timeout=20000) as opened:
+                      jump.tap() if mobile else jump.click()
+                  assert opened.value.status == 200 and bare_url(page.url) == TOOL
+                  for side, filename in zip(("before", "after"), EXPECTED_HASHES):
+                      page.locator(f"#{side}-file").set_input_files(str(OUTPUT / f"{width}-{filename}"))
+                  compare = page.get_by_role("button", name="Compare files", exact=True)
+                  compare.tap() if mobile else compare.click()
+                  summary = page.locator("#results")
+                  summary.wait_for()
+                  counts = {name: int(summary.locator(f'[data-count="{name}"]').inner_text())
+                            for name in ("removed", "added", "changed")}
+                  assert counts == {"removed": 0, "added": 0, "changed": 2}, counts
+                  assert "3 unique subscriptions before, 3 after" in summary.inner_text()
+                  proof["comparison_tool"] = {"exact_url": page.url, "counts": counts,
+                                              "unique_subscriptions_before": 3, "unique_subscriptions_after": 3}
+                  page.locator("#results").scroll_into_view_if_needed()
+                  page.screenshot(path=OUTPUT / f"comparison-{width}.jpg", quality=78, timeout=8000)
+              return proof
+
+          proof = {"passed": False, "run_id": os.environ["GITHUB_RUN_ID"], "results": []}
+          try:
+              with sync_playwright() as playwright, playwright.chromium.launch() as browser:
+                  proof["browser"] = browser.version
+                  for width, height, mobile in ((390, 844, True), (1440, 900, False)):
+                      proof["results"].append(check(browser, width, height, mobile))
+              proof["passed"] = True
+          finally:
+              (OUTPUT / "verification.json").write_text(json.dumps(proof, indent=2) + "\n", encoding="utf-8")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mte-opml-public-landing
+          path: mte-opml-qa/
+          retention-days: 7
+          if-no-files-found: warn
+
