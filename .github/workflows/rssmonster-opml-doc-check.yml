@@ -1,0 +1,69 @@
+name: RSSMonster OPML docs build check
+on:
+  push:
+    branches: [rssmonster-opml-doc-check-20261124]
+    paths:
+      - "rssmonster-opml-doc-check/**"
+      - ".github/workflows/rssmonster-opml-doc-check.yml"
+permissions:
+  contents: read
+jobs:
+  docs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: pietheinstrengholt/rssmonster
+          ref: 13990e1dc01dd78533a712470f75b9f780b6eaf9
+          path: upstream
+          persist-credentials: false
+      - name: Check and apply the one-file documentation patch
+        working-directory: upstream
+        run: |
+          set -euo pipefail
+          test "$(git hash-object docs/opml.md)" = "09404579f9b0bc4cb93007fdec9d88c28be995ea"
+          git apply --check ../rssmonster-opml-doc-check/docs-opml.patch
+          git apply ../rssmonster-opml-doc-check/docs-opml.patch
+          test "$(git diff --name-only)" = "docs/opml.md"
+          git diff --check
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: upstream/docs
+      - name: Build the documentation with the upstream Jekyll options
+        working-directory: upstream/docs
+        env:
+          JEKYLL_ENV: production
+        run: bundle exec jekyll build --baseurl "/rssmonster"
+      - name: Verify the rendered heading and fragment
+        working-directory: upstream/docs
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.ids = []
+                  self.hrefs = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if "id" in attrs:
+                      self.ids.append(attrs["id"])
+                  if tag == "a" and "href" in attrs:
+                      self.hrefs.append(attrs["href"])
+          source = Path("_site/opml.html").read_text(encoding="utf-8")
+          page = Check()
+          page.feed(source)
+          for anchor in ("check-nested-folders", "export-subscriptions"):
+              assert page.ids.count(anchor) == 1, anchor
+          assert page.hrefs.count("#export-subscriptions") >= 1
+          assert "Technology / News" in source and "Science / News" in source
+          assert "getbrew.app" not in source
+          print("Jekyll output and OPML export fragment verified.")
+          PY
