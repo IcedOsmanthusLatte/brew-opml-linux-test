@@ -31,12 +31,13 @@ final class NativeOPMLTests: XCTestCase {
         dismissFirstRunIfPresent(in: app)
         saveWindow(of: app, name: "default-starters")
         try removeDefaultFeeds(from: app, kind: plan.app)
+        expandSidebar(in: app)
         if let selection = plan.selection_mode {
             try arrangeViennaDestination(in: app, plan: plan, mode: selection)
+        } else {
+            saveTree(of: app, name: "before-import")
+            saveWindow(of: app, name: "before-import")
         }
-        expandSidebar(in: app)
-        saveTree(of: app, name: "before-import")
-        saveWindow(of: app, name: "before-import")
         try nativeMenu(app, section: "File", prefixOptions: ["Import Subscriptions", "Import OPML"])
         try chooseInput(in: app, path: plan.fixture_path)
         finishImportIfPresent(in: app)
@@ -78,27 +79,53 @@ final class NativeOPMLTests: XCTestCase {
                                   "Expected existing empty destination after the setup import")
         rowCoordinate(in: app, box: label.1).click()
         let outline = app.outlines.firstMatch
-        saveTree(of: app, name: "before-import")
-        saveWindow(of: app, name: "before-import")
-        let row = try XCTUnwrap(outline.descendants(matching: .outlineRow).allElementsBoundByIndex.first {
-            [$0.label, $0.title, $0.identifier, $0.debugDescription].contains { textKey($0).contains(textKey(target)) }
-                || $0.staticTexts.containing(NSPredicate(format: "label == %@ OR title == %@ OR value == %@", target, target, target)).firstMatch.exists
-        }, "Destination did not have an accessible row")
-        XCTAssertTrue(row.isSelected, "Native row must recognize the selected folder")
+        let selected = try readSelectionBands(in: app, label: label.1)
+        XCTAssertTrue(selected.target, "Could not see active selection on the target row")
+        XCTAssertEqual(selected.count, 1, "Target must be the only highlighted row")
         if mode == "unselected" {
             XCUIElement.perform(withKeyModifiers: [.command]) {
                 rowCoordinate(in: app, box: label.1).click()
             }
-            if row.isSelected {
+            if try readSelectionBands(in: app, label: label.1).count != 0 {
                 outline.coordinate(withNormalizedOffset: CGVector(dx: 0.75, dy: 0.85)).click()
             }
         }
-        let selected = outline.descendants(matching: .outlineRow).allElementsBoundByIndex.filter { $0.isSelected }
-        let receipt = "condition=\(mode)\ntarget=\(target)\ntarget_row_selected=\(row.isSelected)\nselected_row_count=\(selected.count)"
+        let final = try readSelectionBands(in: app, label: label.1)
+        let receipt = "condition=\(mode)\ntarget=\(target)\ntarget_row_selected=\(final.target)\nselected_row_count=\(final.count)\nselection_evidence=window raster immediately before import menu"
         print("BREW_VIENNA_SELECTION: \(receipt.replacingOccurrences(of: "\n", with: " "))")
         attachText(receipt, name: "destination-selection")
-        XCTAssertEqual(row.isSelected, mode == "selected", "Wrong destination row state")
-        XCTAssertEqual(selected.count, mode == "selected" ? 1 : 0, "Wrong selected row count")
+        attachText("target OCR box: \(label.1)\nselected measurements: \(selected)\nfinal measurements: \(final)", name: "selection-measurement")
+        saveTree(of: app, name: "before-import")
+        saveWindow(of: app, name: "before-import")
+        XCTAssertEqual(final.target, mode == "selected", "Wrong destination row state")
+        XCTAssertEqual(final.count, mode == "selected" ? 1 : 0, "Wrong selected row count")
+    }
+
+    @MainActor
+    private func readSelectionBands(in app: XCUIApplication, label: CGRect) throws -> (target: Bool, count: Int, starts: [Int]) {
+        let data = mainWindow(in: app).screenshot().pngRepresentation
+        let bitmap = try XCTUnwrap(NSBitmapImageRep(data: data))
+        let width = bitmap.pixelsWide
+        let height = bitmap.pixelsHigh
+        // Probe the empty portion of the sidebar after labels and before the split view divider.
+        let x = Int(CGFloat(width) * 0.24)
+        let colors = (0..<height).map { y -> Bool in
+            guard let color = bitmap.colorAt(x: x, y: y)?.usingColorSpace(.sRGB) else { return false }
+            return color.blueComponent - color.redComponent > 0.38 && color.blueComponent - color.greenComponent > 0.21
+        }
+        var bands: [Range<Int>] = []
+        var start: Int?
+        for y in 0...height {
+            if y < height, colors[y] {
+                if start == nil { start = y }
+            } else if let first = start {
+                if y - first >= 8 { bands.append(first..<y) }
+                start = nil
+            }
+        }
+        let y = Int(CGFloat(height) * (1 - label.midY))
+        let atTarget = bands.contains { $0.contains(y) || $0.contains(height - 1 - y) }
+        return (atTarget, bands.count, bands.map(\.lowerBound))
     }
 
     @MainActor
