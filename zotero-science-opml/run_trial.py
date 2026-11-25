@@ -158,8 +158,9 @@ def launch(binary, profile, data, home, log):
         try:
             win = expect(window, "Zotero window")
             command("xdotool", "windowactivate", "--sync", win)
-            command("xdotool", "key", "alt+F10")
-            yield
+            command("xdotool", "windowsize", win, "1370", "860")
+            command("xdotool", "windowmove", win, "0", "0")
+            yield win
         finally:
             if process.poll() is None:
                 win = window()
@@ -197,13 +198,24 @@ def run(binary, number, output, temp):
         evidence["version"] = config.get("App", "Version", fallback=release_version)
         evidence["build_id"] = config.get("App", "BuildID", fallback=None)
         assert evidence["version"] == release_version
-        with launch(binary, profile, data, home, log):
+        with launch(binary, profile, data, home, log) as win:
             expect(lambda: db.exists(), "new library database")
             time.sleep(2)
             evidence["preexisting_subscriptions"] = subscriptions(db)
             assert not evidence["preexisting_subscriptions"]
-            press("alt+f")
-            feed = expect(lambda: text_point(scratch, r"\bNew\s+Feed\b", 500), "New Feed menu", 16)
+            # Click the real File menu in the app client rather than assuming its keyboard mnemonic.
+            command("xdotool", "mousemove", "--window", win, "26", "17", "click", "1")
+            time.sleep(0.65)
+            screenshot(output / "file-menu.png")
+            menu = lines(scratch)
+            feed = next(((x, y) for text, x, y in menu if x < 600 and re.search(r"\bNew\s+Feed\b", text, re.I)), None)
+            if not feed:
+                library = next(((x, y) for text, x, y in menu if x < 530 and re.search(r"\bNew\s+Library\b", text, re.I)), None)
+                if library:
+                    mouse(*library)
+                    time.sleep(0.65)
+                screenshot(output / "library-menu.png")
+                feed = expect(lambda: text_point(scratch, r"\bNew\s+Feed\b", 700), "New Feed menu", 12)
             mouse(*feed)
             time.sleep(1.2)
             opml = expect(lambda: text_point(scratch, r"\bFrom\s+OPML\b", 650), "From OPML submenu", 12)
