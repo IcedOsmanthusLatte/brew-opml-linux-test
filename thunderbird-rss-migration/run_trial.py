@@ -226,8 +226,14 @@ def read_body(profile, item):
 
 
 def screenshot(client, subject, path):
-    assert client.run("visible_folder", subject), subject
-    subprocess.run(["scrot", "--overwrite", str(path)], check=True, timeout=8)
+    try:
+        if not client.run("visible_folder", subject):
+            return False
+        subprocess.run(["scrot", "--overwrite", str(path)], check=True, timeout=8)
+    except (RuntimeError, subprocess.SubprocessError) as error:
+        print(f"Native screenshot unavailable: {type(error).__name__}", flush=True)
+        return False
+    return True
 
 
 def main():
@@ -338,4 +344,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -154,15 +154,17 @@ const [action, input] = params;
       const mail = win.document.getElementById("tabmail");
       mail.switchToTab(0);
       const pane = mail.currentAbout3Pane;
-      const target = snapshot().messages.find(row => row.subject === input);
+      let target = null;
+      walk(root(), folder => {
+        if (!folder.isServer && Array.from(folder.messages)
+          .some(hdr => hdr.mime2DecodedSubject === input)) {
+          target = folder;
+        }
+      });
       if (!target || !pane) {
         return false;
       }
-      let folder = root();
-      for (const name of target.path) {
-        folder = folder.getChildNamed(name);
-      }
-      pane.displayFolder(folder.URI);
+      pane.displayFolder(target.URI);
       await sleep(350);
       return true;
     }
