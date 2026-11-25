@@ -55,7 +55,7 @@ def lines(image):
     tsv = command("tesseract", str(image), "stdout", "--psm", "11", "tsv")
     grouped = {}
     for word in csv.DictReader(tsv.splitlines(), delimiter="\t"):
-        if not word.get("text", "").strip():
+        if not (word.get("text") or "").strip():
             continue
         key = tuple(word[field] for field in ("block_num", "par_num", "line_num"))
         grouped.setdefault(key, []).append(word)
@@ -216,13 +216,22 @@ def run(binary, number, output, temp):
                     time.sleep(0.65)
                 screenshot(output / "library-menu.png")
                 feed = expect(lambda: text_point(scratch, r"\bNew\s+Feed\b", 700), "New Feed menu", 12)
-            mouse(*feed)
-            time.sleep(1.2)
-            opml = expect(lambda: text_point(scratch, r"\bFrom\s+OPML\b", 650), "From OPML submenu", 12)
             screenshot(output / "import-menu.png")
-            mouse(*opml, button=1)
+            # The opened File menu shows the actual `New Feed` row and its right arrow.
+            mouse(*feed, button=1)
+            time.sleep(0.65)
+            screenshot(output / "submenu.png")
+            opml = text_point(scratch, r"\b(?:from\s+)?[O0Q]PML\b")
+            if opml:
+                mouse(*opml, button=1)
+            else:
+                # The released New Feed submenu has From URL first and From OPML last.
+                # The actual file chooser below gates any typing, including this keyboard route.
+                press("Right", "End", "Return")
             time.sleep(1.5)
             screenshot(output / "import-picker.png")
+            expect(lambda: text_point(scratch, r"\b(?:import\s+(?:feeds\s+from\s+)?[O0Q]PML|[O0Q]PML\s+feed\s+list)\b"),
+                   "visible native import file picker", 10)
             press("ctrl+l")
             command("xdotool", "type", "--clearmodifiers", str(sample))
             press("Return")
@@ -241,6 +250,7 @@ def run(binary, number, output, temp):
             evidence["selected_item"] = item
             evidence["publisher_entry"] = opened_article(item["url"])
             assert evidence["publisher_entry"]["status"] == 200 and evidence["publisher_entry"]["title"]
+        expect(lambda: window() is None, "previous Zotero window to close", 10)
         with launch(binary, profile, data, home, log):
             time.sleep(2)
             evidence["after_restart"] = expect(imported, "all nine subscriptions after restart", 18)
