@@ -1,0 +1,106 @@
+name: Verify public HN RSS example
+on:
+  push:
+    branches: [ghacks-alternate-rss-20261125]
+permissions:
+  contents: read
+jobs:
+  public-rss-proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Probe exact public RSS URLs and parent chain
+        run: |
+          python3 - <<'PY'
+          import json
+          import time
+          from concurrent.futures import ThreadPoolExecutor
+          from datetime import datetime, timezone
+          from urllib.error import HTTPError, URLError
+          from urllib.parse import urlparse, parse_qs
+          from urllib.request import Request, urlopen
+          from xml.etree import ElementTree
+          urls = {
+              "thread": "https://hnrss.org/item?id=46309919",
+              "replies": "https://hnrss.org/replies?id=46311863&count=25",
+          }
+          hn_api = "https://hacker-news.firebaseio.com/v0/item/{}.json"
+          def retrieve(url, accept):
+              req = Request(url, headers={
+                  "User-Agent": "Mozilla/5.0",
+                  "Accept": accept,
+                  "Referer": "https://getbrew.app/blog/hacker-news-rss-feed/",
+              })
+              observation = {"url":url}
+              try:
+                  with urlopen(req, timeout=10) as response:
+                      observation.update(status=response.status, effective_url=response.url,
+                          content_type=response.headers.get("Content-Type"),
+                          server=response.headers.get("Server"),
+                          date=response.headers.get("Date"),
+                          x_cache=response.headers.get("X-Cache"))
+                      data = response.read(512001)
+                      if len(data) > 512000:
+                          observation["error"] = "body_exceeds_limit"
+                          data = b""
+              except HTTPError as exc:
+                  observation.update(status=exc.code, server=exc.headers.get("Server"))
+                  data = b""
+              except (URLError, OSError) as exc:
+                  observation.update(status=None, error=type(getattr(exc,"reason",exc)).__name__)
+                  data = b""
+              return observation, data
+          def exact_hn_item(value):
+              url = urlparse(value)
+              ids = parse_qs(url.query).get("id",[])
+              return int(ids[0]) if url.hostname == "news.ycombinator.com" and url.path == "/item" and len(ids)==1 and ids[0].isdigit() else None
+          def check_feed(kind, url):
+              obs, data = retrieve(url, "application/rss+xml,application/xml,text/xml;q=0.9,*/*;q=0.1")
+              if obs.get("status") == 200 and data:
+                  try:
+                      rss = ElementTree.fromstring(data)
+                      ids = [exact_hn_item(item.findtext("guid","")) or exact_hn_item(item.findtext("link","")) for item in rss.findall("channel/item")]
+                      obs.update(root=rss.tag, channel_title=rss.findtext("channel/title"), count=len(ids), ids=ids)
+                  except ElementTree.ParseError:
+                      obs["error"] = "invalid_xml"
+              current_ids = obs.get("ids",[])
+              if kind == "thread":
+                  scope = 46315553 in current_ids and 46315894 in current_ids
+              else:
+                  scope = current_ids == [46315553]
+              obs["pass"] = (obs.get("status") == 200 and obs.get("effective_url") == url
+                  and "xml" in (obs.get("content_type") or "").lower()
+                  and obs.get("root") == "rss" and bool(scope))
+              return kind, obs
+          def inspect_item(i):
+              obs, data = retrieve(hn_api.format(i), "application/json")
+              if obs.get("status")==200 and data:
+                  item=json.loads(data)
+                  obs["item"]={k:item[k] for k in ("id","type","parent","kids") if k in item}
+              return str(i), obs
+          with ThreadPoolExecutor(max_workers=4) as pool:
+              official=dict(pool.map(inspect_item, (46309919,46311863,46315553,46315894)))
+              a=dict(pool.map(lambda pair:check_feed(*pair), urls.items()))
+              time.sleep(2)
+              b=dict(pool.map(lambda pair:check_feed(*pair), urls.items()))
+          items={k:x.get("item",{}) for k,x in official.items()}
+          chain=(items["46309919"].get("type")=="story"
+              and items["46311863"].get("parent")==46309919
+              and items["46311863"].get("kids")==[46315553]
+              and items["46315553"].get("parent")==46311863
+              and items["46315894"].get("parent")==46315553)
+          proof={"checked_at_utc":datetime.now(timezone.utc).isoformat(), "environment":"GitHub-hosted Ubuntu 24.04",
+              "official_chain_pass":chain,"official_items":official,"rounds":[a,b],
+              "all_pass":chain and all(r[k]["pass"] for r in (a,b) for k in urls)}
+          with open("ubuntu-rss-proof.json", "w", encoding="utf-8") as file:
+              json.dump(proof,file,ensure_ascii=False,indent=2)
+              file.write("\n")
+          print("RSS_PROOF_JSON=" + json.dumps(proof, ensure_ascii=True, separators=(",",":")))
+          PY
+      - name: Save receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: ubuntu-rss-proof
+          path: ubuntu-rss-proof.json
+          if-no-files-found: error
+          retention-days: 14
