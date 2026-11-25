@@ -74,6 +74,24 @@ def text_point(image, pattern, max_x=1380):
     return next(((x, y) for text, x, y in lines(image) if x < max_x and re.search(pattern, text, re.I)), None)
 
 
+def file_picker_open():
+    try:
+        return bool(command("xdotool", "search", "--onlyvisible", "--name", "^Import Feeds from OPML$"))
+    except subprocess.CalledProcessError:
+        return False
+
+
+@contextmanager
+def capture_failure(output, scratch, evidence):
+    try:
+        yield
+    except Exception:
+        with suppress(OSError, subprocess.SubprocessError):
+            screenshot(output / "failure.png")
+            evidence["last_screen_text"] = [label for label, _, _ in lines(scratch)]
+        raise
+
+
 def read_db(db, query, params=()):
     if not db.exists():
         return []
@@ -204,7 +222,7 @@ def run(binary, number, output, temp):
         evidence["version"] = config.get("App", "Version", fallback=release_version)
         evidence["build_id"] = config.get("App", "BuildID", fallback=None)
         assert evidence["version"] == release_version
-        with launch(binary, profile, data, home, log) as win:
+        with launch(binary, profile, data, home, log) as win, capture_failure(output, scratch, evidence):
             expect(lambda: db.exists(), "new library database")
             time.sleep(2)
             evidence["preexisting_subscriptions"] = subscriptions(db)
@@ -238,15 +256,24 @@ def run(binary, number, output, temp):
             screenshot(output / "import-picker.png")
             expect(lambda: text_point(scratch, r"\b(?:import\s+(?:feeds\s+from\s+)?[O0Q]PML|[O0Q]PML\s+feed\s+list)\b"),
                    "visible native import file picker", 10)
-            # Choose the exact same bytes by clicking a visible file, avoiding GTK path-entry races.
-            home_point = expect(lambda: text_point(scratch, r"(?:^|\s)Home$", 300), "Home sidebar in native file picker", 10)
-            mouse(*home_point, button=1)
-            candidate = expect(lambda: text_point(scratch, r"\bscience\.opml\b"), "exact visible science.opml file", 10)
-            mouse(*candidate, button=1)
-            accept = expect(lambda: text_point(scratch, r"^Open$"), "Open button in native file picker", 8)
+            expect(file_picker_open, "visible native dialog title", 7)
+            # GTK creates the location entry asynchronously. Verify the complete path before accepting.
+            press("ctrl+l")
+            time.sleep(0.8)
+            expect(lambda: text_point(scratch, r"\bLocation\b", 400), "visible GTK location entry", 7)
+            press("ctrl+a")
+            fixture_path = str(picker_copy.resolve())
+            command("xdotool", "type", "--clearmodifiers", "--delay", "55", "--", fixture_path)
+            expect(lambda: any(normalize(fixture_path) in normalize(label) for label, _, _ in lines(scratch)),
+                   "full exact sample path in native picker", 10)
+            evidence["native_picker_path_verified"] = True
             screenshot(output / "selected-opml.png")
-            mouse(*accept, button=1)
-            expect(lambda: not text_point(scratch, r"\b[O0Q]PML\s+feed\s+list\b"), "native file picker closed", 10)
+            press("Return")
+            time.sleep(1)
+            if file_picker_open():
+                accept = expect(lambda: text_point(scratch, r"^Open$"), "Open button in native file picker", 7)
+                mouse(*accept, button=1)
+            expect(lambda: not file_picker_open(), "native file picker closed", 12)
             def imported():
                 feeds = subscriptions(db)
                 return feeds if {row["url"] for row in feeds} == expected else None
@@ -263,7 +290,7 @@ def run(binary, number, output, temp):
             evidence["publisher_entry"] = opened_article(item["url"])
             assert evidence["publisher_entry"]["status"] == 200 and evidence["publisher_entry"]["title"]
         expect(lambda: window() is None, "previous Zotero window to close", 10)
-        with launch(binary, profile, data, home, log):
+        with launch(binary, profile, data, home, log), capture_failure(output, scratch, evidence):
             time.sleep(2)
             evidence["after_restart"] = expect(imported, "all nine subscriptions after restart", 18)
             expect(lambda: text_point(scratch, r"\bPLOS\s+Biology\b", 260), "journal visible after restart", 12)
@@ -272,8 +299,6 @@ def run(binary, number, output, temp):
     except Exception as error:
         evidence["failure"] = f"{type(error).__name__}: {error}"
         evidence["db_readback_on_failure"] = subscriptions(db)
-        evidence["last_screen_text"] = [record[0] for record in lines(scratch)]
-        screenshot(output / "failure.png")
         raise
     finally:
         report.write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
