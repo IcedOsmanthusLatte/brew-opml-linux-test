@@ -1,0 +1,90 @@
+name: Check live HN examples for editorial review
+on:
+  push:
+    branches: [ghacks-hn-editorial-qa-20261125]
+    paths: [.github/workflows/ghacks-hn-editorial-qa.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify the exact RSS samples and HN parent relationships
+        id: rss
+        run: |
+          python verification/ghacks-hn-samples.py 'anonymous GitHub Actions ubuntu-24.04' proof/hn-cloud.json
+          echo "passed=$(python -c 'import json;print(str(json.load(open("proof/hn-cloud.json"))["pass"]).lower())')" >> "$GITHUB_OUTPUT"
+      - name: Install independent layout browser when the RSS checks pass
+        if: steps.rss.outputs.passed == 'true'
+        run: |
+          python -m venv .venv
+          .venv/bin/pip --quiet install playwright==1.55.0
+          .venv/bin/playwright install --with-deps chromium
+      - name: Check the email landing on mobile and desktop
+        if: steps.rss.outputs.passed == 'true'
+        run: |
+          .venv/bin/python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import parse_qs, urlsplit
+          from playwright.sync_api import sync_playwright
+
+          url = 'https://getbrew.app/blog/hacker-news-rss-feed/#choose-a-hacker-news-feed'
+          folder = Path('proof')
+          rss = json.loads((folder / 'hn-cloud.json').read_text(encoding='utf-8'))
+          states = []
+          with sync_playwright() as p:
+              browser = p.chromium.launch()
+              for width, height in ((390, 844), (1440, 900)):
+                  context = browser.new_context(viewport={'width': width, 'height': height}, is_mobile=width < 768,
+                                                has_touch=width < 768, reduced_motion='reduce', service_workers='block')
+                  page = context.new_page()
+                  response = page.goto(url, wait_until='domcontentloaded', timeout=25000)
+                  heading = page.locator('#choose-a-hacker-news-feed')
+                  heading.wait_for(state='visible')
+                  page.evaluate('document.fonts.ready')
+                  page.wait_for_timeout(450)
+                  measurement = heading.evaluate('''heading => {
+                      const rect = heading.getBoundingClientRect();
+                      const x = rect.left + Math.min(16, rect.width / 2);
+                      const y = rect.top + rect.height / 2;
+                      const hit = document.elementFromPoint(x, y);
+                      return { text: heading.textContent.trim(), heading_uncovered: Boolean(hit && heading.contains(hit)),
+                               heading_top: Math.round(rect.top), width: innerWidth,
+                               no_page_overflow: document.documentElement.scrollWidth <= innerWidth + 1 };
+                  }''')
+                  samples = {}
+                  for kind, link_text, identifier in (
+                      ('item', 'Whole-thread feed example', '50599458'),
+                      ('replies', 'Single-comment reply feed example', '50627737'),
+                  ):
+                      link = page.get_by_role('link', name=link_text, exact=True)
+                      href = link.get_attribute('href')
+                      parsed = urlsplit(href or '')
+                      query = parse_qs(parsed.query)
+                      samples[kind] = {'href': href, 'visible_in_table': link.evaluate(
+                          'a => Boolean(a.closest("table") && a.getBoundingClientRect().width > 0)'),
+                          'exact_match': href in rss['published_hrefs'][kind] and query.get('id') == [identifier]}
+                  passed = (response is not None and response.status == 200 and page.url == url
+                            and 'Choose a Hacker News feed' == measurement['text'] and measurement['heading_uncovered']
+                            and measurement['no_page_overflow'] and measurement['width'] == width
+                            and all(sample['exact_match'] and sample['visible_in_table'] for sample in samples.values()))
+                  states.append({'status': response.status if response else None, 'page': page.url,
+                                 **measurement, 'links': samples, 'passed': passed})
+                  page.screenshot(path=str(folder / f'landing-{width}.jpg'), type='jpeg', quality=80)
+                  context.close()
+              browser.close()
+          (folder / 'landing.json').write_text(json.dumps(states, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(states))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ghacks-hn-editorial-proof
+          path: proof/
+          retention-days: 7
+
