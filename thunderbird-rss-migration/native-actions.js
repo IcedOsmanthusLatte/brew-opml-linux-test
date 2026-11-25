@@ -28,7 +28,10 @@ const [action, input] = params;
       if (child.flags & Components.interfaces.nsMsgFolderFlags.Trash) {
         continue;
       }
-      walk(child, visit, [...path, child.prettyName]);
+      if (!child.name) {
+        throw new Error("Native folder did not expose its name");
+      }
+      walk(child, visit, [...path, child.name]);
     }
   }
   function snapshot() {
@@ -53,7 +56,7 @@ const [action, input] = params;
         });
       }
     });
-    return {account: root().prettyName, folders, messages};
+    return {account: root().name, folders, messages};
   }
   async function withSubscriptions(callback) {
     const dlg = win.openDialog("chrome://messenger-newsblog/content/feed-subscriptions.xhtml",
@@ -76,7 +79,7 @@ const [action, input] = params;
       return {version: Services.appinfo.version, build_id: Services.appinfo.appBuildID,
         account_count: rssAccounts().length, window: win?.document.documentURI || null};
     case "create_account":
-      return FeedUtils.createRssAccount("Brew Test Feeds").incomingServer.rootFolder.prettyName;
+      return FeedUtils.createRssAccount("Brew Test Feeds").incomingServer.rootFolder.name;
     case "snapshot":
       return snapshot();
     case "import_opml":
@@ -151,6 +154,16 @@ const [action, input] = params;
       return subjects.sort();
     }
     case "visible_folder": {
+      // Dismiss the fresh profile's email onboarding dialog without entering data.
+      for (const hub of win.document.querySelectorAll("account-hub-container")) {
+        const dialogs = [
+          ...hub.querySelectorAll("dialog[open]"),
+          ...(hub.shadowRoot?.querySelectorAll("dialog[open]") || []),
+        ];
+        for (const dialog of dialogs) {
+          dialog.close();
+        }
+      }
       const mail = win.document.getElementById("tabmail");
       mail.switchToTab(0);
       const pane = mail.currentAbout3Pane;

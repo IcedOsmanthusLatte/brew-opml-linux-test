@@ -266,7 +266,9 @@ def main():
                 observe(client, 3)
                 assert client.run("mark", MARKED) == MARKED
                 snapshots["source_marked"] = client.run("snapshot")
-                assert len(paths(snapshots["source_marked"])) == 3
+                assert paths(snapshots["source_marked"]) == {
+                    f"{BASE}/{name}.xml": list(labels) for name, labels in FEEDS.items()
+                }
                 assert state(snapshots["source_marked"]) == {
                     POSTS["archived"]: [True, True],
                     POSTS["current"]: [True, True],
