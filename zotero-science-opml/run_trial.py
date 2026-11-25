@@ -51,13 +51,15 @@ def screenshot(path):
     command("scrot", "--overwrite", str(path))
 
 
-def lines(image):
+def recognized_words(image):
     screenshot(image)
     tsv = command("tesseract", str(image), "stdout", "--psm", "11", "tsv")
+    return [word for word in csv.DictReader(tsv.splitlines(), delimiter="\t") if (word.get("text") or "").strip()]
+
+
+def lines(image):
     grouped = {}
-    for word in csv.DictReader(tsv.splitlines(), delimiter="\t"):
-        if not (word.get("text") or "").strip():
-            continue
+    for word in recognized_words(image):
         key = tuple(word[field] for field in ("block_num", "par_num", "line_num"))
         grouped.setdefault(key, []).append(word)
     records = []
@@ -72,6 +74,16 @@ def lines(image):
 
 def text_point(image, pattern, max_x=1380):
     return next(((x, y) for text, x, y in lines(image) if x < max_x and re.search(pattern, text, re.I)), None)
+
+
+def exact_word_point(image, label, bounds):
+    left, top, right, bottom = bounds
+    for word in recognized_words(image):
+        x = int(word["left"]) + int(word["width"]) // 2
+        y = int(word["top"]) + int(word["height"]) // 2
+        if word["text"].lower() == label.lower() and left <= x <= right and top <= y <= bottom:
+            return x, y
+    return None
 
 
 def file_picker_open():
@@ -257,22 +269,16 @@ def run(binary, number, output, temp):
             expect(lambda: text_point(scratch, r"\b(?:import\s+(?:feeds\s+from\s+)?[O0Q]PML|[O0Q]PML\s+feed\s+list)\b"),
                    "visible native import file picker", 10)
             expect(file_picker_open, "visible native dialog title", 7)
-            # GTK creates the location entry asynchronously. Verify the complete path before accepting.
-            press("ctrl+l")
-            time.sleep(0.8)
-            expect(lambda: text_point(scratch, r"\bLocation\b", 400), "visible GTK location entry", 7)
-            press("ctrl+a")
-            fixture_path = str(picker_copy.resolve())
-            command("xdotool", "type", "--clearmodifiers", "--delay", "55", "--", fixture_path)
-            expect(lambda: any(normalize(fixture_path) in normalize(label) for label, _, _ in lines(scratch)),
-                   "full exact sample path in native picker", 10)
-            evidence["native_picker_path_verified"] = True
+            # Use each matched word's exact coordinates. GTK can group adjacent rows into one OCR line.
+            home_widget = expect(lambda: exact_word_point(scratch, "Home", (130, 95, 300, 145)),
+                                 "Home sidebar in native file picker", 8)
+            mouse(*home_widget, button=1)
+            selected = expect(lambda: exact_word_point(scratch, "science.opml", (330, 145, 530, 260)),
+                              "exact native science.opml filename and its position", 10)
             screenshot(output / "selected-opml.png")
-            press("Return")
-            time.sleep(1)
-            if file_picker_open():
-                accept = expect(lambda: text_point(scratch, r"^Open$"), "Open button in native file picker", 7)
-                mouse(*accept, button=1)
+            evidence["native_picker_file"] = {"name": picker_copy.name, "word_center_xy": selected}
+            mouse(*selected)
+            command("xdotool", "click", "--repeat", "2", "--delay", "90", "1")
             expect(lambda: not file_picker_open(), "native file picker closed", 12)
             def imported():
                 feeds = subscriptions(db)
