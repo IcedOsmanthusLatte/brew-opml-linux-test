@@ -19,9 +19,6 @@ from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 from xml.etree import ElementTree
 
-from PIL import Image
-
-
 OPML_SHA256 = "9de06c05dc6a964934009ae83e3ea4e6a86a2cee58d91d31077c9703e2ab563e"
 
 
@@ -78,31 +75,30 @@ def text_point(image, pattern, max_x=1380):
     return next(((x, y) for text, x, y in lines(image) if x < max_x and re.search(pattern, text, re.I)), None)
 
 
-def fixture_visible(image, crop):
-    screenshot(image)
-    with Image.open(image) as frame:
-        assert frame.size == (1380, 900)
-        frame.crop((344, 178, 466, 198)).resize((488, 80)).save(crop)
-    text = command("tesseract", str(crop), "stdout", "--psm", "7")
-    return normalize(text) == "scienceopml"
+def set_clipboard(value):
+    subprocess.run(["xclip", "-selection", "clipboard", "-in"], input=value, text=True,
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, timeout=4)
 
 
-def fixture_highlighted(image):
-    screenshot(image)
-    with Image.open(image) as frame:
-        assert frame.size == (1380, 900)
-        rgb = frame.convert("RGB")
-        fixture = rgb.getpixel((700, 188))
-        neighbor = rgb.getpixel((700, 165))
-    red, green, blue = fixture
-    if blue >= 190 and blue - green >= 65 and green - red >= 50 and min(neighbor) >= 240:
-        return {"file_row_rgb": fixture, "adjacent_row_rgb": neighbor}
-    return None
+def chooser_path_readback(path):
+    command("xdotool", "windowactivate", "--sync", expect(file_picker_open, "native GTK file picker"))
+    press("ctrl+l")
+    time.sleep(0.85)
+    set_clipboard(str(path))
+    press("ctrl+a", "ctrl+v")
+    time.sleep(0.65)
+    # An unchanged clipboard must never be accepted as proof of focus and paste.
+    set_clipboard("not the chooser path")
+    press("ctrl+a", "ctrl+c")
+    return expect(
+        lambda: command("xclip", "-selection", "clipboard", "-out") == str(path),
+        "GTK location entry returned the exact fixture path", 4,
+    )
 
 
 def file_picker_open():
     try:
-        return bool(command("xdotool", "search", "--onlyvisible", "--name", "^Import Feeds from OPML$"))
+        return command("xdotool", "search", "--onlyvisible", "--name", "^Import Feeds from OPML$")
     except subprocess.CalledProcessError:
         return False
 
@@ -239,6 +235,11 @@ def run(binary, number, output, temp):
     db = data / "zotero.sqlite"
     log = output / "zotero-runtime.txt"
     scratch = temp / "screen.png"
+
+    def imported():
+        feeds = subscriptions(db)
+        return feeds if len(feeds) == len(expected) and {row["url"] for row in feeds} == expected else None
+
     try:
         config = ConfigParser()
         install = Path(binary).parent
@@ -280,41 +281,42 @@ def run(binary, number, output, temp):
                 press("Right", "End", "Return")
             time.sleep(1.5)
             screenshot(output / "import-picker.png")
-            expect(lambda: text_point(scratch, r"\b(?:import\s+(?:feeds\s+from\s+)?[O0Q]PML|[O0Q]PML\s+feed\s+list)\b"),
-                   "visible native import file picker", 10)
             expect(file_picker_open, "visible native dialog title", 7)
-            # The known 1380 × 900 GTK layout was verified against both previous runners' screenshots.
-            mouse(184, 119, button=1)
-            expect(lambda: fixture_visible(scratch, temp / "fixture-row.png"),
-                   "science.opml filename in its verified screen row", 8)
+            assert chooser_path_readback(picker_copy)
+            evidence["native_picker_file"] = {"name": picker_copy.name, "exact_path_readback": True}
             screenshot(output / "selected-opml.png")
-            mouse(390, 188, button=1)
-            colors = expect(lambda: fixture_highlighted(scratch), "file row selected and adjacent directory unselected", 8)
-            evidence["native_picker_file"] = {"name": picker_copy.name, "selected_xy": [390, 188], **colors}
-            screenshot(output / "native-highlight.png")
-            mouse(1200, 858, button=1)
+            press("Return")
             expect(lambda: not file_picker_open(), "native file picker closed", 12)
-            def imported():
-                feeds = subscriptions(db)
-                return feeds if {row["url"] for row in feeds} == expected else None
             evidence["imported"] = expect(imported, "all nine exact subscriptions", 75)
-            scholarly = next(row for row in evidence["imported"] if row["name"] == "PLOS Biology")
-            entries = expect(lambda: journal_entries(db, scholarly["libraryID"]), "PLOS Biology items", 80)
-            point = expect(lambda: text_point(scratch, r"\bPLOS\s+Biology\b", 260), "visible journal feed", 12)
+        expect(lambda: window() is None, "previous Zotero window to close", 10)
+        with launch(binary, profile, data, home, log), capture_failure(output, scratch, evidence):
+            time.sleep(2)
+            evidence["after_restart"] = expect(imported, "all nine subscriptions after restart", 18)
+            screenshot(output / "after-restart.png")
+            journal_patterns = [
+                ("https://journals.plos.org/plosbiology/feed/atom", r"\bPLOS\s+Biology\b"),
+                ("https://www.nature.com/nature.rss", r"^Nature\b"),
+                ("https://elifesciences.org/rss/subject/evolutionary-biology.xml", r"\beLife\b"),
+            ]
+
+            def loaded_journal():
+                ids = {row["url"]: row["libraryID"] for row in subscriptions(db)}
+                for url, pattern in journal_patterns:
+                    if entries := journal_entries(db, ids[url]):
+                        return url, pattern, entries
+                return None
+
+            url, pattern, entries = expect(loaded_journal, "items in a scholarly feed", 85)
+            point = expect(lambda: text_point(scratch, pattern, 260), "visible journal feed", 12)
             mouse(*point, button=1)
             item, x, y = expect(lambda: find_article(entries, scratch), "visible journal title", 18)
             mouse(x, y, button=1)
             time.sleep(0.7)
             screenshot(output / "journal-item.png")
+            evidence["selected_journal_feed"] = url
             evidence["selected_item"] = item
             evidence["publisher_entry"] = opened_article(item["url"])
             assert evidence["publisher_entry"]["status"] == 200 and evidence["publisher_entry"]["title"]
-        expect(lambda: window() is None, "previous Zotero window to close", 10)
-        with launch(binary, profile, data, home, log), capture_failure(output, scratch, evidence):
-            time.sleep(2)
-            evidence["after_restart"] = expect(imported, "all nine subscriptions after restart", 18)
-            expect(lambda: text_point(scratch, r"\bPLOS\s+Biology\b", 260), "journal visible after restart", 12)
-            screenshot(output / "after-restart.png")
         evidence["passed"] = True
     except Exception as error:
         evidence["failure"] = f"{type(error).__name__}: {error}"

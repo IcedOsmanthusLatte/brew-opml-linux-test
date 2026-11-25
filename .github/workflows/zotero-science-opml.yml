@@ -1,8 +1,7 @@
 name: Zotero Science OPML native trial
 on:
   push:
-    branches: [zotero-science-opml-20261125]
-    paths: ['.github/workflows/zotero-science-opml.yml', 'zotero-science-opml/**']
+    branches: [zotero-science-opml-20261126]
 permissions:
   contents: read
 jobs:
@@ -31,7 +30,7 @@ jobs:
           tar -xf zotero.tar.xz -C zotero-app --strip-components=1
           curl --silent --show-error --fail --location --max-time 20 \
             'https://getbrew.app/collections/downloads/science.opml' --output evidence/science.opml
-          sudo apt-get install -y -qq xvfb xdotool scrot openbox tesseract-ocr libgtk-3-0t64 libdbus-glib-1-2 python3-pil
+          sudo apt-get install -y -qq xvfb xdotool xclip scrot openbox tesseract-ocr libgtk-3-0t64 libdbus-glib-1-2
       - name: Import through the real desktop UI and verify after restart
         shell: bash
         run: >-
