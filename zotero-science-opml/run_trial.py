@@ -1,7 +1,7 @@
 """Run the real Zotero desktop importer on a dedicated virtual X11 display."""
 
 from configparser import ConfigParser
-from contextlib import contextmanager, closing
+from contextlib import contextmanager, closing, suppress
 import csv
 from difflib import SequenceMatcher
 from hashlib import sha256
@@ -9,6 +9,7 @@ from pathlib import Path
 import json
 import os
 import re
+import signal
 import sqlite3
 import subprocess
 import sys
@@ -154,7 +155,7 @@ def launch(binary, profile, data, home, log):
            "XDG_DATA_HOME": str(home / "share"), "MOZ_ENABLE_WAYLAND": "0", "LC_ALL": "C.UTF-8"}
     with log.open("ab") as output:
         process = subprocess.Popen([binary, "-no-remote", "-profile", str(profile)], env=env,
-                                   stdout=output, stderr=subprocess.STDOUT)
+                                   stdout=output, stderr=subprocess.STDOUT, start_new_session=True)
         try:
             win = expect(window, "Zotero window")
             command("xdotool", "windowactivate", "--sync", win)
@@ -163,14 +164,15 @@ def launch(binary, profile, data, home, log):
             yield win
         finally:
             if process.poll() is None:
-                win = window()
-                if win:
-                    command("xdotool", "windowactivate", "--sync", win)
-                    press("Escape", "ctrl+q")
+                with suppress(subprocess.CalledProcessError, subprocess.TimeoutExpired):
+                    press("Escape")
+                    if win := window():
+                        command("xdotool", "windowactivate", win)
+                        press("ctrl+q")
                 try:
                     process.wait(timeout=20)
                 except subprocess.TimeoutExpired:
-                    process.terminate()
+                    os.killpg(process.pid, signal.SIGTERM)
                     process.wait(timeout=10)
 
 
@@ -185,7 +187,11 @@ def run(binary, number, output, temp):
     report = output / "trial.json"
     report.write_text(json.dumps(evidence, indent=2) + "\n")
     profile, data, home = (temp / name for name in ("profile", "data", "home"))
-    home.mkdir(); data.mkdir()
+    home.mkdir()
+    data.mkdir()
+    picker_copy = home / "science.opml"
+    picker_copy.write_bytes(sample.read_bytes())
+    assert sha256(picker_copy.read_bytes()).hexdigest() == OPML_SHA256
     db = data / "zotero.sqlite"
     log = output / "zotero-runtime.txt"
     scratch = temp / "screen.png"
@@ -232,9 +238,15 @@ def run(binary, number, output, temp):
             screenshot(output / "import-picker.png")
             expect(lambda: text_point(scratch, r"\b(?:import\s+(?:feeds\s+from\s+)?[O0Q]PML|[O0Q]PML\s+feed\s+list)\b"),
                    "visible native import file picker", 10)
-            press("ctrl+l")
-            command("xdotool", "type", "--clearmodifiers", str(sample))
-            press("Return")
+            # Choose the exact same bytes by clicking a visible file, avoiding GTK path-entry races.
+            home_point = expect(lambda: text_point(scratch, r"(?:^|\s)Home$", 300), "Home sidebar in native file picker", 10)
+            mouse(*home_point, button=1)
+            candidate = expect(lambda: text_point(scratch, r"\bscience\.opml\b"), "exact visible science.opml file", 10)
+            mouse(*candidate, button=1)
+            accept = expect(lambda: text_point(scratch, r"^Open$"), "Open button in native file picker", 8)
+            screenshot(output / "selected-opml.png")
+            mouse(*accept, button=1)
+            expect(lambda: not text_point(scratch, r"\b[O0Q]PML\s+feed\s+list\b"), "native file picker closed", 10)
             def imported():
                 feeds = subscriptions(db)
                 return feeds if {row["url"] for row in feeds} == expected else None
