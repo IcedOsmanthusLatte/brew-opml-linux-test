@@ -1,0 +1,50 @@
+name: Thunderbird RSS profile and OPML comparison
+on:
+  push:
+    branches: [thunderbird-rss-migration-20261125]
+    paths: ['.github/workflows/thunderbird-rss-migration.yml', 'thunderbird-rss-migration/**']
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        round: [1, 2]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify the official Thunderbird release archive and prepare virtual desktop
+        shell: bash
+        run: |
+          set -euo pipefail
+          release=161.0
+          prefix=linux-x86_64/en-US
+          base="https://archive.mozilla.org/pub/thunderbird/releases/$release"
+          curl --fail --location --retry 2 --max-time 100 "$base/SHA256SUMS" -o sums
+          path=$(awk -v prefix="$prefix/" '$2 ~ "^" prefix "thunderbird-.*\\.tar\\.(xz|bz2)$" {print $2}' sums)
+          test -n "$path"
+          mkdir -p "$prefix"
+          curl --fail --location --retry 2 --max-time 140 "$base/$path" -o "$path"
+          awk -v path="$path" '$2 == path' sums | sha256sum --strict -c
+          tar -xf "$path"
+          rm -- "$path"
+          cp sums "$RUNNER_TEMP/thunderbird-release-sha256sums"
+          sudo apt-get install -y -qq xvfb scrot libgtk-3-0t64 libdbus-glib-1-2
+      - name: Compare the two native transfer paths in independent profiles
+        shell: bash
+        run: >-
+          xvfb-run -a -s '-screen 0 1380x900x24'
+          python thunderbird-rss-migration/run_trial.py
+          "$PWD/thunderbird/thunderbird" ${{ matrix.round }} evidence
+      - name: Save only synthetic evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: thunderbird-rss-round-${{ matrix.round }}
+          path: evidence/
+          if-no-files-found: ignore
+          retention-days: 7
