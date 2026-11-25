@@ -5,6 +5,7 @@ from contextlib import contextmanager, closing, suppress
 import csv
 from difflib import SequenceMatcher
 from hashlib import sha256
+from html import unescape
 from pathlib import Path
 import json
 import os
@@ -155,7 +156,8 @@ def find_article(entries, image):
         for label, x, y in view:
             seen = normalize(label)
             if 210 < x < 940 and y > 86 and len(seen) >= 14 and (
-                expected.startswith(seen) or SequenceMatcher(None, expected[:len(seen)], seen).ratio() > 0.89
+                expected.startswith(seen) or seen.startswith(expected)
+                or SequenceMatcher(None, expected[:len(seen)], seen).ratio() > 0.89
             ):
                 return entry, x, y
     return None
@@ -169,7 +171,7 @@ def opened_article(url):
     with urlopen(request, timeout=18) as response:
         body = response.read(2_000_000).decode("utf-8", errors="replace")
         meta = re.search(r"<title[^>]*>(.*?)</title>", body, re.I | re.S)
-        return {"status": response.status, "url": response.geturl(), "title": meta.group(1).strip() if meta else None}
+        return {"status": response.status, "url": response.geturl(), "title": unescape(meta.group(1).strip()) if meta else None}
 
 
 def window():
@@ -201,7 +203,7 @@ def launch(binary, profile, data, home, log):
             command("xdotool", "windowactivate", "--sync", win)
             command("xdotool", "windowsize", win, "1370", "860")
             command("xdotool", "windowmove", win, "0", "0")
-            yield win
+            yield win, process.pid
         finally:
             if process.poll() is None:
                 with suppress(subprocess.CalledProcessError, subprocess.TimeoutExpired):
@@ -236,9 +238,10 @@ def run(binary, number, output, temp):
     log = output / "zotero-runtime.txt"
     scratch = temp / "screen.png"
 
-    def imported():
+    def verify_saved_subscriptions(stage):
         feeds = subscriptions(db)
-        return feeds if len(feeds) == len(expected) and {row["url"] for row in feeds} == expected else None
+        evidence[stage] = feeds
+        assert len(feeds) == len(expected) and {row["url"] for row in feeds} == expected, f"{stage}: exact saved URLs differ"
 
     try:
         config = ConfigParser()
@@ -249,7 +252,8 @@ def run(binary, number, output, temp):
         evidence["version"] = config.get("App", "Version", fallback=release_version)
         evidence["build_id"] = config.get("App", "BuildID", fallback=None)
         assert evidence["version"] == release_version
-        with launch(binary, profile, data, home, log) as win, capture_failure(output, scratch, evidence):
+        with launch(binary, profile, data, home, log) as (win, pid), capture_failure(output, scratch, evidence):
+            evidence["first_zotero_pid"] = pid
             expect(lambda: db.exists(), "new library database")
             time.sleep(2)
             evidence["preexisting_subscriptions"] = subscriptions(db)
@@ -287,36 +291,48 @@ def run(binary, number, output, temp):
             screenshot(output / "selected-opml.png")
             press("Return")
             expect(lambda: not file_picker_open(), "native file picker closed", 12)
-            evidence["imported"] = expect(imported, "all nine exact subscriptions", 75)
+            expect(lambda: text_point(scratch, r"\bPLOS\s+Biology\b", 260), "visible native subscriptions", 24)
+            screenshot(output / "post-import.png")
+            # Let the desktop app complete its initial feed requests before closing its database.
+            time.sleep(12)
         expect(lambda: window() is None, "previous Zotero window to close", 10)
-        with launch(binary, profile, data, home, log), capture_failure(output, scratch, evidence):
-            time.sleep(2)
-            evidence["after_restart"] = expect(imported, "all nine subscriptions after restart", 18)
+        # Zotero can hold SQLite locked while it is running. Read only after a complete exit.
+        verify_saved_subscriptions("imported")
+        journal_patterns = [
+            ("https://journals.plos.org/plosbiology/feed/atom", r"\bPLOS\s+Biology\b"),
+            ("https://www.nature.com/nature.rss", r"^Nature\b"),
+            ("https://elifesciences.org/rss/subject/evolutionary-biology.xml", r"\beLife\b"),
+        ]
+        ids = {row["url"]: row["libraryID"] for row in evidence["imported"]}
+        journals = [(url, pattern, journal_entries(db, ids[url])) for url, pattern in journal_patterns]
+        evidence["journal_counts_after_first_exit"] = {url: len(entries) for url, _, entries in journals}
+        with launch(binary, profile, data, home, log) as (_, restart_pid), capture_failure(output, scratch, evidence):
+            assert restart_pid != evidence["first_zotero_pid"]
+            evidence["restarted_zotero_pid"] = restart_pid
+            expect(lambda: text_point(scratch, r"\bPLOS\s+Biology\b", 260), "visible native subscriptions after restart", 20)
             screenshot(output / "after-restart.png")
-            journal_patterns = [
-                ("https://journals.plos.org/plosbiology/feed/atom", r"\bPLOS\s+Biology\b"),
-                ("https://www.nature.com/nature.rss", r"^Nature\b"),
-                ("https://elifesciences.org/rss/subject/evolutionary-biology.xml", r"\beLife\b"),
-            ]
-
-            def loaded_journal():
-                ids = {row["url"]: row["libraryID"] for row in subscriptions(db)}
-                for url, pattern in journal_patterns:
-                    if entries := journal_entries(db, ids[url]):
-                        return url, pattern, entries
-                return None
-
-            url, pattern, entries = expect(loaded_journal, "items in a scholarly feed", 85)
-            point = expect(lambda: text_point(scratch, pattern, 260), "visible journal feed", 12)
-            mouse(*point, button=1)
-            item, x, y = expect(lambda: find_article(entries, scratch), "visible journal title", 18)
-            mouse(x, y, button=1)
-            time.sleep(0.7)
-            screenshot(output / "journal-item.png")
-            evidence["selected_journal_feed"] = url
-            evidence["selected_item"] = item
-            evidence["publisher_entry"] = opened_article(item["url"])
-            assert evidence["publisher_entry"]["status"] == 200 and evidence["publisher_entry"]["title"]
+            for url, pattern, entries in journals:
+                if not entries:
+                    continue
+                point = expect(lambda: text_point(scratch, pattern, 260), "visible journal feed", 8)
+                mouse(*point, button=1)
+                try:
+                    item, x, y = expect(lambda: find_article(entries, scratch), "visible journal title", 10)
+                except RuntimeError:
+                    continue
+                mouse(x, y, button=1)
+                time.sleep(0.8)
+                screenshot(output / "journal-item.png")
+                evidence["selected_journal_feed"] = url
+                evidence["selected_item"] = item
+                break
+        verify_saved_subscriptions("after_restart")
+        assert "selected_item" in evidence, "no matched journal item in the relaunched desktop app"
+        evidence["publisher_entry"] = opened_article(evidence["selected_item"]["url"])
+        assert evidence["publisher_entry"]["status"] == 200 and evidence["publisher_entry"]["title"]
+        publisher_title = normalize(evidence["publisher_entry"]["title"])
+        item_title = normalize(evidence["selected_item"]["title"])
+        assert item_title in publisher_title, "publisher HTML title does not match selected journal item"
         evidence["passed"] = True
     except Exception as error:
         evidence["failure"] = f"{type(error).__name__}: {error}"
