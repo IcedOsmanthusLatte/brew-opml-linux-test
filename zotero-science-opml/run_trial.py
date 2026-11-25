@@ -188,11 +188,15 @@ def run(binary, number, output, temp):
     db = data / "zotero.sqlite"
     log = output / "zotero-runtime.txt"
     scratch = temp / "screen.png"
-    config = ConfigParser()
-    config.read(Path(binary).parent / "application.ini")
-    evidence["version"] = config["App"].get("Version")
-    evidence["build_id"] = config["App"].get("BuildID")
     try:
+        config = ConfigParser()
+        install = Path(binary).parent
+        config.read([install / "application.ini", install / "app" / "application.ini"])
+        release_url = (output / "release-url.txt").read_text().strip()
+        release_version = re.search(r"/release/([0-9.]+)/", release_url).group(1)
+        evidence["version"] = config.get("App", "Version", fallback=release_version)
+        evidence["build_id"] = config.get("App", "BuildID", fallback=None)
+        assert evidence["version"] == release_version
         with launch(binary, profile, data, home, log):
             expect(lambda: db.exists(), "new library database")
             time.sleep(2)
