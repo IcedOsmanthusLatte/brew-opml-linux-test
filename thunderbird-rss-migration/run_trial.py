@@ -5,6 +5,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from threading import Thread
 import json
+import os
 import platform
 import socket
 import subprocess
@@ -168,7 +169,8 @@ def launch(binary, profile, log):
     with log.open("wb") as stream:
         process = subprocess.Popen([binary, "-no-remote", "-profile", str(profile),
                                     "-marionette", "-remote-allow-system-access"],
-                                   stdout=stream, stderr=subprocess.STDOUT)
+                                   stdout=stream, stderr=subprocess.STDOUT,
+                                   env={**os.environ, "MOZ_REMOTE_ALLOW_SYSTEM_ACCESS": "1"})
         client = None
         try:
             def connect():
@@ -193,6 +195,8 @@ def launch(binary, profile, log):
                     except (OSError, RuntimeError, KeyError):
                         pass
                 client.close()
+            elif process.poll() is None:
+                process.terminate()
             try:
                 process.wait(timeout=15)
             except subprocess.TimeoutExpired:
@@ -334,3 +338,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
