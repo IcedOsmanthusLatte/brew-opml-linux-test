@@ -1,0 +1,52 @@
+name: Zotero Science OPML native trial
+on:
+  push:
+    branches: [zotero-science-opml-20261125]
+    paths: ['.github/workflows/zotero-science-opml.yml', 'zotero-science-opml/**']
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        round: [1, 2]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Get the stable Linux release and the exact published fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          release=$(curl --silent --show-error --fail --location --max-time 140 \
+            'https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64' \
+            --output zotero.tar.xz --write-out '%{url_effective}')
+          [[ "$release" =~ ^https://download\.zotero\.org/client/release/[0-9.]+/Zotero-[0-9.]+_linux-x86_64\.tar\.xz$ ]]
+          mkdir -p evidence zotero-app
+          printf '%s\n' "$release" > evidence/release-url.txt
+          sha256sum zotero.tar.xz > evidence/release-sha256.txt
+          tar -xf zotero.tar.xz -C zotero-app --strip-components=1
+          curl --silent --show-error --fail --location --max-time 20 \
+            'https://getbrew.app/collections/downloads/science.opml' --output evidence/science.opml
+          sudo apt-get install -y -qq xvfb xdotool scrot openbox tesseract-ocr libgtk-3-0t64 libdbus-glib-1-2
+      - name: Import through the real desktop UI and verify after restart
+        shell: bash
+        run: >-
+          xvfb-run -a -s '-screen 0 1380x900x24'
+          python zotero-science-opml/run_trial.py
+          "$PWD/zotero-app/zotero" ${{ matrix.round }} "$PWD/evidence"
+      - name: Save public sample and isolated screenshots and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zotero-science-round-${{ matrix.round }}
+          path: |
+            evidence/*.json
+            evidence/*.png
+            evidence/*.txt
+            evidence/science.opml
+          if-no-files-found: ignore
+          retention-days: 7
