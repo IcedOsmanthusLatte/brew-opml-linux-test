@@ -19,6 +19,8 @@ from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 from xml.etree import ElementTree
 
+from PIL import Image
+
 
 OPML_SHA256 = "9de06c05dc6a964934009ae83e3ea4e6a86a2cee58d91d31077c9703e2ab563e"
 
@@ -76,13 +78,25 @@ def text_point(image, pattern, max_x=1380):
     return next(((x, y) for text, x, y in lines(image) if x < max_x and re.search(pattern, text, re.I)), None)
 
 
-def exact_word_point(image, label, bounds):
-    left, top, right, bottom = bounds
-    for word in recognized_words(image):
-        x = int(word["left"]) + int(word["width"]) // 2
-        y = int(word["top"]) + int(word["height"]) // 2
-        if word["text"].lower() == label.lower() and left <= x <= right and top <= y <= bottom:
-            return x, y
+def fixture_visible(image, crop):
+    screenshot(image)
+    with Image.open(image) as frame:
+        assert frame.size == (1380, 900)
+        frame.crop((344, 178, 466, 198)).resize((488, 80)).save(crop)
+    text = command("tesseract", str(crop), "stdout", "--psm", "7")
+    return normalize(text) == "scienceopml"
+
+
+def fixture_highlighted(image):
+    screenshot(image)
+    with Image.open(image) as frame:
+        assert frame.size == (1380, 900)
+        rgb = frame.convert("RGB")
+        fixture = rgb.getpixel((700, 188))
+        neighbor = rgb.getpixel((700, 165))
+    red, green, blue = fixture
+    if blue >= 190 and blue - green >= 65 and green - red >= 50 and min(neighbor) >= 240:
+        return {"file_row_rgb": fixture, "adjacent_row_rgb": neighbor}
     return None
 
 
@@ -269,16 +283,16 @@ def run(binary, number, output, temp):
             expect(lambda: text_point(scratch, r"\b(?:import\s+(?:feeds\s+from\s+)?[O0Q]PML|[O0Q]PML\s+feed\s+list)\b"),
                    "visible native import file picker", 10)
             expect(file_picker_open, "visible native dialog title", 7)
-            # Use each matched word's exact coordinates. GTK can group adjacent rows into one OCR line.
-            home_widget = expect(lambda: exact_word_point(scratch, "Home", (130, 95, 300, 145)),
-                                 "Home sidebar in native file picker", 8)
-            mouse(*home_widget, button=1)
-            selected = expect(lambda: exact_word_point(scratch, "science.opml", (330, 145, 530, 260)),
-                              "exact native science.opml filename and its position", 10)
+            # The known 1380 × 900 GTK layout was verified against both previous runners' screenshots.
+            mouse(184, 119, button=1)
+            expect(lambda: fixture_visible(scratch, temp / "fixture-row.png"),
+                   "science.opml filename in its verified screen row", 8)
             screenshot(output / "selected-opml.png")
-            evidence["native_picker_file"] = {"name": picker_copy.name, "word_center_xy": selected}
-            mouse(*selected)
-            command("xdotool", "click", "--repeat", "2", "--delay", "90", "1")
+            mouse(390, 188, button=1)
+            colors = expect(lambda: fixture_highlighted(scratch), "file row selected and adjacent directory unselected", 8)
+            evidence["native_picker_file"] = {"name": picker_copy.name, "selected_xy": [390, 188], **colors}
+            screenshot(output / "native-highlight.png")
+            mouse(1200, 858, button=1)
             expect(lambda: not file_picker_open(), "native file picker closed", 12)
             def imported():
                 feeds = subscriptions(db)

@@ -31,12 +31,12 @@ jobs:
           tar -xf zotero.tar.xz -C zotero-app --strip-components=1
           curl --silent --show-error --fail --location --max-time 20 \
             'https://getbrew.app/collections/downloads/science.opml' --output evidence/science.opml
-          sudo apt-get install -y -qq xvfb xdotool scrot openbox tesseract-ocr libgtk-3-0t64 libdbus-glib-1-2
+          sudo apt-get install -y -qq xvfb xdotool scrot openbox tesseract-ocr libgtk-3-0t64 libdbus-glib-1-2 python3-pil
       - name: Import through the real desktop UI and verify after restart
         shell: bash
         run: >-
           xvfb-run -a -s '-screen 0 1380x900x24'
-          python zotero-science-opml/run_trial.py
+          /usr/bin/python3 zotero-science-opml/run_trial.py
           "$PWD/zotero-app/zotero" ${{ matrix.round }} "$PWD/evidence"
       - name: Save public sample and isolated screenshots and results
         if: always()
