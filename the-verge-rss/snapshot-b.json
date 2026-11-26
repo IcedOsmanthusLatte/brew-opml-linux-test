@@ -1,0 +1,290 @@
+{
+  "main": {
+    "url": "https://www.theverge.com/rss/index.xml",
+    "final_url": "https://www.theverge.com/rss/index.xml",
+    "http_status": 200,
+    "retrieved_utc": "2026-11-26T16:54:34.918703+00:00",
+    "xml_sha256": "c33a22b175199d29c540b82215cd2eaaec04efcdb23871e674cc0a5dbf046ee7",
+    "date": "Thu, 26 Nov 2026 16:54:35 GMT",
+    "age": "1327",
+    "etag": "\"977f2f435534efca2ce7bf308533dde5\"",
+    "last_modified": null,
+    "feed_title": "The Verge",
+    "feed_id": "https://www.theverge.com/rss/index.xml",
+    "feed_updated": "2026-11-26T15:55:24+00:00",
+    "entries": [
+      {
+        "atom_id": "https://www.theverge.com/?p=1041762",
+        "original_url": "https://www.theverge.com/gadgets/1041762/best-black-friday-streaming-deals-2026",
+        "url_key": "https://www.theverge.com/gadgets/1041762/best-black-friday-streaming-deals-2026",
+        "title": "Disney Plus, Hulu, and HBO Max are all over 50 percent off for Black Friday",
+        "published": "2026-11-26T11:00:00-05:00",
+        "updated": "2026-11-25T20:29:46-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1043169",
+        "original_url": "https://www.theverge.com/games/1043169/rockstar-games-union-vote-iwgb",
+        "url_key": "https://www.theverge.com/games/1043169/rockstar-games-union-vote-iwgb",
+        "title": "GTA VI developers vote against unionization",
+        "published": "2026-11-26T10:55:24-05:00",
+        "updated": "2026-11-26T10:55:24-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1042629",
+        "original_url": "https://www.theverge.com/entertainment/1042629/gta-6-city-design",
+        "url_key": "https://www.theverge.com/entertainment/1042629/gta-6-city-design",
+        "title": "Why GTA VI’s version of Florida feels so real",
+        "published": "2026-11-26T10:00:00-05:00",
+        "updated": "2026-11-25T17:18:23-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1040110",
+        "original_url": "https://www.theverge.com/gadgets/1040110/zelda-ocarina-of-time-switch-2-black-friday-2026-deal-sale",
+        "url_key": "https://www.theverge.com/gadgets/1040110/zelda-ocarina-of-time-switch-2-black-friday-2026-deal-sale",
+        "title": "Here’s where you can save (a little) on the Ocarina of Time remake",
+        "published": "2026-11-26T09:00:00-05:00",
+        "updated": "2026-11-25T15:47:55-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1042613",
+        "original_url": "https://www.theverge.com/tech/1042613/samsung-r95h-rgb-led-tv-review",
+        "url_key": "https://www.theverge.com/tech/1042613/samsung-r95h-rgb-led-tv-review",
+        "title": "Samsung’s R95H TV shows what RGB LED is capable of",
+        "published": "2026-11-26T09:00:00-05:00",
+        "updated": "2026-11-25T17:05:18-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1042151",
+        "original_url": "https://www.theverge.com/transportation/1042151/waymo-highway-ban-ai-safety-recalls",
+        "url_key": "https://www.theverge.com/transportation/1042151/waymo-highway-ban-ai-safety-recalls",
+        "title": "Waymo conquered city streets — why does it keep stumbling on freeways?",
+        "published": "2026-11-26T07:00:00-05:00",
+        "updated": "2026-11-25T11:14:38-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1043078",
+        "original_url": "https://www.theverge.com/news/1043078/x-parental-controls-features",
+        "url_key": "https://www.theverge.com/news/1043078/x-parental-controls-features",
+        "title": "X is finally getting its first parental controls",
+        "published": "2026-11-26T05:45:50-05:00",
+        "updated": "2026-11-26T05:45:50-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1042620",
+        "original_url": "https://www.theverge.com/policy/1042620/character-ai-sale-state-ags-block-selling-users-chats",
+        "url_key": "https://www.theverge.com/policy/1042620/character-ai-sale-state-ags-block-selling-users-chats",
+        "title": "42 state AGs are trying to stop Character.AI from selling users’ chats",
+        "published": "2026-11-26T04:54:40-05:00",
+        "updated": "2026-11-26T04:54:40-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1042938",
+        "original_url": "https://www.theverge.com/tech/1042938/google-home-familiar-faces-onn-cameras",
+        "url_key": "https://www.theverge.com/tech/1042938/google-home-familiar-faces-onn-cameras",
+        "title": "Now Google’s Familiar Faces AI feature works on Walmart’s $35 smart home camera too",
+        "published": "2026-11-25T19:04:34-05:00",
+        "updated": "2026-11-25T19:04:34-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1042870",
+        "original_url": "https://www.theverge.com/tech/1042870/amazon-recall-order-cpsc",
+        "url_key": "https://www.theverge.com/tech/1042870/amazon-recall-order-cpsc",
+        "title": "Amazon loses its latest attempt to get out of handling more recall notices",
+        "published": "2026-11-25T18:56:44-05:00",
+        "updated": "2026-11-25T21:53:40-05:00"
+      }
+    ]
+  },
+  "ai": {
+    "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+    "final_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+    "http_status": 200,
+    "retrieved_utc": "2026-11-26T16:54:34.897181+00:00",
+    "xml_sha256": "8a7196d9ec56c31cc059830ca4ab0fe5d2476bb957e48a4207f80bb2269c82c8",
+    "date": "Thu, 26 Nov 2026 16:54:35 GMT",
+    "age": "25",
+    "etag": "\"16e1e385321305c9efc856164dfb2b89\"",
+    "last_modified": null,
+    "feed_title": "AI | The Verge",
+    "feed_id": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+    "feed_updated": "2026-11-26T12:29:18+00:00",
+    "entries": [
+      {
+        "atom_id": "https://www.theverge.com/?p=1042620",
+        "original_url": "https://www.theverge.com/policy/1042620/character-ai-sale-state-ags-block-selling-users-chats",
+        "url_key": "https://www.theverge.com/policy/1042620/character-ai-sale-state-ags-block-selling-users-chats",
+        "title": "42 state AGs are trying to stop Character.AI from selling users’ chats",
+        "published": "2026-11-26T04:54:40-05:00",
+        "updated": "2026-11-26T04:54:40-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1042221",
+        "original_url": "https://www.theverge.com/entertainment/1042221/google-my-channel-ai-video-patent",
+        "url_key": "https://www.theverge.com/entertainment/1042221/google-my-channel-ai-video-patent",
+        "title": "Google’s patent for custom AI video feeds paints a bleak picture of entertainment’s future",
+        "published": "2026-11-25T16:51:26-05:00",
+        "updated": "2026-11-25T16:51:26-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1042278",
+        "original_url": "https://www.theverge.com/science/1042278/spacex-fcc-starmind-ai-space-data-centers",
+        "url_key": "https://www.theverge.com/science/1042278/spacex-fcc-starmind-ai-space-data-centers",
+        "title": "FCC signs off on SpaceX’s plan to put up to 1 million data center satellites into space",
+        "published": "2026-11-25T12:44:51-05:00",
+        "updated": "2026-11-25T12:44:57-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1042162",
+        "original_url": "https://www.theverge.com/gadgets/1042162/nothing-ear-note-ai-earbuds-reveal",
+        "url_key": "https://www.theverge.com/gadgets/1042162/nothing-ear-note-ai-earbuds-reveal",
+        "title": "Nothing offers a full look at its AI earbuds and charging case",
+        "published": "2026-11-25T11:00:59-05:00",
+        "updated": "2026-11-25T11:00:59-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1042071",
+        "original_url": "https://www.theverge.com/tech/1042071/meta-amazon-muse-ai-shopping-discussions",
+        "url_key": "https://www.theverge.com/tech/1042071/meta-amazon-muse-ai-shopping-discussions",
+        "title": "Amazon is reportedly in talks to end Muse AI shopping block",
+        "published": "2026-11-25T09:12:33-05:00",
+        "updated": "2026-11-25T09:12:33-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1040081",
+        "original_url": "https://www.theverge.com/ai-artificial-intelligence/1040081/vibe-coding-open-source-music-firmware",
+        "url_key": "https://www.theverge.com/ai-artificial-intelligence/1040081/vibe-coding-open-source-music-firmware",
+        "title": "Has vibe coding made open source the new normal for synths?",
+        "published": "2026-11-25T08:00:00-05:00",
+        "updated": "2026-11-24T10:35:01-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1041571",
+        "original_url": "https://www.theverge.com/tech/1041571/jensen-huang-all-hands-nvidia-apology",
+        "url_key": "https://www.theverge.com/tech/1041571/jensen-huang-all-hands-nvidia-apology",
+        "title": "Jensen Huang reportedly tells Nvidia staff it&#8217;s ‘not true’ Trump got him rehired",
+        "published": "2026-11-24T15:02:03-05:00",
+        "updated": "2026-11-24T15:52:19-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1041417",
+        "original_url": "https://www.theverge.com/entertainment/1041417/david-fincher-netflix-cliff-booth-ai-interpositive",
+        "url_key": "https://www.theverge.com/entertainment/1041417/david-fincher-netflix-cliff-booth-ai-interpositive",
+        "title": "David Fincher is being dragged for suspected use of AI in his latest film",
+        "published": "2026-11-24T13:15:00-05:00",
+        "updated": "2026-11-24T13:38:16-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1041362",
+        "original_url": "https://www.theverge.com/entertainment/1041362/tidal-ai-music-ban",
+        "url_key": "https://www.theverge.com/entertainment/1041362/tidal-ai-music-ban",
+        "title": "Tidal will start banning AI-generated music next month",
+        "published": "2026-11-24T12:17:09-05:00",
+        "updated": "2026-11-24T12:17:09-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1041222",
+        "original_url": "https://www.theverge.com/tech/1041222/jensen-huang-nvidia-scandal-deepfakes",
+        "url_key": "https://www.theverge.com/tech/1041222/jensen-huang-nvidia-scandal-deepfakes",
+        "title": "Jensen Huang deepfakes are the hot new AI slop",
+        "published": "2026-11-24T11:30:00-05:00",
+        "updated": "2026-11-26T07:29:18-05:00"
+      }
+    ]
+  },
+  "reviews": {
+    "url": "https://www.theverge.com/rss/reviews/index.xml",
+    "final_url": "https://www.theverge.com/rss/reviews/index.xml",
+    "http_status": 200,
+    "retrieved_utc": "2026-11-26T16:54:34.903682+00:00",
+    "xml_sha256": "163100971f67e98f7e586c788b50fadb0bc1a080241cd58772ffccabf0a52884",
+    "date": "Thu, 26 Nov 2026 16:54:35 GMT",
+    "age": "242",
+    "etag": "\"16e1e385321305c9efc856164dfb2b89\"",
+    "last_modified": null,
+    "feed_title": "Reviews | The Verge",
+    "feed_id": "https://www.theverge.com/rss/reviews/index.xml",
+    "feed_updated": "2026-11-25T22:05:18+00:00",
+    "entries": [
+      {
+        "atom_id": "https://www.theverge.com/?p=1042613",
+        "original_url": "https://www.theverge.com/tech/1042613/samsung-r95h-rgb-led-tv-review",
+        "url_key": "https://www.theverge.com/tech/1042613/samsung-r95h-rgb-led-tv-review",
+        "title": "Samsung’s R95H TV shows what RGB LED is capable of",
+        "published": "2026-11-26T09:00:00-05:00",
+        "updated": "2026-11-25T17:05:18-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1041034",
+        "original_url": "https://www.theverge.com/tech/1041034/bambu-p3c-3d-printer-price-release-date",
+        "url_key": "https://www.theverge.com/tech/1041034/bambu-p3c-3d-printer-price-release-date",
+        "title": "Bambu’s five-nozzle P3C isn’t quite the 3D printer I expected",
+        "published": "2026-11-24T09:00:00-05:00",
+        "updated": "2026-11-24T14:29:27-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1038713",
+        "original_url": "https://www.theverge.com/tech/1038713/apple-homeview-audio-smart-speaker-spotify-airplay",
+        "url_key": "https://www.theverge.com/tech/1038713/apple-homeview-audio-smart-speaker-spotify-airplay",
+        "title": "Your questions about Apple HomeView’s audio, answered",
+        "published": "2026-11-22T08:00:00-05:00",
+        "updated": "2026-11-22T08:11:50-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1038562",
+        "original_url": "https://www.theverge.com/tech/1038562/xiaomi-18-pro-max-review",
+        "url_key": "https://www.theverge.com/tech/1038562/xiaomi-18-pro-max-review",
+        "title": "The Xiaomi 18 Pro proves two screens aren’t better than one",
+        "published": "2026-11-21T08:00:00-05:00",
+        "updated": "2026-11-23T10:11:28-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1037100",
+        "original_url": "https://www.theverge.com/tech/1037100/apple-siri-recap-audio-intelligence-hands-on",
+        "url_key": "https://www.theverge.com/tech/1037100/apple-siri-recap-audio-intelligence-hands-on",
+        "title": "I let Apple’s always-listening AI summarize my life for two weeks",
+        "published": "2026-11-19T08:00:00-05:00",
+        "updated": "2026-11-18T17:31:27-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1035437",
+        "original_url": "https://www.theverge.com/tech/1035437/iphone-duo-face-unlock-front-camera-hands-on",
+        "url_key": "https://www.theverge.com/tech/1035437/iphone-duo-face-unlock-front-camera-hands-on",
+        "title": "The iPhone Duo feels far more intuitive with Apple’s new face unlock",
+        "published": "2026-11-17T12:41:22-05:00",
+        "updated": "2026-11-18T05:40:29-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1035159",
+        "original_url": "https://www.theverge.com/tech/1035159/windows-11-8gb-ram-updates-performance-improvements-surface-laptop-testing",
+        "url_key": "https://www.theverge.com/tech/1035159/windows-11-8gb-ram-updates-performance-improvements-surface-laptop-testing",
+        "title": "Windows 11 actually runs better on 8GB of RAM now",
+        "published": "2026-11-17T09:00:00-05:00",
+        "updated": "2026-11-17T16:16:01-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1013985",
+        "original_url": "https://www.theverge.com/tech/1013985/crkd-atom-plus-tmr-analog-thumbstick-controller-gamepad-switch-ios-android-hands-on",
+        "url_key": "https://www.theverge.com/tech/1013985/crkd-atom-plus-tmr-analog-thumbstick-controller-gamepad-switch-ios-android-hands-on",
+        "title": "This tiny gamepad with dual analog thumbsticks pushes the limits of portable controllers",
+        "published": "2026-11-14T09:00:00-05:00",
+        "updated": "2026-11-14T09:16:05-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1032141",
+        "original_url": "https://www.theverge.com/tech/1032141/paprika-4-recipe-grocery-pantry-app-update-subscription-hands-on",
+        "url_key": "https://www.theverge.com/tech/1032141/paprika-4-recipe-grocery-pantry-app-update-subscription-hands-on",
+        "title": "My favorite recipe app just got a big upgrade — and a subscription fee",
+        "published": "2026-11-13T11:00:00-05:00",
+        "updated": "2026-11-13T14:10:09-05:00"
+      },
+      {
+        "atom_id": "https://www.theverge.com/?p=1032518",
+        "original_url": "https://www.theverge.com/ai-artificial-intelligence/1032518/claude-duet-ai-agent-hands-on",
+        "url_key": "https://www.theverge.com/ai-artificial-intelligence/1032518/claude-duet-ai-agent-hands-on",
+        "title": "Claude’s Duet agent is a little neurotic and surprisingly helpful",
+        "published": "2026-11-13T09:00:00-05:00",
+        "updated": "2026-11-12T19:23:32-05:00"
+      }
+    ]
+  }
+}
