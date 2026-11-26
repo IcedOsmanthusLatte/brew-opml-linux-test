@@ -1,0 +1,2173 @@
+{
+  "run_url": "https://github.com/IcedOsmanthusLatte/brew-opml-linux-test/actions/runs/45839684983",
+  "original_workflow_commit": "8c88777c409bd584389bba95760dc96af1f5fd4f",
+  "archive_receipts": [
+    {
+      "artifact_id": 15127575930,
+      "filename": "rss-filter-recovery-round-2.zip",
+      "sha256": "dced5994032afcc317ab75dd4c201e887bf0d18e216497ef1740da61c42ffd0a",
+      "download_sha256_matches_github": true
+    },
+    {
+      "artifact_id": 15126923964,
+      "filename": "rss-filter-recovery-round-1.zip",
+      "sha256": "e9a0cb0de939be5c6dbd4654459075c90c2a333f41e78329a09170b179a3fd9f",
+      "download_sha256_matches_github": true
+    }
+  ],
+  "independently_verified": {
+    "rounds_equal": true,
+    "verification": [
+      {
+        "decisive_phase_refresh_count": {
+          "freshrss": 8,
+          "miniflux": 8
+        },
+        "digest": "97d5f90a4c014abef679939d15c1a58642bf7a6809a6dab38fedbb833b1d7c59",
+        "images": {
+          "database": "postgres@sha256:4e6e670bb069649261c9c18031f0aded7bb249a5b6664ddec29c013a89310d50",
+          "fixture": "python@sha256:c5ba3deef00c7758561a0f03c26f44f10589263d40e732b8748e0d1f38f6dd89",
+          "freshrss": "freshrss/freshrss@sha256:af44385229541bee24aa9148d0ff8f3b40e095373c63a2c0f74e09a27d3c59df",
+          "miniflux": "miniflux/miniflux@sha256:8fd6c3c434ecc3d4083306f83e03c0bb74c632e0f8378da5ead7e1773b0b89c9"
+        },
+        "round": 1,
+        "stable": {
+          "freshrss": {
+            "clean-control-undo": {
+              "removed-after-title": "unread",
+              "removed-new-plain": "unread",
+              "removed-new-web": "unread",
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-after-title": "unread",
+              "retained-new-body": "unread",
+              "retained-new-plain": "unread",
+              "retained-new-title": "unread",
+              "retained-new-web": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            },
+            "primary-filter": {
+              "removed-new-body": "read",
+              "removed-new-plain": "unread",
+              "removed-new-title": "read",
+              "removed-new-web": "unread",
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-new-body": "read",
+              "retained-new-plain": "unread",
+              "retained-new-title": "read",
+              "retained-new-web": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            },
+            "primary-seed": {
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            },
+            "primary-undo": {
+              "removed-after-title": "unread",
+              "removed-new-body": "read",
+              "removed-new-plain": "unread",
+              "removed-new-title": "read",
+              "removed-new-web": "unread",
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-after-title": "unread",
+              "retained-new-body": "read",
+              "retained-new-plain": "unread",
+              "retained-new-title": "read",
+              "retained-new-web": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            }
+          },
+          "miniflux": {
+            "clean-control-undo": {
+              "removed-after-title": "unread",
+              "removed-new-plain": "unread",
+              "removed-new-web": "unread",
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-after-title": "unread",
+              "retained-new-body": "unread",
+              "retained-new-plain": "unread",
+              "retained-new-title": "unread",
+              "retained-new-web": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            },
+            "primary-filter": {
+              "removed-new-plain": "unread",
+              "removed-new-web": "unread",
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-new-plain": "unread",
+              "retained-new-web": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            },
+            "primary-seed": {
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            },
+            "primary-undo": {
+              "removed-after-title": "unread",
+              "removed-new-plain": "unread",
+              "removed-new-web": "unread",
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-after-title": "unread",
+              "retained-new-body": "unread",
+              "retained-new-plain": "unread",
+              "retained-new-title": "unread",
+              "retained-new-web": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            }
+          }
+        },
+        "ui_screenshots_checked_for_png": [
+          "freshrss-filter-retained-all.png",
+          "freshrss-filter-removed-all.png",
+          "freshrss-undo-retained-all.png",
+          "freshrss-undo-removed-all.png",
+          "miniflux-filter-retained-all.png",
+          "miniflux-filter-removed-all.png",
+          "miniflux-undo-retained-all.png",
+          "miniflux-undo-removed-all.png"
+        ],
+        "versions": {
+          "freshrss": "1.30.4",
+          "miniflux": "2.3.5"
+        }
+      },
+      {
+        "decisive_phase_refresh_count": {
+          "freshrss": 8,
+          "miniflux": 8
+        },
+        "digest": "97d5f90a4c014abef679939d15c1a58642bf7a6809a6dab38fedbb833b1d7c59",
+        "images": {
+          "database": "postgres@sha256:4e6e670bb069649261c9c18031f0aded7bb249a5b6664ddec29c013a89310d50",
+          "fixture": "python@sha256:c5ba3deef00c7758561a0f03c26f44f10589263d40e732b8748e0d1f38f6dd89",
+          "freshrss": "freshrss/freshrss@sha256:af44385229541bee24aa9148d0ff8f3b40e095373c63a2c0f74e09a27d3c59df",
+          "miniflux": "miniflux/miniflux@sha256:8fd6c3c434ecc3d4083306f83e03c0bb74c632e0f8378da5ead7e1773b0b89c9"
+        },
+        "round": 2,
+        "stable": {
+          "freshrss": {
+            "clean-control-undo": {
+              "removed-after-title": "unread",
+              "removed-new-plain": "unread",
+              "removed-new-web": "unread",
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-after-title": "unread",
+              "retained-new-body": "unread",
+              "retained-new-plain": "unread",
+              "retained-new-title": "unread",
+              "retained-new-web": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            },
+            "primary-filter": {
+              "removed-new-body": "read",
+              "removed-new-plain": "unread",
+              "removed-new-title": "read",
+              "removed-new-web": "unread",
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-new-body": "read",
+              "retained-new-plain": "unread",
+              "retained-new-title": "read",
+              "retained-new-web": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            },
+            "primary-seed": {
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            },
+            "primary-undo": {
+              "removed-after-title": "unread",
+              "removed-new-body": "read",
+              "removed-new-plain": "unread",
+              "removed-new-title": "read",
+              "removed-new-web": "unread",
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-after-title": "unread",
+              "retained-new-body": "read",
+              "retained-new-plain": "unread",
+              "retained-new-title": "read",
+              "retained-new-web": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            }
+          },
+          "miniflux": {
+            "clean-control-undo": {
+              "removed-after-title": "unread",
+              "removed-new-plain": "unread",
+              "removed-new-web": "unread",
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-after-title": "unread",
+              "retained-new-body": "unread",
+              "retained-new-plain": "unread",
+              "retained-new-title": "unread",
+              "retained-new-web": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            },
+            "primary-filter": {
+              "removed-new-plain": "unread",
+              "removed-new-web": "unread",
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-new-plain": "unread",
+              "retained-new-web": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            },
+            "primary-seed": {
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            },
+            "primary-undo": {
+              "removed-after-title": "unread",
+              "removed-new-plain": "unread",
+              "removed-new-web": "unread",
+              "removed-old-plain": "unread",
+              "removed-old-title": "unread",
+              "retained-after-title": "unread",
+              "retained-new-body": "unread",
+              "retained-new-plain": "unread",
+              "retained-new-title": "unread",
+              "retained-new-web": "unread",
+              "retained-old-plain": "unread",
+              "retained-old-title": "unread"
+            }
+          }
+        },
+        "ui_screenshots_checked_for_png": [
+          "freshrss-filter-retained-all.png",
+          "freshrss-filter-removed-all.png",
+          "freshrss-undo-retained-all.png",
+          "freshrss-undo-removed-all.png",
+          "miniflux-filter-retained-all.png",
+          "miniflux-filter-removed-all.png",
+          "miniflux-undo-retained-all.png",
+          "miniflux-undo-removed-all.png"
+        ],
+        "versions": {
+          "freshrss": "1.30.4",
+          "miniflux": "2.3.5"
+        }
+      }
+    ]
+  },
+  "source_fetch_and_ui_receipts": {
+    "round_1": {
+      "freshrss": {
+        "primary-seed": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (2 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"c5f938439095e3b89daa4f9e0deded98b471062465725a2e4952d86d96a7cae8\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:00:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "seed",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c5f938439095e3b89daa4f9e0deded98b471062465725a2e4952d86d96a7cae8"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (2 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"6bd4c1d1fff505dd5ea697e5251c80c62614ef7a59f296c2203c4a0b1466d243\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:00:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "seed",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "6bd4c1d1fff505dd5ea697e5251c80c62614ef7a59f296c2203c4a0b1466d243"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain"
+              ],
+              "unread": {
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain"
+              ],
+              "unread": {
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        },
+        "primary-filter": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (4 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"9cf9f299f34281dd48761b128b8fbb17caa2f235911025c059eedaaad5b88443\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-title",
+                    "urn:filter-lab:removed:new-body",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:01:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "filter",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "9cf9f299f34281dd48761b128b8fbb17caa2f235911025c059eedaaad5b88443"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (4 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"63ba1f9d263e2ea11d78f40e3c675dc27a60c5e3af2a2eb435ae66c8a317f80f\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:01:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "filter",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "63ba1f9d263e2ea11d78f40e3c675dc27a60c5e3af2a2eb435ae66c8a317f80f"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-new-body": "read",
+                "removed-new-plain": "unread",
+                "removed-new-title": "read",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain",
+                "removed-new-title",
+                "removed-new-body",
+                "removed-new-web",
+                "removed-new-plain"
+              ],
+              "unread": {
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-new-body": "read",
+                "retained-new-plain": "unread",
+                "retained-new-title": "read",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain",
+                "retained-new-title",
+                "retained-new-body",
+                "retained-new-web",
+                "retained-new-plain"
+              ],
+              "unread": {
+                "retained-new-plain": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        },
+        "primary-undo": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (1 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain",
+                    "urn:filter-lab:removed:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (1 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain",
+                    "urn:filter-lab:retained:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-after-title": "unread",
+                "removed-new-body": "read",
+                "removed-new-plain": "unread",
+                "removed-new-title": "read",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain",
+                "removed-new-web",
+                "removed-new-plain",
+                "removed-after-title"
+              ],
+              "unread": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-after-title": "unread",
+                "retained-new-body": "read",
+                "retained-new-plain": "unread",
+                "retained-new-title": "read",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain",
+                "retained-new-title",
+                "retained-new-body",
+                "retained-new-web",
+                "retained-new-plain",
+                "retained-after-title"
+              ],
+              "unread": {
+                "retained-after-title": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        },
+        "clean-control-undo": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (5 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain",
+                    "urn:filter-lab:removed:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (7 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain",
+                    "urn:filter-lab:retained:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain",
+                "removed-new-web",
+                "removed-new-plain",
+                "removed-after-title"
+              ],
+              "unread": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-after-title": "unread",
+                "retained-new-body": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-title": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain",
+                "retained-new-title",
+                "retained-new-body",
+                "retained-new-web",
+                "retained-new-plain",
+                "retained-after-title"
+              ],
+              "unread": {
+                "retained-after-title": "unread",
+                "retained-new-body": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-title": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        }
+      },
+      "miniflux": {
+        "primary-seed": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"c5f938439095e3b89daa4f9e0deded98b471062465725a2e4952d86d96a7cae8\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:00:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "seed",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c5f938439095e3b89daa4f9e0deded98b471062465725a2e4952d86d96a7cae8"
+                },
+                {
+                  "etag": "\"c5f938439095e3b89daa4f9e0deded98b471062465725a2e4952d86d96a7cae8\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:00:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "seed",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c5f938439095e3b89daa4f9e0deded98b471062465725a2e4952d86d96a7cae8"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"6bd4c1d1fff505dd5ea697e5251c80c62614ef7a59f296c2203c4a0b1466d243\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:00:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "seed",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "6bd4c1d1fff505dd5ea697e5251c80c62614ef7a59f296c2203c4a0b1466d243"
+                },
+                {
+                  "etag": "\"6bd4c1d1fff505dd5ea697e5251c80c62614ef7a59f296c2203c4a0b1466d243\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:00:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "seed",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "6bd4c1d1fff505dd5ea697e5251c80c62614ef7a59f296c2203c4a0b1466d243"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain"
+              ],
+              "unread": {
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain"
+              ],
+              "unread": {
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        },
+        "primary-filter": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"9cf9f299f34281dd48761b128b8fbb17caa2f235911025c059eedaaad5b88443\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-title",
+                    "urn:filter-lab:removed:new-body",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:01:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "filter",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "9cf9f299f34281dd48761b128b8fbb17caa2f235911025c059eedaaad5b88443"
+                },
+                {
+                  "etag": "\"9cf9f299f34281dd48761b128b8fbb17caa2f235911025c059eedaaad5b88443\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-title",
+                    "urn:filter-lab:removed:new-body",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:01:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "filter",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "9cf9f299f34281dd48761b128b8fbb17caa2f235911025c059eedaaad5b88443"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"63ba1f9d263e2ea11d78f40e3c675dc27a60c5e3af2a2eb435ae66c8a317f80f\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:01:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "filter",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "63ba1f9d263e2ea11d78f40e3c675dc27a60c5e3af2a2eb435ae66c8a317f80f"
+                },
+                {
+                  "etag": "\"63ba1f9d263e2ea11d78f40e3c675dc27a60c5e3af2a2eb435ae66c8a317f80f\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:01:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "filter",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "63ba1f9d263e2ea11d78f40e3c675dc27a60c5e3af2a2eb435ae66c8a317f80f"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain",
+                "removed-new-title",
+                "removed-new-body",
+                "removed-new-web",
+                "removed-new-plain"
+              ],
+              "unread": {
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-new-plain": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain",
+                "retained-new-title",
+                "retained-new-body",
+                "retained-new-web",
+                "retained-new-plain"
+              ],
+              "unread": {
+                "retained-new-plain": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        },
+        "primary-undo": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain",
+                    "urn:filter-lab:removed:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169"
+                },
+                {
+                  "etag": "\"c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain",
+                    "urn:filter-lab:removed:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain",
+                    "urn:filter-lab:retained:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301"
+                },
+                {
+                  "etag": "\"d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain",
+                    "urn:filter-lab:retained:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain",
+                "removed-new-web",
+                "removed-new-plain",
+                "removed-after-title"
+              ],
+              "unread": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-after-title": "unread",
+                "retained-new-body": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-title": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain",
+                "retained-new-title",
+                "retained-new-body",
+                "retained-new-web",
+                "retained-new-plain",
+                "retained-after-title"
+              ],
+              "unread": {
+                "retained-after-title": "unread",
+                "retained-new-body": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-title": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        },
+        "clean-control-undo": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain",
+                    "urn:filter-lab:removed:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169"
+                },
+                {
+                  "etag": "\"c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain",
+                    "urn:filter-lab:removed:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain",
+                    "urn:filter-lab:retained:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301"
+                },
+                {
+                  "etag": "\"d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain",
+                    "urn:filter-lab:retained:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain",
+                "removed-new-web",
+                "removed-new-plain",
+                "removed-after-title"
+              ],
+              "unread": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-after-title": "unread",
+                "retained-new-body": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-title": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain",
+                "retained-new-title",
+                "retained-new-body",
+                "retained-new-web",
+                "retained-new-plain",
+                "retained-after-title"
+              ],
+              "unread": {
+                "retained-after-title": "unread",
+                "retained-new-body": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-title": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        }
+      }
+    },
+    "round_2": {
+      "freshrss": {
+        "primary-seed": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (2 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"c5f938439095e3b89daa4f9e0deded98b471062465725a2e4952d86d96a7cae8\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:00:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "seed",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c5f938439095e3b89daa4f9e0deded98b471062465725a2e4952d86d96a7cae8"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (2 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"6bd4c1d1fff505dd5ea697e5251c80c62614ef7a59f296c2203c4a0b1466d243\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:00:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "seed",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "6bd4c1d1fff505dd5ea697e5251c80c62614ef7a59f296c2203c4a0b1466d243"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain"
+              ],
+              "unread": {
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain"
+              ],
+              "unread": {
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        },
+        "primary-filter": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (4 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"9cf9f299f34281dd48761b128b8fbb17caa2f235911025c059eedaaad5b88443\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-title",
+                    "urn:filter-lab:removed:new-body",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:01:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "filter",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "9cf9f299f34281dd48761b128b8fbb17caa2f235911025c059eedaaad5b88443"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (4 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"63ba1f9d263e2ea11d78f40e3c675dc27a60c5e3af2a2eb435ae66c8a317f80f\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:01:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "filter",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "63ba1f9d263e2ea11d78f40e3c675dc27a60c5e3af2a2eb435ae66c8a317f80f"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-new-body": "read",
+                "removed-new-plain": "unread",
+                "removed-new-title": "read",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain",
+                "removed-new-title",
+                "removed-new-body",
+                "removed-new-web",
+                "removed-new-plain"
+              ],
+              "unread": {
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-new-body": "read",
+                "retained-new-plain": "unread",
+                "retained-new-title": "read",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain",
+                "retained-new-title",
+                "retained-new-body",
+                "retained-new-web",
+                "retained-new-plain"
+              ],
+              "unread": {
+                "retained-new-plain": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        },
+        "primary-undo": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (1 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain",
+                    "urn:filter-lab:removed:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (1 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain",
+                    "urn:filter-lab:retained:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-after-title": "unread",
+                "removed-new-body": "read",
+                "removed-new-plain": "unread",
+                "removed-new-title": "read",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain",
+                "removed-new-web",
+                "removed-new-plain",
+                "removed-after-title"
+              ],
+              "unread": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-after-title": "unread",
+                "retained-new-body": "read",
+                "retained-new-plain": "unread",
+                "retained-new-title": "read",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain",
+                "retained-new-title",
+                "retained-new-body",
+                "retained-new-web",
+                "retained-new-plain",
+                "retained-after-title"
+              ],
+              "unread": {
+                "retained-after-title": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        },
+        "clean-control-undo": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (5 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain",
+                    "urn:filter-lab:removed:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "FreshRSS actualized 1 feeds for filterlab (7 new articles)",
+              "origin_receipts": [
+                {
+                  "etag": "\"d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain",
+                    "urn:filter-lab:retained:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain",
+                "removed-new-web",
+                "removed-new-plain",
+                "removed-after-title"
+              ],
+              "unread": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-after-title": "unread",
+                "retained-new-body": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-title": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain",
+                "retained-new-title",
+                "retained-new-body",
+                "retained-new-web",
+                "retained-new-plain",
+                "retained-after-title"
+              ],
+              "unread": {
+                "retained-after-title": "unread",
+                "retained-new-body": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-title": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        }
+      },
+      "miniflux": {
+        "primary-seed": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"c5f938439095e3b89daa4f9e0deded98b471062465725a2e4952d86d96a7cae8\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:00:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "seed",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c5f938439095e3b89daa4f9e0deded98b471062465725a2e4952d86d96a7cae8"
+                },
+                {
+                  "etag": "\"c5f938439095e3b89daa4f9e0deded98b471062465725a2e4952d86d96a7cae8\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:00:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "seed",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c5f938439095e3b89daa4f9e0deded98b471062465725a2e4952d86d96a7cae8"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"6bd4c1d1fff505dd5ea697e5251c80c62614ef7a59f296c2203c4a0b1466d243\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:00:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "seed",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "6bd4c1d1fff505dd5ea697e5251c80c62614ef7a59f296c2203c4a0b1466d243"
+                },
+                {
+                  "etag": "\"6bd4c1d1fff505dd5ea697e5251c80c62614ef7a59f296c2203c4a0b1466d243\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:00:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "seed",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "6bd4c1d1fff505dd5ea697e5251c80c62614ef7a59f296c2203c4a0b1466d243"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain"
+              ],
+              "unread": {
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain"
+              ],
+              "unread": {
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        },
+        "primary-filter": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"9cf9f299f34281dd48761b128b8fbb17caa2f235911025c059eedaaad5b88443\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-title",
+                    "urn:filter-lab:removed:new-body",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:01:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "filter",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "9cf9f299f34281dd48761b128b8fbb17caa2f235911025c059eedaaad5b88443"
+                },
+                {
+                  "etag": "\"9cf9f299f34281dd48761b128b8fbb17caa2f235911025c059eedaaad5b88443\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-title",
+                    "urn:filter-lab:removed:new-body",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:01:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "filter",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "9cf9f299f34281dd48761b128b8fbb17caa2f235911025c059eedaaad5b88443"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"63ba1f9d263e2ea11d78f40e3c675dc27a60c5e3af2a2eb435ae66c8a317f80f\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:01:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "filter",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "63ba1f9d263e2ea11d78f40e3c675dc27a60c5e3af2a2eb435ae66c8a317f80f"
+                },
+                {
+                  "etag": "\"63ba1f9d263e2ea11d78f40e3c675dc27a60c5e3af2a2eb435ae66c8a317f80f\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:01:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "filter",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "63ba1f9d263e2ea11d78f40e3c675dc27a60c5e3af2a2eb435ae66c8a317f80f"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain",
+                "removed-new-title",
+                "removed-new-body",
+                "removed-new-web",
+                "removed-new-plain"
+              ],
+              "unread": {
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-new-plain": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain",
+                "retained-new-title",
+                "retained-new-body",
+                "retained-new-web",
+                "retained-new-plain"
+              ],
+              "unread": {
+                "retained-new-plain": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        },
+        "primary-undo": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain",
+                    "urn:filter-lab:removed:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169"
+                },
+                {
+                  "etag": "\"c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain",
+                    "urn:filter-lab:removed:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain",
+                    "urn:filter-lab:retained:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301"
+                },
+                {
+                  "etag": "\"d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain",
+                    "urn:filter-lab:retained:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain",
+                "removed-new-web",
+                "removed-new-plain",
+                "removed-after-title"
+              ],
+              "unread": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-after-title": "unread",
+                "retained-new-body": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-title": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain",
+                "retained-new-title",
+                "retained-new-body",
+                "retained-new-web",
+                "retained-new-plain",
+                "retained-after-title"
+              ],
+              "unread": {
+                "retained-after-title": "unread",
+                "retained-new-body": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-title": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        },
+        "clean-control-undo": {
+          "refresh": {
+            "removed": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain",
+                    "urn:filter-lab:removed:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169"
+                },
+                {
+                  "etag": "\"c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:removed:old-title",
+                    "urn:filter-lab:removed:old-plain",
+                    "urn:filter-lab:removed:new-web",
+                    "urn:filter-lab:removed:new-plain",
+                    "urn:filter-lab:removed:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/removed.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "c82ddea3d433b87617d84fba4cc7cf86a5745949a054f37c30643c6ccd1ae169"
+                }
+              ]
+            },
+            "retained": {
+              "app_refresh": "synchronous ordinary feed refresh",
+              "origin_receipts": [
+                {
+                  "etag": "\"d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain",
+                    "urn:filter-lab:retained:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301"
+                },
+                {
+                  "etag": "\"d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301\"",
+                  "if_modified_since": null,
+                  "if_none_match": null,
+                  "item_guids": [
+                    "urn:filter-lab:retained:old-title",
+                    "urn:filter-lab:retained:old-plain",
+                    "urn:filter-lab:retained:new-title",
+                    "urn:filter-lab:retained:new-body",
+                    "urn:filter-lab:retained:new-web",
+                    "urn:filter-lab:retained:new-plain",
+                    "urn:filter-lab:retained:after-title"
+                  ],
+                  "last_modified": "Thu, 26 Nov 2026 00:02:00 GMT",
+                  "method": "GET",
+                  "path": "/retained.xml",
+                  "phase": "undo",
+                  "response_status": 200,
+                  "sent_body": true,
+                  "sha256": "d5e65bfb95a585200d597a833090969b7c57a3f33ddda1a57725658e5a6e3301"
+                }
+              ]
+            }
+          },
+          "views": {
+            "removed": {
+              "all": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              },
+              "source_items": [
+                "removed-old-title",
+                "removed-old-plain",
+                "removed-new-web",
+                "removed-new-plain",
+                "removed-after-title"
+              ],
+              "unread": {
+                "removed-after-title": "unread",
+                "removed-new-plain": "unread",
+                "removed-new-web": "unread",
+                "removed-old-plain": "unread",
+                "removed-old-title": "unread"
+              }
+            },
+            "retained": {
+              "all": {
+                "retained-after-title": "unread",
+                "retained-new-body": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-title": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              },
+              "source_items": [
+                "retained-old-title",
+                "retained-old-plain",
+                "retained-new-title",
+                "retained-new-body",
+                "retained-new-web",
+                "retained-new-plain",
+                "retained-after-title"
+              ],
+              "unread": {
+                "retained-after-title": "unread",
+                "retained-new-body": "unread",
+                "retained-new-plain": "unread",
+                "retained-new-title": "unread",
+                "retained-new-web": "unread",
+                "retained-old-plain": "unread",
+                "retained-old-title": "unread"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
