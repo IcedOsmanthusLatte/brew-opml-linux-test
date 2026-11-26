@@ -175,6 +175,7 @@ class Fresh:
         self.name = f"{NETWORK}-fresh-{tag}"
         docker("run", "-d", "--name", self.name, "--network", NETWORK, "-p", "127.0.0.1::80",
                "-e", "FRESHRSS_INSTALL=--db-type sqlite --default-user filterlab --language en",
+               "-e", "INTERNAL_HOST_ALLOWLIST=rss-fixture.test:8090",
                "-e", f"FRESHRSS_USER=--user {USER} --password {PASSWORD} --no-default-feeds", image)
         cleanup.callback(docker, "rm", "-fv", self.name, check=False)
         self.url = f"http://127.0.0.1:{port(self.name, 80)}"
@@ -386,7 +387,7 @@ def main():
     progress["images"] = images
     write_json(OUT / "summary.json", progress)
     try:
-        with ExitStack() as cleanup, sync_playwright() as playwright:
+        with sync_playwright() as playwright, ExitStack() as cleanup:
             docker("network", "create", NETWORK)
             cleanup.callback(docker, "network", "rm", NETWORK, check=False)
             names = {letter: f"{NETWORK}-{letter}" for letter in ("fixture", "db")}
