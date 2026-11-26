@@ -1,0 +1,102 @@
+{
+  "league_preview": {
+    "url": "https://www.nhl.com/news/toronto-maple-leafs-new-york-islanders-game-preview-november-23-2026",
+    "final_url": "https://www.nhl.com/news/toronto-maple-leafs-new-york-islanders-game-preview-november-23-2026",
+    "status": 200,
+    "request_started": "2026-11-26T18:12:49.164854+00:00",
+    "retrieved_utc": "2026-11-26T18:12:50.189909+00:00",
+    "sha256": "fb31704a0a6f4b2e6d20aa2b6b319da6cbca3353d59bbdcfa90c6a4732e2713a",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Thu, 26 Nov 2026 18:12:50 GMT",
+      "age": null,
+      "etag": null,
+      "last-modified": null
+    },
+    "canonical": "https://www.nhl.com/news/toronto-maple-leafs-new-york-islanders-game-preview-november-23-2026",
+    "publisher": "league",
+    "purpose": "preview",
+    "title": "Maple Leafs at Islanders projected lineups | NHL.com",
+    "published": "2026-11-23T17:48:06.043Z"
+  },
+  "islanders_preview": {
+    "url": "https://www.nhl.com/islanders/news/game-preview-islanders-vs-maple-leafs-nov-23-2026",
+    "final_url": "https://www.nhl.com/islanders/news/game-preview-islanders-vs-maple-leafs-nov-23-2026",
+    "status": 200,
+    "request_started": "2026-11-26T18:12:49.165354+00:00",
+    "retrieved_utc": "2026-11-26T18:12:49.962174+00:00",
+    "sha256": "72e3461a85c18a2f55d88b113a0751d935bb9f940978cec366269d1c0bd9ebe4",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Thu, 26 Nov 2026 18:12:50 GMT",
+      "age": null,
+      "etag": null,
+      "last-modified": null
+    },
+    "canonical": "https://www.nhl.com/islanders/news/game-preview-islanders-vs-maple-leafs-nov-23-2026",
+    "publisher": "islanders",
+    "purpose": "preview",
+    "title": "Game Preview: Islanders vs Maple Leafs | New York Islanders",
+    "published": "2026-11-23T05:00:41.765Z"
+  },
+  "islanders_takeaways": {
+    "url": "https://www.nhl.com/islanders/news/takeaways-islanders-7-game-point-streak-ends-in-4-2-loss-to-maple-leafs",
+    "final_url": "https://www.nhl.com/islanders/news/takeaways-islanders-7-game-point-streak-ends-in-4-2-loss-to-maple-leafs",
+    "status": 200,
+    "request_started": "2026-11-26T18:12:49.165854+00:00",
+    "retrieved_utc": "2026-11-26T18:12:49.776452+00:00",
+    "sha256": "b12ca83dcc483d1173dfc3a38d928a74926543b719a7b5b33ba89b28f8c3d09f",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Thu, 26 Nov 2026 18:12:50 GMT",
+      "age": "119",
+      "etag": null,
+      "last-modified": null
+    },
+    "canonical": "https://www.nhl.com/islanders/news/takeaways-islanders-7-game-point-streak-ends-in-4-2-loss-to-maple-leafs",
+    "publisher": "islanders",
+    "purpose": "postgame",
+    "title": "Takeaways: Islanders 7-Game Point Streak Ends in 4-2 loss to Maple Leafs   | New York Islanders",
+    "published": "2026-11-24T04:19:01.251Z"
+  },
+  "mapleleafs_game_day": {
+    "url": "https://www.nhl.com/mapleleafs/news/game-day-islanders-nov-23-2026",
+    "final_url": "https://www.nhl.com/mapleleafs/news/game-day-islanders-nov-23-2026",
+    "status": 200,
+    "request_started": "2026-11-26T18:12:49.165854+00:00",
+    "retrieved_utc": "2026-11-26T18:12:49.768922+00:00",
+    "sha256": "d3ddd6ce2f0f33cf4e605fe768d550bc06b4547bf5121606f1a765b71b5bd060",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Thu, 26 Nov 2026 18:12:50 GMT",
+      "age": "87",
+      "etag": null,
+      "last-modified": null
+    },
+    "canonical": "https://www.nhl.com/mapleleafs/news/game-day-islanders-nov-23-2026",
+    "publisher": "mapleleafs",
+    "purpose": "preview",
+    "title": "GAME DAY @ Islanders | Nov. 23, 2026 | Toronto Maple Leafs",
+    "published": "2026-11-23T16:00:15.186Z"
+  },
+  "mapleleafs_recap": {
+    "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-islanders-nov-23-2026",
+    "final_url": "https://www.nhl.com/mapleleafs/news/recap-leafs-islanders-nov-23-2026",
+    "status": 200,
+    "request_started": "2026-11-26T18:12:49.240910+00:00",
+    "retrieved_utc": "2026-11-26T18:12:49.762089+00:00",
+    "sha256": "3ffc99ce3963d47ca15a2ca32f1732bb40afadc6c3c4c9bce80c2def239adb4e",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Thu, 26 Nov 2026 18:12:50 GMT",
+      "age": "87",
+      "etag": null,
+      "last-modified": null
+    },
+    "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-islanders-nov-23-2026",
+    "publisher": "mapleleafs",
+    "purpose": "postgame",
+    "title": "RECAP | Leafs @ Islanders | Nov. 23, 2026 | Toronto Maple Leafs",
+    "published": "2026-11-24T04:06:48.336Z"
+  }
+}

@@ -1,0 +1,27 @@
+name: Replay NHL RSS reader windows
+
+on:
+  push:
+    branches: [nhl-rss-20261127]
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Import the same OPML into clean isolated Miniflux stores
+        run: python3 nhl-rss/trial.py trial-output
+      - name: Preserve verified reader and origin observations
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nhl-rss-miniflux
+          path: trial-output/
+          if-no-files-found: warn
+          retention-days: 14
