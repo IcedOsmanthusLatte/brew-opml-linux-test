@@ -1,0 +1,405 @@
+{
+  "closed_eastern_game_day": {
+    "begin": "2026-11-23T00:00:00-05:00",
+    "end_exclusive": "2026-11-24T00:00:00-05:00"
+  },
+  "originals": {
+    "league_preview": {
+      "url": "https://www.nhl.com/news/toronto-maple-leafs-new-york-islanders-game-preview-november-23-2026",
+      "final_url": "https://www.nhl.com/news/toronto-maple-leafs-new-york-islanders-game-preview-november-23-2026",
+      "status": 200,
+      "request_started": "2026-11-26T18:12:49.164854+00:00",
+      "retrieved_utc": "2026-11-26T18:12:50.189909+00:00",
+      "sha256": "fb31704a0a6f4b2e6d20aa2b6b319da6cbca3353d59bbdcfa90c6a4732e2713a",
+      "headers": {
+        "content-type": "text/html",
+        "date": "Thu, 26 Nov 2026 18:12:50 GMT",
+        "age": null,
+        "etag": null,
+        "last-modified": null
+      },
+      "canonical": "https://www.nhl.com/news/toronto-maple-leafs-new-york-islanders-game-preview-november-23-2026",
+      "publisher": "league",
+      "purpose": "preview",
+      "title": "Maple Leafs at Islanders projected lineups | NHL.com",
+      "published": "2026-11-23T17:48:06.043Z"
+    },
+    "islanders_preview": {
+      "url": "https://www.nhl.com/islanders/news/game-preview-islanders-vs-maple-leafs-nov-23-2026",
+      "final_url": "https://www.nhl.com/islanders/news/game-preview-islanders-vs-maple-leafs-nov-23-2026",
+      "status": 200,
+      "request_started": "2026-11-26T18:12:49.165354+00:00",
+      "retrieved_utc": "2026-11-26T18:12:49.962174+00:00",
+      "sha256": "72e3461a85c18a2f55d88b113a0751d935bb9f940978cec366269d1c0bd9ebe4",
+      "headers": {
+        "content-type": "text/html",
+        "date": "Thu, 26 Nov 2026 18:12:50 GMT",
+        "age": null,
+        "etag": null,
+        "last-modified": null
+      },
+      "canonical": "https://www.nhl.com/islanders/news/game-preview-islanders-vs-maple-leafs-nov-23-2026",
+      "publisher": "islanders",
+      "purpose": "preview",
+      "title": "Game Preview: Islanders vs Maple Leafs | New York Islanders",
+      "published": "2026-11-23T05:00:41.765Z"
+    },
+    "islanders_takeaways": {
+      "url": "https://www.nhl.com/islanders/news/takeaways-islanders-7-game-point-streak-ends-in-4-2-loss-to-maple-leafs",
+      "final_url": "https://www.nhl.com/islanders/news/takeaways-islanders-7-game-point-streak-ends-in-4-2-loss-to-maple-leafs",
+      "status": 200,
+      "request_started": "2026-11-26T18:12:49.165854+00:00",
+      "retrieved_utc": "2026-11-26T18:12:49.776452+00:00",
+      "sha256": "b12ca83dcc483d1173dfc3a38d928a74926543b719a7b5b33ba89b28f8c3d09f",
+      "headers": {
+        "content-type": "text/html",
+        "date": "Thu, 26 Nov 2026 18:12:50 GMT",
+        "age": "119",
+        "etag": null,
+        "last-modified": null
+      },
+      "canonical": "https://www.nhl.com/islanders/news/takeaways-islanders-7-game-point-streak-ends-in-4-2-loss-to-maple-leafs",
+      "publisher": "islanders",
+      "purpose": "postgame",
+      "title": "Takeaways: Islanders 7-Game Point Streak Ends in 4-2 loss to Maple Leafs   | New York Islanders",
+      "published": "2026-11-24T04:19:01.251Z"
+    },
+    "mapleleafs_game_day": {
+      "url": "https://www.nhl.com/mapleleafs/news/game-day-islanders-nov-23-2026",
+      "final_url": "https://www.nhl.com/mapleleafs/news/game-day-islanders-nov-23-2026",
+      "status": 200,
+      "request_started": "2026-11-26T18:12:49.165854+00:00",
+      "retrieved_utc": "2026-11-26T18:12:49.768922+00:00",
+      "sha256": "d3ddd6ce2f0f33cf4e605fe768d550bc06b4547bf5121606f1a765b71b5bd060",
+      "headers": {
+        "content-type": "text/html",
+        "date": "Thu, 26 Nov 2026 18:12:50 GMT",
+        "age": "87",
+        "etag": null,
+        "last-modified": null
+      },
+      "canonical": "https://www.nhl.com/mapleleafs/news/game-day-islanders-nov-23-2026",
+      "publisher": "mapleleafs",
+      "purpose": "preview",
+      "title": "GAME DAY @ Islanders | Nov. 23, 2026 | Toronto Maple Leafs",
+      "published": "2026-11-23T16:00:15.186Z"
+    },
+    "mapleleafs_recap": {
+      "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-islanders-nov-23-2026",
+      "final_url": "https://www.nhl.com/mapleleafs/news/recap-leafs-islanders-nov-23-2026",
+      "status": 200,
+      "request_started": "2026-11-26T18:12:49.240910+00:00",
+      "retrieved_utc": "2026-11-26T18:12:49.762089+00:00",
+      "sha256": "3ffc99ce3963d47ca15a2ca32f1732bb40afadc6c3c4c9bce80c2def239adb4e",
+      "headers": {
+        "content-type": "text/html",
+        "date": "Thu, 26 Nov 2026 18:12:50 GMT",
+        "age": "87",
+        "etag": null,
+        "last-modified": null
+      },
+      "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-islanders-nov-23-2026",
+      "publisher": "mapleleafs",
+      "purpose": "postgame",
+      "title": "RECAP | Leafs @ Islanders | Nov. 23, 2026 | Toronto Maple Leafs",
+      "published": "2026-11-24T04:06:48.336Z"
+    }
+  },
+  "source_snapshot_sha256": {
+    "snapshot-a.json": "9b2fe4bef0dc979a801e1415c394afdc605519e60803b6e2644e0dfc6f7a09f1",
+    "snapshot-b.json": "3294ad45008dc6178618fe7d8bd54ec438675c84071151609e04e0564ce70f1c"
+  },
+  "later_publications": {
+    "cbs-nhl": {
+      "new_published_urls": [],
+      "original_payload_equal": false,
+      "first_read": "2026-11-26T18:10:26.949960+00:00",
+      "second_read": "2026-11-26T18:22:52.781225+00:00"
+    },
+    "cbs-all": {
+      "new_published_urls": [],
+      "original_payload_equal": false,
+      "first_read": "2026-11-26T18:10:26.890396+00:00",
+      "second_read": "2026-11-26T18:22:52.810255+00:00"
+    },
+    "espn-nhl": {
+      "new_published_urls": [],
+      "original_payload_equal": false,
+      "first_read": "2026-11-26T18:10:26.834970+00:00",
+      "second_read": "2026-11-26T18:22:52.780216+00:00"
+    },
+    "league": {
+      "new_published_urls": [
+        {
+          "canonical": "https://www.nhl.com/news/nhl-on-tap-news-and-notes-november-27-2026",
+          "published_utc": "2026-11-26T18:10:47+00:00"
+        }
+      ],
+      "original_payload_equal": false,
+      "first_read": "2026-11-26T18:10:27.488731+00:00",
+      "second_read": "2026-11-26T18:22:53.328227+00:00"
+    },
+    "islanders": {
+      "new_published_urls": [],
+      "original_payload_equal": true,
+      "first_read": "2026-11-26T18:10:27.291590+00:00",
+      "second_read": "2026-11-26T18:22:53.128768+00:00"
+    },
+    "mapleleafs": {
+      "new_published_urls": [],
+      "original_payload_equal": true,
+      "first_read": "2026-11-26T18:10:27.292921+00:00",
+      "second_read": "2026-11-26T18:22:53.127268+00:00"
+    }
+  },
+  "timeline_records": {
+    "a": {
+      "cbs-nhl": {
+        "all_feed_items": 36,
+        "start_utc": "2026-10-15T12:54:44+00:00",
+        "end_utc": "2026-11-26T13:50:16+00:00",
+        "brackets_closed_day": true,
+        "closed_day_entries": 2,
+        "matching_originals": {
+          "league_preview": false,
+          "islanders_preview": false,
+          "islanders_takeaways": false,
+          "mapleleafs_game_day": false,
+          "mapleleafs_recap": false
+        },
+        "definite_cbs_non_hockey_urls_entire_public_sample": [
+          "https://www.cbssports.com/nfl/news/steelers-aaron-rodgers-mccarthy-corum-rams-packers-thanksgiving-nfl",
+          "https://www.cbssports.com/nfl/news/49ers-giants-cowboys-earn-top-grades-in-nfl-week-11-fallout-from-tarik-skubals-historic-mets-deal",
+          "https://www.cbssports.com/nfl/news/nfl-experts-make-week-11-picks-lamelo-ball-driving-timberwolves-success-no-1-no-3-teams-in-top-25-lose",
+          "https://www.cbssports.com/college-football/news/miami-loses-malachi-toney-to-high-ankle-sprain-week-9-nfl-picks-and-latest-nba-power-rankings",
+          "https://www.cbssports.com/mlb/news/brewers-bash-champion-dodgers-to-brink-of-nlcs-sweep-cbs-sports-preseason-all-america-team-revealed"
+        ],
+        "nhl_path_urls_entire_public_sample": 10
+      },
+      "cbs-all": {
+        "all_feed_items": 36,
+        "start_utc": "2026-11-26T14:34:17+00:00",
+        "end_utc": "2026-11-26T17:28:53+00:00",
+        "brackets_closed_day": false,
+        "closed_day_entries": 0,
+        "matching_originals": {
+          "league_preview": false,
+          "islanders_preview": false,
+          "islanders_takeaways": false,
+          "mapleleafs_game_day": false,
+          "mapleleafs_recap": false
+        },
+        "definite_cbs_non_hockey_urls_entire_public_sample": [
+          "https://www.cbssports.com/nfl/news/nfl-thanksgiving-2026-grateful",
+          "https://www.cbssports.com/college-basketball/news/michigan-state-arkansas-prediction-pick-odds-spread",
+          "https://www.cbssports.com/college-basketball/news/college-basketball-rankings-arizona-maui-invitationl",
+          "https://www.cbssports.com/college-football/news/mississippi-state-football-2027-roster-spending-kamario-taylor",
+          "https://www.cbssports.com/college-football/news/teams-most-to-lose-week-13-oregon-tennessee-ucla",
+          "https://www.cbssports.com/college-football/news/college-football-playoff-resume-rankings-conspiracies-indiana",
+          "https://www.cbssports.com/nfl/news/lions-vs-bears-thanksgiving-prediction-odds-how-to-watch",
+          "https://www.cbssports.com/mlb/news/mlb-rumors-blue-jays-offense-cardinals-starting-pitching-nationals-twins",
+          "https://www.cbssports.com/mlb/news/mlb-thanksgiving-all-30-teams-thankful-2026"
+        ],
+        "nhl_path_urls_entire_public_sample": 0
+      },
+      "espn-nhl": {
+        "all_feed_items": 13,
+        "start_utc": "2026-11-23T18:41:27+00:00",
+        "end_utc": "2026-11-26T16:29:58+00:00",
+        "brackets_closed_day": false,
+        "closed_day_entries": 1,
+        "matching_originals": {
+          "league_preview": false,
+          "islanders_preview": false,
+          "islanders_takeaways": false,
+          "mapleleafs_game_day": false,
+          "mapleleafs_recap": false
+        },
+        "definite_cbs_non_hockey_urls_entire_public_sample": [],
+        "nhl_path_urls_entire_public_sample": 0
+      },
+      "league": {
+        "all_feed_items": 96,
+        "start_utc": "2026-10-15T04:00:00+00:00",
+        "end_utc": "2026-11-26T17:45:13+00:00",
+        "brackets_closed_day": true,
+        "closed_day_entries": 13,
+        "matching_originals": {
+          "league_preview": true,
+          "islanders_preview": false,
+          "islanders_takeaways": false,
+          "mapleleafs_game_day": false,
+          "mapleleafs_recap": false
+        },
+        "definite_cbs_non_hockey_urls_entire_public_sample": [],
+        "nhl_path_urls_entire_public_sample": 0
+      },
+      "islanders": {
+        "all_feed_items": 38,
+        "start_utc": "2026-11-16T23:06:20+00:00",
+        "end_utc": "2026-11-26T16:27:57+00:00",
+        "brackets_closed_day": true,
+        "closed_day_entries": 7,
+        "matching_originals": {
+          "league_preview": true,
+          "islanders_preview": true,
+          "islanders_takeaways": true,
+          "mapleleafs_game_day": false,
+          "mapleleafs_recap": false
+        },
+        "definite_cbs_non_hockey_urls_entire_public_sample": [],
+        "nhl_path_urls_entire_public_sample": 0
+      },
+      "mapleleafs": {
+        "all_feed_items": 40,
+        "start_utc": "2026-10-15T15:15:19+00:00",
+        "end_utc": "2026-11-26T15:54:26+00:00",
+        "brackets_closed_day": true,
+        "closed_day_entries": 3,
+        "matching_originals": {
+          "league_preview": true,
+          "islanders_preview": false,
+          "islanders_takeaways": false,
+          "mapleleafs_game_day": true,
+          "mapleleafs_recap": true
+        },
+        "definite_cbs_non_hockey_urls_entire_public_sample": [],
+        "nhl_path_urls_entire_public_sample": 0
+      },
+      "independent_club_indexes": {
+        "islanders": [
+          "https://www.nhl.com/islanders/news/game-preview-islanders-vs-maple-leafs-nov-23-2026",
+          "https://www.nhl.com/islanders/news/takeaways-islanders-7-game-point-streak-ends-in-4-2-loss-to-maple-leafs"
+        ],
+        "mapleleafs": [
+          "https://www.nhl.com/mapleleafs/news/game-day-islanders-nov-23-2026",
+          "https://www.nhl.com/mapleleafs/news/recap-leafs-islanders-nov-23-2026"
+        ]
+      }
+    },
+    "b": {
+      "cbs-nhl": {
+        "all_feed_items": 36,
+        "start_utc": "2026-10-15T12:54:44+00:00",
+        "end_utc": "2026-11-26T13:50:16+00:00",
+        "brackets_closed_day": true,
+        "closed_day_entries": 2,
+        "matching_originals": {
+          "league_preview": false,
+          "islanders_preview": false,
+          "islanders_takeaways": false,
+          "mapleleafs_game_day": false,
+          "mapleleafs_recap": false
+        },
+        "definite_cbs_non_hockey_urls_entire_public_sample": [
+          "https://www.cbssports.com/nfl/news/steelers-aaron-rodgers-mccarthy-corum-rams-packers-thanksgiving-nfl",
+          "https://www.cbssports.com/nfl/news/49ers-giants-cowboys-earn-top-grades-in-nfl-week-11-fallout-from-tarik-skubals-historic-mets-deal",
+          "https://www.cbssports.com/nfl/news/nfl-experts-make-week-11-picks-lamelo-ball-driving-timberwolves-success-no-1-no-3-teams-in-top-25-lose",
+          "https://www.cbssports.com/college-football/news/miami-loses-malachi-toney-to-high-ankle-sprain-week-9-nfl-picks-and-latest-nba-power-rankings",
+          "https://www.cbssports.com/mlb/news/brewers-bash-champion-dodgers-to-brink-of-nlcs-sweep-cbs-sports-preseason-all-america-team-revealed"
+        ],
+        "nhl_path_urls_entire_public_sample": 10
+      },
+      "cbs-all": {
+        "all_feed_items": 36,
+        "start_utc": "2026-11-26T14:14:28+00:00",
+        "end_utc": "2026-11-26T17:24:21+00:00",
+        "brackets_closed_day": false,
+        "closed_day_entries": 0,
+        "matching_originals": {
+          "league_preview": false,
+          "islanders_preview": false,
+          "islanders_takeaways": false,
+          "mapleleafs_game_day": false,
+          "mapleleafs_recap": false
+        },
+        "definite_cbs_non_hockey_urls_entire_public_sample": [
+          "https://www.cbssports.com/nfl/news/nfl-thanksgiving-2026-grateful",
+          "https://www.cbssports.com/college-basketball/news/michigan-state-arkansas-prediction-pick-odds-spread",
+          "https://www.cbssports.com/college-basketball/news/college-basketball-rankings-arizona-maui-invitationl",
+          "https://www.cbssports.com/college-football/news/mississippi-state-football-2027-roster-spending-kamario-taylor",
+          "https://www.cbssports.com/college-football/news/teams-most-to-lose-week-13-oregon-tennessee-ucla",
+          "https://www.cbssports.com/college-football/news/college-football-playoff-resume-rankings-conspiracies-indiana",
+          "https://www.cbssports.com/nfl/news/lions-vs-bears-thanksgiving-prediction-odds-how-to-watch",
+          "https://www.cbssports.com/mlb/news/mlb-rumors-blue-jays-offense-cardinals-starting-pitching-nationals-twins",
+          "https://www.cbssports.com/mlb/news/mlb-thanksgiving-all-30-teams-thankful-2026"
+        ],
+        "nhl_path_urls_entire_public_sample": 0
+      },
+      "espn-nhl": {
+        "all_feed_items": 13,
+        "start_utc": "2026-11-23T18:41:27+00:00",
+        "end_utc": "2026-11-26T16:29:58+00:00",
+        "brackets_closed_day": false,
+        "closed_day_entries": 1,
+        "matching_originals": {
+          "league_preview": false,
+          "islanders_preview": false,
+          "islanders_takeaways": false,
+          "mapleleafs_game_day": false,
+          "mapleleafs_recap": false
+        },
+        "definite_cbs_non_hockey_urls_entire_public_sample": [],
+        "nhl_path_urls_entire_public_sample": 0
+      },
+      "league": {
+        "all_feed_items": 96,
+        "start_utc": "2026-10-15T04:00:00+00:00",
+        "end_utc": "2026-11-26T18:10:47+00:00",
+        "brackets_closed_day": true,
+        "closed_day_entries": 13,
+        "matching_originals": {
+          "league_preview": true,
+          "islanders_preview": false,
+          "islanders_takeaways": false,
+          "mapleleafs_game_day": false,
+          "mapleleafs_recap": false
+        },
+        "definite_cbs_non_hockey_urls_entire_public_sample": [],
+        "nhl_path_urls_entire_public_sample": 0
+      },
+      "islanders": {
+        "all_feed_items": 38,
+        "start_utc": "2026-11-16T23:06:20+00:00",
+        "end_utc": "2026-11-26T16:27:57+00:00",
+        "brackets_closed_day": true,
+        "closed_day_entries": 7,
+        "matching_originals": {
+          "league_preview": true,
+          "islanders_preview": true,
+          "islanders_takeaways": true,
+          "mapleleafs_game_day": false,
+          "mapleleafs_recap": false
+        },
+        "definite_cbs_non_hockey_urls_entire_public_sample": [],
+        "nhl_path_urls_entire_public_sample": 0
+      },
+      "mapleleafs": {
+        "all_feed_items": 40,
+        "start_utc": "2026-10-15T15:15:19+00:00",
+        "end_utc": "2026-11-26T15:54:26+00:00",
+        "brackets_closed_day": true,
+        "closed_day_entries": 3,
+        "matching_originals": {
+          "league_preview": true,
+          "islanders_preview": false,
+          "islanders_takeaways": false,
+          "mapleleafs_game_day": true,
+          "mapleleafs_recap": true
+        },
+        "definite_cbs_non_hockey_urls_entire_public_sample": [],
+        "nhl_path_urls_entire_public_sample": 0
+      },
+      "independent_club_indexes": {
+        "islanders": [
+          "https://www.nhl.com/islanders/news/game-preview-islanders-vs-maple-leafs-nov-23-2026",
+          "https://www.nhl.com/islanders/news/takeaways-islanders-7-game-point-streak-ends-in-4-2-loss-to-maple-leafs"
+        ],
+        "mapleleafs": [
+          "https://www.nhl.com/mapleleafs/news/game-day-islanders-nov-23-2026",
+          "https://www.nhl.com/mapleleafs/news/recap-leafs-islanders-nov-23-2026"
+        ]
+      }
+    }
+  }
+}

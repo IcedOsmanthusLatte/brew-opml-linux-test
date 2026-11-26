@@ -177,7 +177,8 @@ def analysis(name, rows, feed_ids):
             duplicates[key] = items
     print(json.dumps({"cohort": name, "count": len(rows), "per_source": counts,
                       "cross_feed_duplicate_urls": len(duplicates)}), flush=True)
-    return {"reader_native_api_rows": rows, "count": len(rows), "per_source": counts,
+    return {"reader_native_api_rows": rows, "source_feed_ids": feed_ids,
+            "count": len(rows), "per_source": counts,
             "cross_feed_duplicate_urls": duplicates}
 
 

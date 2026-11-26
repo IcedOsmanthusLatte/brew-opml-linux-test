@@ -1,0 +1,2291 @@
+{
+  "feeds": {
+    "cbs-nhl": {
+      "url": "https://www.cbssports.com/rss/headlines/nhl/",
+      "final_url": "https://www.cbssports.com/rss/headlines/nhl/",
+      "status": 200,
+      "request_started": "2026-11-26T18:22:52.032149+00:00",
+      "retrieved_utc": "2026-11-26T18:22:52.781225+00:00",
+      "sha256": "e0c1e6e9fee11a918ce8895e7aef7bc45692d9d313ad59bcb58fcbfc028f48cf",
+      "headers": {
+        "content-type": "text/xml; charset=UTF-8",
+        "date": "Thu, 26 Nov 2026 18:22:53 GMT",
+        "age": null,
+        "etag": "W/\"97810190c0fea652bcd047640eace42f\"",
+        "last-modified": null
+      },
+      "feed_title": "CBS Sports Headlines",
+      "items": [
+        {
+          "url": "https://www.cbssports.com/nfl/news/steelers-aaron-rodgers-mccarthy-corum-rams-packers-thanksgiving-nfl/",
+          "canonical": "https://www.cbssports.com/nfl/news/steelers-aaron-rodgers-mccarthy-corum-rams-packers-thanksgiving-nfl",
+          "guid": "2e4fa967-bec1-4ea9-baf6-62ce22e87734",
+          "title": "Steelers cut Aaron Rodgers after McCarthy blowup; Blake Corum and Rams run wild vs. Packers",
+          "published_rss": "Thu, 26 Nov 2026 13:50:16 +0000",
+          "published_utc": "2026-11-26T13:50:16+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-packers-vs-rams-clippers-vs-grizzlies-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-packers-vs-rams-clippers-vs-grizzlies-and-more",
+          "guid": "880690fd-d0cd-48b6-a4d9-b20b06c17d7a",
+          "title": "Today's top games to watch, best bets, odds: Packers vs. Rams, Clippers vs. Grizzlies and more",
+          "published_rss": "Wed, 25 Nov 2026 19:50:13 +0000",
+          "published_utc": "2026-11-25T19:50:13+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nhl/news/nhl-power-rankings-minnesota-wild-quinn-hughes-chicago-blackhawks/",
+          "canonical": "https://www.cbssports.com/nhl/news/nhl-power-rankings-minnesota-wild-quinn-hughes-chicago-blackhawks",
+          "guid": "47b5fee6-fa6d-4ca1-89b7-1aba53f6b26f",
+          "title": "NHL Power Rankings: Wild fans thankful for Quinn Hughes, Blackhawks fans thankful for other viewing options",
+          "published_rss": "Wed, 25 Nov 2026 14:30:33 +0000",
+          "published_utc": "2026-11-25T14:30:33+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-mavericks-vs-nuggets-louisville-vs-texas-tech-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-mavericks-vs-nuggets-louisville-vs-texas-tech-and-more",
+          "guid": "740f9382-5006-4a46-897b-dbbcd4e1b90f",
+          "title": "Today's top games to watch, best bets, odds: Mavericks vs. Nuggets, Louisville vs. Texas Tech and more",
+          "published_rss": "Tue, 24 Nov 2026 20:30:32 +0000",
+          "published_utc": "2026-11-24T20:30:32+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nhl/news/connor-bedard-shoulder-injury-blackhawks-rebuild/",
+          "canonical": "https://www.cbssports.com/nhl/news/connor-bedard-shoulder-injury-blackhawks-rebuild",
+          "guid": "928e6b36-fd95-4ce1-8d9b-c42bf1b4afeb",
+          "title": "Connor Bedard injury: Blackhawks star's latest issue shines light on a stalled out rebuild in Chicago",
+          "published_rss": "Tue, 24 Nov 2026 15:17:14 +0000",
+          "published_utc": "2026-11-24T15:17:14+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-bengals-vs-commanders-on-mnf-grizzlies-vs-hornets-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-bengals-vs-commanders-on-mnf-grizzlies-vs-hornets-and-more",
+          "guid": "30ca0450-47b0-492f-8ae6-7d0ee7132615",
+          "title": "Today's top games to watch, best bets, odds: Bengals vs. Commanders on MNF, Grizzlies vs. Hornets and more",
+          "published_rss": "Mon, 23 Nov 2026 20:30:48 +0000",
+          "published_utc": "2026-11-23T20:30:48+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nfl/news/49ers-giants-cowboys-earn-top-grades-in-nfl-week-11-fallout-from-tarik-skubals-historic-mets-deal/",
+          "canonical": "https://www.cbssports.com/nfl/news/49ers-giants-cowboys-earn-top-grades-in-nfl-week-11-fallout-from-tarik-skubals-historic-mets-deal",
+          "guid": "fb80fc17-cfcf-43b2-b755-b07926d5cd50",
+          "title": "49ers, Giants, Cowboys earn top grades in NFL Week 11; fallout from Tarik Skubal's historic Mets deal",
+          "published_rss": "Mon, 23 Nov 2026 13:57:57 +0000",
+          "published_utc": "2026-11-23T13:57:57+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nhl/news/nhl-trade-canadiens-dylan-larkin-red-wings/",
+          "canonical": "https://www.cbssports.com/nhl/news/nhl-trade-canadiens-dylan-larkin-red-wings",
+          "guid": "05590ccb-21b4-438d-ada7-f4849c3541b2",
+          "title": "Dylan Larkin trade grades: Red Wings notch massive win in blockbuster NHL deal with Canadiens",
+          "published_rss": "Mon, 23 Nov 2026 03:12:12 +0000",
+          "published_utc": "2026-11-23T03:12:12+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/oilers-vs-lightning-nhl-picks-can-tampa-bay-slow-edmontons-connor-mcdavid-in-possible-cup-finals-preview/",
+          "canonical": "https://www.cbssports.com/betting/news/oilers-vs-lightning-nhl-picks-can-tampa-bay-slow-edmontons-connor-mcdavid-in-possible-cup-finals-preview",
+          "guid": "95b330dc-4cdb-4cfd-8194-586a47f9f71b",
+          "title": "Oilers vs. Lightning NHL picks: Can Tampa Bay slow Edmonton's Connor McDavid in possible Cup Finals preview?",
+          "published_rss": "Fri, 20 Nov 2026 00:41:06 +0000",
+          "published_utc": "2026-11-20T00:41:06+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nfl/news/nfl-experts-make-week-11-picks-lamelo-ball-driving-timberwolves-success-no-1-no-3-teams-in-top-25-lose/",
+          "canonical": "https://www.cbssports.com/nfl/news/nfl-experts-make-week-11-picks-lamelo-ball-driving-timberwolves-success-no-1-no-3-teams-in-top-25-lose",
+          "guid": "1825a115-d7e4-4190-b14b-03e53c49199d",
+          "title": "NFL experts make Week 11 picks; LaMelo Ball driving Timberwolves' success; No. 1, No. 3 teams in Top 25 lose",
+          "published_rss": "Thu, 19 Nov 2026 13:58:12 +0000",
+          "published_utc": "2026-11-19T13:58:12+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-hawks-vs-thunder-kansas-vs-west-virginia-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-hawks-vs-thunder-kansas-vs-west-virginia-and-more",
+          "guid": "b1732b10-77d0-4044-9f21-7b7408900215",
+          "title": "Today's top games to watch, best bets, odds: Hawks vs. Thunder, Kansas vs. West Virginia and more",
+          "published_rss": "Wed, 18 Nov 2026 20:30:48 +0000",
+          "published_utc": "2026-11-18T20:30:48+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nhl/news/nhl-power-rankings-carolina-hurricanes-stanley-cup-title-repeat-quest/",
+          "canonical": "https://www.cbssports.com/nhl/news/nhl-power-rankings-carolina-hurricanes-stanley-cup-title-repeat-quest",
+          "guid": "c5274c49-b7d1-44a4-a2c6-49eb3f64ba69",
+          "title": "NHL Power Rankings: Hurricanes mowing down everyone in their path on quest for Stanley Cup repeat",
+          "published_rss": "Wed, 18 Nov 2026 14:44:43 +0000",
+          "published_utc": "2026-11-18T14:44:43+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-jazz-vs-clippers-illinois-vs-duke-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-jazz-vs-clippers-illinois-vs-duke-and-more",
+          "guid": "885683a2-8f22-4580-8784-757c9e7ebb56",
+          "title": "Today's top games to watch, best bets, odds: Jazz vs. Clippers, Illinois vs. Duke and more",
+          "published_rss": "Tue, 17 Nov 2026 20:30:54 +0000",
+          "published_utc": "2026-11-17T20:30:54+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-chargers-vs-ravens-on-mnf-blazers-vs-timberwolves-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-chargers-vs-ravens-on-mnf-blazers-vs-timberwolves-and-more",
+          "guid": "99eb3170-ab0c-4204-9ff4-d64d2eb94066",
+          "title": "Today's top games to watch, best bets, odds: Chargers vs. Ravens on MNF, Blazers vs. Timberwolves and more",
+          "published_rss": "Mon, 16 Nov 2026 20:09:12 +0000",
+          "published_utc": "2026-11-16T20:09:12+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/hurricanes-vs-kraken-nhl-odds-picks-carolina-looks-to-keep-rolling-in-rare-thursday-matinee-from-finland/",
+          "canonical": "https://www.cbssports.com/betting/news/hurricanes-vs-kraken-nhl-odds-picks-carolina-looks-to-keep-rolling-in-rare-thursday-matinee-from-finland",
+          "guid": "19aff9f7-e9cd-4413-baac-dc7948f7f1cf",
+          "title": "Hurricanes vs. Kraken NHL odds, picks: Carolina looks to keep rolling in rare Thursday matinee from Finland",
+          "published_rss": "Thu, 12 Nov 2026 11:33:18 +0000",
+          "published_utc": "2026-11-12T11:33:18+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-wizards-vs-pacers-sacramento-st-vs-central-michigan-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-wizards-vs-pacers-sacramento-st-vs-central-michigan-and-more",
+          "guid": "4e06ba3a-a3b8-402b-8cd6-e26bc8bdf3da",
+          "title": "Today's top games to watch, best bets, odds: Wizards vs. Pacers, Sacramento St. vs. Central Michigan and more",
+          "published_rss": "Wed, 11 Nov 2026 20:30:51 +0000",
+          "published_utc": "2026-11-11T20:30:51+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nhl/news/nhl-power-rankings-maple-leafs-sergei-bobrovsky/",
+          "canonical": "https://www.cbssports.com/nhl/news/nhl-power-rankings-maple-leafs-sergei-bobrovsky",
+          "guid": "237026ae-a481-49e7-86f3-827b1796d91e",
+          "title": "NHL Power Rankings: Maple Leafs continue to slide as Sergei Bobrovsky struggles",
+          "published_rss": "Wed, 11 Nov 2026 16:18:56 +0000",
+          "published_utc": "2026-11-11T16:18:56+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-celtics-vs-76ers-illinois-vs-texas-tech-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-celtics-vs-76ers-illinois-vs-texas-tech-and-more",
+          "guid": "f4a9d06d-7373-4565-8f8e-7ed3e9ff95ab",
+          "title": "Today's top games to watch, best bets, odds: Celtics vs. 76ers, Illinois vs. Texas Tech and more",
+          "published_rss": "Tue, 10 Nov 2026 20:30:49 +0000",
+          "published_utc": "2026-11-10T20:30:49+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/devils-vs-jets-tuesday-nhl-odds-picks-new-jersey-decides-not-to-play-connor-hellebuyck-in-homecoming/",
+          "canonical": "https://www.cbssports.com/betting/news/devils-vs-jets-tuesday-nhl-odds-picks-new-jersey-decides-not-to-play-connor-hellebuyck-in-homecoming",
+          "guid": "dc861994-171e-4949-a553-60e765dc2820",
+          "title": "Devils vs. Jets Tuesday NHL odds, picks: New Jersey decides not to play Connor Hellebuyck in homecoming",
+          "published_rss": "Tue, 10 Nov 2026 17:25:03 +0000",
+          "published_utc": "2026-11-10T17:25:03+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-bills-vs-vikings-on-mnf-nuggets-vs-rockets-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-bills-vs-vikings-on-mnf-nuggets-vs-rockets-and-more",
+          "guid": "024a1e76-2d77-4356-aff2-c7e9227d0fee",
+          "title": "Today's top games to watch, best bets, odds: Bills vs. Vikings on MNF, Nuggets vs. Rockets and more",
+          "published_rss": "Mon, 09 Nov 2026 20:30:48 +0000",
+          "published_utc": "2026-11-09T20:30:48+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-jaguars-vs-ravens-nfl-week-9-tnf-heat-vs-warriors-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-jaguars-vs-ravens-nfl-week-9-tnf-heat-vs-warriors-more",
+          "guid": "f139d95c-c5b0-47dc-b451-716db4d399d8",
+          "title": "Today's top games to watch, best bets, odds: Jaguars vs. Ravens NFL Week 9 TNF, Heat vs. Warriors, more",
+          "published_rss": "Thu, 05 Nov 2026 20:30:51 +0000",
+          "published_utc": "2026-11-05T20:30:51+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/college-football/news/miami-loses-malachi-toney-to-high-ankle-sprain-week-9-nfl-picks-and-latest-nba-power-rankings/",
+          "canonical": "https://www.cbssports.com/college-football/news/miami-loses-malachi-toney-to-high-ankle-sprain-week-9-nfl-picks-and-latest-nba-power-rankings",
+          "guid": "71890c06-6917-4561-bc96-beb75d149537",
+          "title": "Miami loses Malachi Toney to high ankle sprain; Week 9 NFL picks and latest NBA Power Rankings",
+          "published_rss": "Thu, 05 Nov 2026 13:56:03 +0000",
+          "published_utc": "2026-11-05T13:56:03+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nhl/news/nhl-power-rankings-penguins-sidney-crosby-evgeni-malkin/",
+          "canonical": "https://www.cbssports.com/nhl/news/nhl-power-rankings-penguins-sidney-crosby-evgeni-malkin",
+          "guid": "2d3ad73f-9cbe-4f4a-9352-6c1ead88c86f",
+          "title": "NHL Power Rankings: Penguins facing some tough decisions on star players amid slow start",
+          "published_rss": "Wed, 04 Nov 2026 16:00:44 +0000",
+          "published_utc": "2026-11-04T16:00:44+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-oilers-vs-devils-drexel-vs-virginia-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-oilers-vs-devils-drexel-vs-virginia-and-more",
+          "guid": "fc907c95-c4ff-43d1-b74f-7027ab32b70b",
+          "title": "Today's top games to watch, best bets, odds: Oilers vs. Devils, Drexel vs. Virginia and more",
+          "published_rss": "Tue, 03 Nov 2026 20:30:49 +0000",
+          "published_utc": "2026-11-03T20:30:49+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-bears-vs-seahawks-on-mnf-pelicans-vs-grizzlies-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-bears-vs-seahawks-on-mnf-pelicans-vs-grizzlies-and-more",
+          "guid": "628b5850-4cf7-405d-8e2b-dc30c93ee4c2",
+          "title": "Today's top games to watch, best bets, odds: Bears vs. Seahawks on MNF, Pelicans vs. Grizzlies and more",
+          "published_rss": "Mon, 02 Nov 2026 20:30:46 +0000",
+          "published_utc": "2026-11-02T20:30:46+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nhl/news/nikita-kucherov-trade-request-landing-spots-nhl-mvp/",
+          "canonical": "https://www.cbssports.com/nhl/news/nikita-kucherov-trade-request-landing-spots-nhl-mvp",
+          "guid": "322f4775-d6f3-4684-bb43-7d87e371b239",
+          "title": "Nikita Kucherov trade request: Five potential landing spots for the reigning NHL MVP",
+          "published_rss": "Sat, 31 Oct 2026 01:57:50 +0000",
+          "published_utc": "2026-10-31T01:57:50+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-panthers-vs-packers-kings-vs-pelicans-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-panthers-vs-packers-kings-vs-pelicans-and-more",
+          "guid": "1c2f5431-081f-4c92-b85d-a3f37c05b197",
+          "title": "Today's top games to watch, best bets, odds: Panthers vs. Packers, Kings vs. Pelicans and more",
+          "published_rss": "Thu, 29 Oct 2026 19:30:53 +0000",
+          "published_utc": "2026-10-29T19:30:53+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-brewers-vs-rays-world-series-game-5-spurs-vs-jazz-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-brewers-vs-rays-world-series-game-5-spurs-vs-jazz-and-more",
+          "guid": "9d183f2c-428e-4bb4-a677-100ef01773c0",
+          "title": "Today's top games to watch, best bets, odds: Brewers vs. Rays World Series Game 5, Spurs vs. Jazz and more",
+          "published_rss": "Wed, 28 Oct 2026 19:34:50 +0000",
+          "published_utc": "2026-10-28T19:34:50+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nhl/news/nhl-power-rankings-new-jersey-devils-connor-hellebuyck/",
+          "canonical": "https://www.cbssports.com/nhl/news/nhl-power-rankings-new-jersey-devils-connor-hellebuyck",
+          "guid": "d1adb0c8-cc5d-4deb-8439-6665375e9d33",
+          "title": "NHL Power Rankings: New Jersey Devils looking scary after Connor Hellebuyck trade",
+          "published_rss": "Wed, 28 Oct 2026 13:56:13 +0000",
+          "published_utc": "2026-10-28T13:56:13+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-brewers-vs-rays-world-series-game-3-cowboys-vs-eagles-mnf/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-brewers-vs-rays-world-series-game-3-cowboys-vs-eagles-mnf",
+          "guid": "091723f1-a57c-4df4-ac35-b31d4c3d3bbb",
+          "title": "Today's top games to watch, best bets, odds: Brewers vs. Rays World Series Game 3, Cowboys vs. Eagles MNF",
+          "published_rss": "Mon, 26 Oct 2026 19:30:47 +0000",
+          "published_utc": "2026-10-26T19:30:47+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nhl/news/connor-hellebuyck-trade-winnipeg-jets-send-star-goalie-new-jersey-devils/",
+          "canonical": "https://www.cbssports.com/nhl/news/connor-hellebuyck-trade-winnipeg-jets-send-star-goalie-new-jersey-devils",
+          "guid": "c6a7784f-0432-4137-88c9-7287367acb49",
+          "title": "Connor Hellebuyck trade: Jets send star goalie to the Devils in exchange for four players, two draft picks",
+          "published_rss": "Sat, 24 Oct 2026 12:49:51 +0000",
+          "published_utc": "2026-10-24T12:49:51+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-timberwolves-vs-heat-nhl-action-and-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-timberwolves-vs-heat-nhl-action-and-more",
+          "guid": "7c870a31-3acf-4e37-8c7d-51c704b910ad",
+          "title": "Today's top games to watch, best bets, odds: Timberwolves vs. Heat, NHL action and more",
+          "published_rss": "Wed, 21 Oct 2026 21:43:35 +0000",
+          "published_utc": "2026-10-21T21:43:35+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nhl/news/nhl-power-rankings-2026-bruins-jeremy-swayman/",
+          "canonical": "https://www.cbssports.com/nhl/news/nhl-power-rankings-2026-bruins-jeremy-swayman",
+          "guid": "9f066681-c385-421d-b1f2-1548e357027d",
+          "title": "NHL Power Rankings: Bruins, Jeremy Swayman off to a roaring start in a tough Atlantic Division",
+          "published_rss": "Wed, 21 Oct 2026 14:11:41 +0000",
+          "published_utc": "2026-10-21T14:11:41+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/kings-vs-capitals-nhl-tuesday-parlay-alex-ovechkin-and-co-looking-to-keep-los-angeles-as-only-winless-team/",
+          "canonical": "https://www.cbssports.com/betting/news/kings-vs-capitals-nhl-tuesday-parlay-alex-ovechkin-and-co-looking-to-keep-los-angeles-as-only-winless-team",
+          "guid": "ecc73b4d-2e09-4b9a-a1c3-26e1fe871551",
+          "title": "Kings vs. Capitals NHL Tuesday parlay: Alex Ovechkin and Co. looking to keep Los Angeles as only winless team",
+          "published_rss": "Tue, 20 Oct 2026 21:30:49 +0000",
+          "published_utc": "2026-10-20T21:30:49+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-guardians-vs-rays-alcs-game-6-commanders-vs-49ers-on-mnf-more/",
+          "canonical": "https://www.cbssports.com/betting/news/todays-top-games-to-watch-best-bets-odds-guardians-vs-rays-alcs-game-6-commanders-vs-49ers-on-mnf-more",
+          "guid": "0d93f9bb-de8d-4bac-b22d-b297e58bb93c",
+          "title": "Today's top games to watch, best bets, odds: Guardians vs. Rays ALCS Game 6, Commanders vs. 49ers on MNF, more",
+          "published_rss": "Mon, 19 Oct 2026 19:32:37 +0000",
+          "published_utc": "2026-10-19T19:32:37+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/mlb/news/brewers-bash-champion-dodgers-to-brink-of-nlcs-sweep-cbs-sports-preseason-all-america-team-revealed/",
+          "canonical": "https://www.cbssports.com/mlb/news/brewers-bash-champion-dodgers-to-brink-of-nlcs-sweep-cbs-sports-preseason-all-america-team-revealed",
+          "guid": "cf02457d-9d20-4b9a-910b-44982183090d",
+          "title": "Brewers bash champion Dodgers to brink of NLCS sweep; CBS Sports Preseason All-America team revealed",
+          "published_rss": "Thu, 15 Oct 2026 12:54:44 +0000",
+          "published_utc": "2026-10-15T12:54:44+00:00"
+        }
+      ]
+    },
+    "cbs-all": {
+      "url": "https://www.cbssports.com/rss/headlines/",
+      "final_url": "https://www.cbssports.com/rss/headlines/",
+      "status": 200,
+      "request_started": "2026-11-26T18:22:52.032649+00:00",
+      "retrieved_utc": "2026-11-26T18:22:52.810255+00:00",
+      "sha256": "bc52483b79cb11b53a9db44c3c9a6846a9d7fd7b1ff3af4ee8b2b41c2f7b8d68",
+      "headers": {
+        "content-type": "text/xml; charset=UTF-8",
+        "date": "Thu, 26 Nov 2026 18:22:53 GMT",
+        "age": null,
+        "etag": "W/\"ccf416020d470df12e587aedc460797f\"",
+        "last-modified": null
+      },
+      "feed_title": "CBS Sports Headlines",
+      "items": [
+        {
+          "url": "https://www.cbssports.com/betting/news/use-fanduel-promo-code-to-get-250-bonus-bets-nfl-thanksgiving-cowboys-eagles-bills-chiefs/",
+          "canonical": "https://www.cbssports.com/betting/news/use-fanduel-promo-code-to-get-250-bonus-bets-nfl-thanksgiving-cowboys-eagles-bills-chiefs",
+          "guid": "9bcd32a8-e0d4-4414-8888-fa8e280762bc",
+          "title": "Use FanDuel promo code to get $250 bonus bets by targeting NFL Thanksgiving, Cowboys-Eagles, Bills-Chiefs",
+          "published_rss": "Thu, 26 Nov 2026 17:22:14 +0000",
+          "published_utc": "2026-11-26T17:22:14+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/use-draftkings-promo-code-to-get-200-bonus-bets-free-nba-league-pass-nfl-thanksgiving-bills-chiefs/",
+          "canonical": "https://www.cbssports.com/betting/news/use-draftkings-promo-code-to-get-200-bonus-bets-free-nba-league-pass-nfl-thanksgiving-bills-chiefs",
+          "guid": "0aa78635-a926-45a8-9140-1a899a7b90f4",
+          "title": "Use DraftKings promo code to get $200 bonus bets, free NBA League Pass for NFL Thanksgiving, Bills-Chiefs",
+          "published_rss": "Thu, 26 Nov 2026 17:11:25 +0000",
+          "published_utc": "2026-11-26T17:11:25+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/best-kalshi-promo-code-cbssports55-receive-55-bonus-chiefs-bills-cowboys-eagles-thanksgiving-day-nfl/",
+          "canonical": "https://www.cbssports.com/betting/news/best-kalshi-promo-code-cbssports55-receive-55-bonus-chiefs-bills-cowboys-eagles-thanksgiving-day-nfl",
+          "guid": "38417f8f-a335-48d6-b8c1-49c3f5667ce7",
+          "title": "Best Kalshi promo code CBSSPORTS55: Receive $55 bonus for Chiefs-Bills, Cowboys-Eagles, Thanksgiving Day NFL",
+          "published_rss": "Thu, 26 Nov 2026 17:10:24 +0000",
+          "published_utc": "2026-11-26T17:10:24+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/use-betmgm-bonus-code-cbssports-to-get-1500-bonus-bets-nfl-thanksgiving-bears-lions-cowboys-eagles/",
+          "canonical": "https://www.cbssports.com/betting/news/use-betmgm-bonus-code-cbssports-to-get-1500-bonus-bets-nfl-thanksgiving-bears-lions-cowboys-eagles",
+          "guid": "d1b9b19f-170f-48f5-9f02-062d1aceac01",
+          "title": "Use BetMGM bonus code CBSSPORTS to get $1,500 bonus bets for NFL Thanksgiving, Bears-Lions, Cowboys-Eagles",
+          "published_rss": "Thu, 26 Nov 2026 17:09:23 +0000",
+          "published_utc": "2026-11-26T17:09:23+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/prediction/news/2026-nfl-thanksgiving-odds-picks-predictions-use-kalshi-promo-code-cbssports55-for-55-bonus/",
+          "canonical": "https://www.cbssports.com/prediction/news/2026-nfl-thanksgiving-odds-picks-predictions-use-kalshi-promo-code-cbssports55-for-55-bonus",
+          "guid": "3f3777cb-39bc-4ccd-93cb-11e609b24c29",
+          "title": "2026 NFL Thanksgiving odds, picks, predictions: Use Kalshi promo code CBSSPORTS55 for $55 bonus",
+          "published_rss": "Thu, 26 Nov 2026 17:07:16 +0000",
+          "published_utc": "2026-11-26T17:07:16+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/week-12-nfl-betting-promos-get-nearly-4000-in-bonuses-from-betting-apps-sportsbooks-for-nfl-thanksgiving/",
+          "canonical": "https://www.cbssports.com/betting/news/week-12-nfl-betting-promos-get-nearly-4000-in-bonuses-from-betting-apps-sportsbooks-for-nfl-thanksgiving",
+          "guid": "eb9d29d1-5ff0-4a69-be6e-7363eee11b1c",
+          "title": "Week 12 NFL betting promos: Get nearly $4,000 in bonuses from betting apps, sportsbooks for NFL Thanksgiving",
+          "published_rss": "Thu, 26 Nov 2026 17:05:13 +0000",
+          "published_utc": "2026-11-26T17:05:13+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nfl/news/nfl-thanksgiving-2026-grateful/",
+          "canonical": "https://www.cbssports.com/nfl/news/nfl-thanksgiving-2026-grateful",
+          "guid": "55b532b1-b111-4ece-b021-1802c987bf37",
+          "title": "What all 32 NFL teams should be thankful for this Thanksgiving",
+          "published_rss": "Thu, 26 Nov 2026 16:56:18 +0000",
+          "published_utc": "2026-11-26T16:56:18+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/week-12-nfl-betting-lines-odds-spreads-totals/",
+          "canonical": "https://www.cbssports.com/betting/news/week-12-nfl-betting-lines-odds-spreads-totals",
+          "guid": "b84ad5a8-ff04-4fde-b069-f362d63940e2",
+          "title": "Week 12 NFL odds, lines, totals, spreads for every game, including Bears-Lions, Cowboys-Eagles, Bills-Chiefs",
+          "published_rss": "Thu, 26 Nov 2026 16:40:29 +0000",
+          "published_utc": "2026-11-26T16:40:29+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/prediction/news/best-kalshi-promo-code-cbssports55-earn-55-bonus-chiefs-bills-eagles-cowboys-nfl-thanksgiving-day/",
+          "canonical": "https://www.cbssports.com/prediction/news/best-kalshi-promo-code-cbssports55-earn-55-bonus-chiefs-bills-eagles-cowboys-nfl-thanksgiving-day",
+          "guid": "80cb5cba-5411-4d75-bddf-5b945df58c65",
+          "title": "Best Kalshi promo code CBSSPORTS55: Earn $55 bonus for Chiefs-Bills, Eagles-Cowboys, NFL on Thanksgiving Day",
+          "published_rss": "Thu, 26 Nov 2026 16:40:27 +0000",
+          "published_utc": "2026-11-26T16:40:27+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/bears-lions-prediction-odds-time-spread-2026-nfl-thanksgiving-day-picks-best-bets/",
+          "canonical": "https://www.cbssports.com/betting/news/bears-lions-prediction-odds-time-spread-2026-nfl-thanksgiving-day-picks-best-bets",
+          "guid": "6d0cde96-175a-4874-b899-c7d904d7f91e",
+          "title": "Bears vs. Lions prediction, odds, time: 2026 NFL Thanksgiving Day picks by proven model",
+          "published_rss": "Thu, 26 Nov 2026 16:39:20 +0000",
+          "published_utc": "2026-11-26T16:39:20+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/college-football-score-predictions-best-bets-rivalry-week-2026/",
+          "canonical": "https://www.cbssports.com/betting/news/college-football-score-predictions-best-bets-rivalry-week-2026",
+          "guid": "b301efad-d070-4f04-8b37-8e767c442704",
+          "title": "College football score predictions for Rivalry Week, 2026: Model backs Wake Forest (-14.5) vs. Duke",
+          "published_rss": "Thu, 26 Nov 2026 16:35:25 +0000",
+          "published_utc": "2026-11-26T16:35:25+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/college-basketball/news/michigan-state-arkansas-prediction-pick-odds-spread/",
+          "canonical": "https://www.cbssports.com/college-basketball/news/michigan-state-arkansas-prediction-pick-odds-spread",
+          "guid": "5c46e790-ead1-45b2-b42c-8553706adad3",
+          "title": "Michigan State vs. Arkansas prediction, pick, odds: SEC, Big Ten foes meet in CBS Sports Thanksgiving Classic",
+          "published_rss": "Thu, 26 Nov 2026 16:33:38 +0000",
+          "published_utc": "2026-11-26T16:33:38+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/bears-vs-lions-odds-picks-prediction-start-time-2026-nfl-thanksgiving-day-betting-preview-best-bets/",
+          "canonical": "https://www.cbssports.com/betting/news/bears-vs-lions-odds-picks-prediction-start-time-2026-nfl-thanksgiving-day-betting-preview-best-bets",
+          "guid": "63b70c16-6b22-4b0f-abec-99fec6273262",
+          "title": "Bears vs. Lions odds, picks, prediction, start time: 2026 NFL Thanksgiving Day betting preview, best bets",
+          "published_rss": "Thu, 26 Nov 2026 16:31:11 +0000",
+          "published_utc": "2026-11-26T16:31:11+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/college-basketball/news/college-basketball-rankings-arizona-maui-invitationl/",
+          "canonical": "https://www.cbssports.com/college-basketball/news/college-basketball-rankings-arizona-maui-invitationl",
+          "guid": "e098f3e0-c2f4-4670-97f4-f69d9d42f48a",
+          "title": "College basketball rankings: Arizona's hot streak continues as Wildcats win Maui Invitational",
+          "published_rss": "Thu, 26 Nov 2026 17:24:21 +0000",
+          "published_utc": "2026-11-26T17:24:21+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/fantasy/football/news/fantasy-football-rankings-week-12-dave-richards-tough-startsit-calls/",
+          "canonical": "https://www.cbssports.com/fantasy/football/news/fantasy-football-rankings-week-12-dave-richards-tough-startsit-calls",
+          "guid": "875d53d2-3870-496a-a903-62754c1a766c",
+          "title": "Fantasy football rankings Week 12: Dave Richard's tough start/sit calls clear up your toughest flex decisions",
+          "published_rss": "Thu, 26 Nov 2026 16:18:24 +0000",
+          "published_utc": "2026-11-26T16:18:24+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/chiefs-bills-prediction-odds-time-2026-nfl-thanksgiving-night-picks-bets/",
+          "canonical": "https://www.cbssports.com/betting/news/chiefs-bills-prediction-odds-time-2026-nfl-thanksgiving-night-picks-bets",
+          "guid": "9c2fea68-164c-4dc5-b50a-41c444ee6442",
+          "title": "Chiefs vs. Bills prediction, odds, time: 2026 NFL Thanksgiving night picks by proven model",
+          "published_rss": "Thu, 26 Nov 2026 16:11:20 +0000",
+          "published_utc": "2026-11-26T16:11:20+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/nfl-odds-picks-brinsons-best-bets-player-props-anytime-td-scorers-for-week-12-thanksgiving-day-games/",
+          "canonical": "https://www.cbssports.com/betting/news/nfl-odds-picks-brinsons-best-bets-player-props-anytime-td-scorers-for-week-12-thanksgiving-day-games",
+          "guid": "f191446a-3f30-4ade-80cb-620e76729894",
+          "title": "NFL odds, picks: Brinson's best bets, player props, anytime TD scorers for Week 12 Thanksgiving Day games",
+          "published_rss": "Thu, 26 Nov 2026 16:07:48 +0000",
+          "published_utc": "2026-11-26T16:07:48+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/fantasy/football/news/fantasy-football-rankings-projections-lineups-sleeper-picks-start-sit-advice-week-12-2026/",
+          "canonical": "https://www.cbssports.com/fantasy/football/news/fantasy-football-rankings-projections-lineups-sleeper-picks-start-sit-advice-week-12-2026",
+          "guid": "63c5fdd3-8aad-4948-9e0d-db2a792abbd6",
+          "title": "Fantasy football rankings, projections, lineup advice, sleeper picks for Week 12 from proven model",
+          "published_rss": "Thu, 26 Nov 2026 16:02:23 +0000",
+          "published_utc": "2026-11-26T16:02:23+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/",
+          "canonical": "https://www.cbssports.com/",
+          "guid": "c19397c0-83df-4d98-8331-2cb64f603b4c",
+          "title": "SportsLine Newsletter Thursday, November 26, 2026",
+          "published_rss": "Thu, 26 Nov 2026 15:58:37 +0000",
+          "published_utc": "2026-11-26T15:58:37+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/prediction/news/aaron-rodgers-next-team-predictions-patriots-and-ravens-are-in-the-mix-but-retirement-the-most-likely-option/",
+          "canonical": "https://www.cbssports.com/prediction/news/aaron-rodgers-next-team-predictions-patriots-and-ravens-are-in-the-mix-but-retirement-the-most-likely-option",
+          "guid": "e0f0c2bd-dee6-4e16-9daa-8095118530aa",
+          "title": "Aaron Rodgers next team predictions: Patriots and Ravens are in the mix, but retirement the most likely option",
+          "published_rss": "Thu, 26 Nov 2026 15:56:51 +0000",
+          "published_utc": "2026-11-26T15:56:51+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/college-football-odds-picks-predictions-lines-best-bets-rivalry-week-2026/",
+          "canonical": "https://www.cbssports.com/betting/news/college-football-odds-picks-predictions-lines-best-bets-rivalry-week-2026",
+          "guid": "137be776-2860-4f14-8fe8-ad8beb91916e",
+          "title": "College football odds, picks, predictions for Rivalry Week, 2026: Computer likes North Carolina, Arizona",
+          "published_rss": "Thu, 26 Nov 2026 15:33:41 +0000",
+          "published_utc": "2026-11-26T15:33:41+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/2026-rivalry-week-college-football-odds-betting-lines-spreads-start-times-picks-best-bets-predictions/",
+          "canonical": "https://www.cbssports.com/betting/news/2026-rivalry-week-college-football-odds-betting-lines-spreads-start-times-picks-best-bets-predictions",
+          "guid": "083bc150-7e87-44cf-8cc5-98ccc4f303b5",
+          "title": "2026 Rivalry Week college football odds, betting lines, spreads, start times: Picks, best bets, predictions",
+          "published_rss": "Thu, 26 Nov 2026 15:28:13 +0000",
+          "published_utc": "2026-11-26T15:28:13+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/cowboys-eagles-prediction-odds-time-spread-2026-nfl-thanksgiving-day-picks/",
+          "canonical": "https://www.cbssports.com/betting/news/cowboys-eagles-prediction-odds-time-spread-2026-nfl-thanksgiving-day-picks",
+          "guid": "8cf175c5-efc8-45ec-b439-f97106f70859",
+          "title": "Cowboys vs. Eagles prediction, odds, time: 2026 NFL Thanksgiving Day picks by proven model",
+          "published_rss": "Thu, 26 Nov 2026 15:24:26 +0000",
+          "published_utc": "2026-11-26T15:24:26+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/tcu-texas-tech-odds-prediction-time-rivalry-week-college-football-picks/",
+          "canonical": "https://www.cbssports.com/betting/news/tcu-texas-tech-odds-prediction-time-rivalry-week-college-football-picks",
+          "guid": "fa55bce0-2b0e-47a0-9014-6e644c93d195",
+          "title": "TCU vs. Texas Tech odds, prediction, time: Rivalry week college football picks from proven model",
+          "published_rss": "Thu, 26 Nov 2026 15:20:14 +0000",
+          "published_utc": "2026-11-26T15:20:14+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/college-football/news/mississippi-state-football-2027-roster-spending-kamario-taylor/",
+          "canonical": "https://www.cbssports.com/college-football/news/mississippi-state-football-2027-roster-spending-kamario-taylor",
+          "guid": "0d1b5722-c816-4639-985d-4132e222e797",
+          "title": "Mississippi State's dream season went up in smoke. It should overspend in 2027",
+          "published_rss": "Thu, 26 Nov 2026 15:08:35 +0000",
+          "published_utc": "2026-11-26T15:08:35+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/thanksgiving-day-nfl-2026-prediction-odds-time-bills-chiefs-picks/",
+          "canonical": "https://www.cbssports.com/betting/news/thanksgiving-day-nfl-2026-prediction-odds-time-bills-chiefs-picks",
+          "guid": "e7cb6509-26cf-40e2-8711-28ea1f309e62",
+          "title": "2026 NFL Thanksgiving Day prediction, odds, time: Bills vs. Chiefs picks from expert on 21-12 run",
+          "published_rss": "Thu, 26 Nov 2026 15:16:02 +0000",
+          "published_utc": "2026-11-26T15:16:02+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/college-football/news/teams-most-to-lose-week-13-oregon-tennessee-ucla/",
+          "canonical": "https://www.cbssports.com/college-football/news/teams-most-to-lose-week-13-oregon-tennessee-ucla",
+          "guid": "2441377d-9106-4114-9fdb-ba67055c70ce",
+          "title": "Eight teams with the most to lose in Week 13: Oregon, Tennessee, UCLA face must-wins",
+          "published_rss": "Thu, 26 Nov 2026 15:06:10 +0000",
+          "published_utc": "2026-11-26T15:06:10+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/college-football/news/college-football-playoff-resume-rankings-conspiracies-indiana/",
+          "canonical": "https://www.cbssports.com/college-football/news/college-football-playoff-resume-rankings-conspiracies-indiana",
+          "guid": "2ca86ec7-d972-4c9e-8aa8-94b82a8f0028",
+          "title": "College Football Playoff resume rankings: No committee conspiracies; Indiana got what it deserved",
+          "published_rss": "Thu, 26 Nov 2026 15:04:01 +0000",
+          "published_utc": "2026-11-26T15:04:01+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/nfl-score-predictions-top-picks-best-bets-today-week-12-2026/",
+          "canonical": "https://www.cbssports.com/betting/news/nfl-score-predictions-top-picks-best-bets-today-week-12-2026",
+          "guid": "acc95303-701c-4a28-8188-c978a634edc5",
+          "title": "Week 12 NFL score predictions, best picks today: Expert reveals exact scores for every game",
+          "published_rss": "Thu, 26 Nov 2026 14:58:09 +0000",
+          "published_utc": "2026-11-26T14:58:09+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/nfl/news/lions-vs-bears-thanksgiving-prediction-odds-how-to-watch/",
+          "canonical": "https://www.cbssports.com/nfl/news/lions-vs-bears-thanksgiving-prediction-odds-how-to-watch",
+          "guid": "83ec1448-f509-4d07-b986-9fabece8a84f",
+          "title": "Lions vs. Bears Thanksgiving prediction: Which team will take control of NFC North?",
+          "published_rss": "Thu, 26 Nov 2026 14:46:23 +0000",
+          "published_utc": "2026-11-26T14:46:23+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/nfl-odds-lines-spreads-picks-predictions-best-bets-week-12-2026/",
+          "canonical": "https://www.cbssports.com/betting/news/nfl-odds-lines-spreads-picks-predictions-best-bets-week-12-2026",
+          "guid": "2820521a-dbb2-4a97-88e0-42fe35a0fdf9",
+          "title": "Week 12 NFL odds, picks, predictions: Computer model backs Vikings and Dolphins",
+          "published_rss": "Thu, 26 Nov 2026 14:45:29 +0000",
+          "published_utc": "2026-11-26T14:45:29+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/mlb/news/mlb-rumors-blue-jays-offense-cardinals-starting-pitching-nationals-twins/",
+          "canonical": "https://www.cbssports.com/mlb/news/mlb-rumors-blue-jays-offense-cardinals-starting-pitching-nationals-twins",
+          "guid": "6c271f55-dbb9-45a1-8931-9571ffdd2dd7",
+          "title": "MLB rumors: Blue Jays narrow focus, Cardinals target pitching, plus more relievers off the board",
+          "published_rss": "Thu, 26 Nov 2026 14:44:09 +0000",
+          "published_utc": "2026-11-26T14:44:09+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/rivalry-week-college-football-betting-promos-get-almost-4000-in-bonuses-best-betting-apps-sportsbooks/",
+          "canonical": "https://www.cbssports.com/betting/news/rivalry-week-college-football-betting-promos-get-almost-4000-in-bonuses-best-betting-apps-sportsbooks",
+          "guid": "6fe113e3-4a11-45ed-8435-39e4ee2d8ff6",
+          "title": "Rivalry Week college football betting promos: Get almost $4,000 in bonuses from best betting apps, sportsbooks",
+          "published_rss": "Thu, 26 Nov 2026 14:44:01 +0000",
+          "published_utc": "2026-11-26T14:44:01+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/mlb/news/mlb-thanksgiving-all-30-teams-thankful-2026/",
+          "canonical": "https://www.cbssports.com/mlb/news/mlb-thanksgiving-all-30-teams-thankful-2026",
+          "guid": "1dfdf658-0edf-4fe3-a7aa-49fca60dc94e",
+          "title": "What all 30 MLB teams have to be thankful for this year",
+          "published_rss": "Thu, 26 Nov 2026 14:35:10 +0000",
+          "published_utc": "2026-11-26T14:35:10+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/nfl-picks-ai-score-predictions-best-bets-for-week-12-2026/",
+          "canonical": "https://www.cbssports.com/betting/news/nfl-picks-ai-score-predictions-best-bets-for-week-12-2026",
+          "guid": "8674b888-6888-4cbb-bb50-c978347c95ed",
+          "title": "Self-learning AI releases NFL picks, score predictions for every Week 12 game",
+          "published_rss": "Thu, 26 Nov 2026 14:34:17 +0000",
+          "published_utc": "2026-11-26T14:34:17+00:00"
+        },
+        {
+          "url": "https://www.cbssports.com/betting/news/chiefs-vs-bills-odds-picks-prediction-start-time-2026-nfl-thanksgiving-betting-preview-best-bets/",
+          "canonical": "https://www.cbssports.com/betting/news/chiefs-vs-bills-odds-picks-prediction-start-time-2026-nfl-thanksgiving-betting-preview-best-bets",
+          "guid": "d14a9fef-0c22-42cb-bd3c-6c3c232480b8",
+          "title": "Chiefs vs. Bills odds, picks, prediction, start time: 2026 NFL Thanksgiving betting preview, best bets",
+          "published_rss": "Thu, 26 Nov 2026 14:14:28 +0000",
+          "published_utc": "2026-11-26T14:14:28+00:00"
+        }
+      ]
+    },
+    "espn-nhl": {
+      "url": "https://www.espn.com/espn/rss/nhl/news",
+      "final_url": "https://www.espn.com/espn/rss/nhl/news",
+      "status": 200,
+      "request_started": "2026-11-26T18:22:52.033148+00:00",
+      "retrieved_utc": "2026-11-26T18:22:52.780216+00:00",
+      "sha256": "775f7d4cbab32463f048515e1772ee60e47979cbeebbc3337148cf1b648f9004",
+      "headers": {
+        "content-type": "text/xml;charset=UTF-8",
+        "date": "Thu, 26 Nov 2026 18:22:53 GMT",
+        "age": null,
+        "etag": null,
+        "last-modified": null
+      },
+      "feed_title": "www.espn.com - NHL",
+      "items": [
+        {
+          "url": "https://www.espn.com/nhl/story/_/id/50587368/nhl-2026-27-playoffs-standings-all-32-thanksgiving-panic-index-rankings-tiers",
+          "canonical": "https://www.espn.com/nhl/story/_/id/50587368/nhl-2026-27-playoffs-standings-all-32-thanksgiving-panic-index-rankings-tiers",
+          "guid": "US-EN-50587368",
+          "title": "Wysh List: Turkey, stuffing ... and anxiety? The NHL teams most worried about playoff position",
+          "published_rss": "Thu, 26 Nov 2026 11:29:48 EST",
+          "published_utc": "2026-11-26T16:29:48+00:00"
+        },
+        {
+          "url": "https://www.espn.com/nhl/story/_/id/50594065/aleksander-barkov-brad-marchand-returning-vs-senators",
+          "canonical": "https://www.espn.com/nhl/story/_/id/50594065/aleksander-barkov-brad-marchand-returning-vs-senators",
+          "guid": "US-EN-50594065",
+          "title": "Panthers stars Barkov, Marchand make instant impact in return",
+          "published_rss": "Thu, 26 Nov 2026 11:29:58 EST",
+          "published_utc": "2026-11-26T16:29:58+00:00"
+        },
+        {
+          "url": "https://www.espn.com/nhl/story/_/id/50601479/bruins-tanner-jeannot-jets-tyrel-bauer-lengthy-fight",
+          "canonical": "https://www.espn.com/nhl/story/_/id/50601479/bruins-tanner-jeannot-jets-tyrel-bauer-lengthy-fight",
+          "guid": "US-EN-50601479",
+          "title": "Bruins' Jeannot, Jets' Bauer entertain with 'one of the best fights' seen",
+          "published_rss": "Thu, 26 Nov 2026 11:29:58 EST",
+          "published_utc": "2026-11-26T16:29:58+00:00"
+        },
+        {
+          "url": "https://www.espn.com/nhl/story/_/id/50602167/devils-brenden-dillon-hearing-denton-mateychuk-hit",
+          "canonical": "https://www.espn.com/nhl/story/_/id/50602167/devils-brenden-dillon-hearing-denton-mateychuk-hit",
+          "guid": "US-EN-50602167",
+          "title": "Devils' Dillon to have hearing for Mateychuk hit",
+          "published_rss": "Thu, 26 Nov 2026 11:29:58 EST",
+          "published_utc": "2026-11-26T16:29:58+00:00"
+        },
+        {
+          "url": "https://www.espn.com/nhl/story/_/id/50598239/maple-leafs-support-sergei-bobrovsky-rough-start-toronto",
+          "canonical": "https://www.espn.com/nhl/story/_/id/50598239/maple-leafs-support-sergei-bobrovsky-rough-start-toronto",
+          "guid": "US-EN-50598239",
+          "title": "Maple Leafs support Bobrovsky during rough start in Toronto",
+          "published_rss": "Thu, 26 Nov 2026 11:29:58 EST",
+          "published_utc": "2026-11-26T16:29:58+00:00"
+        },
+        {
+          "url": "https://www.espn.com/nhl/story/_/id/50578959/blackhawks-connor-bedard-right-shoulder-surgery",
+          "canonical": "https://www.espn.com/nhl/story/_/id/50578959/blackhawks-connor-bedard-right-shoulder-surgery",
+          "guid": "US-EN-50578959",
+          "title": "Blackhawks' Bedard has shoulder surgery, out approximately 4 months",
+          "published_rss": "Thu, 26 Nov 2026 11:29:58 EST",
+          "published_utc": "2026-11-26T16:29:58+00:00"
+        },
+        {
+          "url": "https://www.espn.com/nhl/story/_/id/50586281/joel-hofer-supplants-jordan-binnington-blues-starting-goaltender",
+          "canonical": "https://www.espn.com/nhl/story/_/id/50586281/joel-hofer-supplants-jordan-binnington-blues-starting-goaltender",
+          "guid": "US-EN-50586281",
+          "title": "Hofer supplants Binnington as Blues' starting goaltender",
+          "published_rss": "Thu, 26 Nov 2026 11:29:58 EST",
+          "published_utc": "2026-11-26T16:29:58+00:00"
+        },
+        {
+          "url": "https://www.espn.com/nhl/story/_/id/50432982/2026-27-nhl-awards-watch-ranking-ballots-hart-norris-calder-vezina-selke",
+          "canonical": "https://www.espn.com/nhl/story/_/id/50432982/2026-27-nhl-awards-watch-ranking-ballots-hart-norris-calder-vezina-selke",
+          "guid": "US-EN-50432982",
+          "title": "🏆 Awards Watch: Why McDavid is not the unanimous MVP pick",
+          "published_rss": "Thu, 26 Nov 2026 11:29:58 EST",
+          "published_utc": "2026-11-26T16:29:58+00:00"
+        },
+        {
+          "url": "https://www.espn.com/nhl/story/_/id/50585269/nhl-2026-27-new-york-rangers-alexis-lafreniere-breakout-draft-stats-playoffs",
+          "canonical": "https://www.espn.com/nhl/story/_/id/50585269/nhl-2026-27-new-york-rangers-alexis-lafreniere-breakout-draft-stats-playoffs",
+          "guid": "US-EN-50585269",
+          "title": "Why Alexis Lafreniere's breakout brings Rangers hope ... for 2026-27 and beyond",
+          "published_rss": "Wed, 25 Nov 2026 14:49:27 EST",
+          "published_utc": "2026-11-25T19:49:27+00:00"
+        },
+        {
+          "url": "https://www.espn.com/nhl/story/_/id/50576360/nhl-2026-27-goalies-mystery-movement-butterfly-tracking-technology",
+          "canonical": "https://www.espn.com/nhl/story/_/id/50576360/nhl-2026-27-goalies-mystery-movement-butterfly-tracking-technology",
+          "guid": "US-EN-50576360",
+          "title": "A mystery no more? How movement tracking could shed new light on NHL goaltenders",
+          "published_rss": "Wed, 25 Nov 2026 23:05:34 EST",
+          "published_utc": "2026-11-26T04:05:34+00:00"
+        },
+        {
+          "url": "https://www.espn.com/nhl/story/_/id/50572721/nhl-2026-27-dylan-larkin-trade-grade-winners-losers-canadiens-red-wings",
+          "canonical": "https://www.espn.com/nhl/story/_/id/50572721/nhl-2026-27-dylan-larkin-trade-grade-winners-losers-canadiens-red-wings",
+          "guid": "US-EN-50572721",
+          "title": "Dylan Larkin is a Canadien: Wyshynski sorts out the winners and losers around the NHL",
+          "published_rss": "Wed, 25 Nov 2026 09:47:17 EST",
+          "published_utc": "2026-11-25T14:47:17+00:00"
+        },
+        {
+          "url": "https://www.espn.com/nhl/story/_/id/50054705/nhl-2026-27-season-trade-grades-deals-report-cards-top-players-prospects-biggest-deals",
+          "canonical": "https://www.espn.com/nhl/story/_/id/50054705/nhl-2026-27-season-trade-grades-deals-report-cards-top-players-prospects-biggest-deals",
+          "guid": "US-EN-50054705",
+          "title": "Who comes out ahead in Larkin blockbuster? Grading Red Wings and Canadiens",
+          "published_rss": "Wed, 25 Nov 2026 09:47:17 EST",
+          "published_utc": "2026-11-25T14:47:17+00:00"
+        },
+        {
+          "url": "https://www.espn.com/fantasy/hockey/story/_/id/50574172/fantasy-hockey-picks-forwards-defense-goalies-streamers",
+          "canonical": "https://www.espn.com/fantasy/hockey/story/_/id/50574172/fantasy-hockey-picks-forwards-defense-goalies-streamers",
+          "guid": "US-EN-50574172",
+          "title": "Pickups: Montreal second line boosted by Larkin trade",
+          "published_rss": "Mon, 23 Nov 2026 13:41:27 EST",
+          "published_utc": "2026-11-23T18:41:27+00:00"
+        }
+      ]
+    },
+    "league": {
+      "url": "https://www.to-rss.xyz/nhl/news/",
+      "final_url": "https://www.to-rss.xyz/nhl/news/",
+      "status": 200,
+      "request_started": "2026-11-26T18:22:52.033647+00:00",
+      "retrieved_utc": "2026-11-26T18:22:53.328227+00:00",
+      "sha256": "c0f8532464ec8a449e5523cfb6530c762d74ae4263ddbf0fce05892e615905d9",
+      "headers": {
+        "content-type": "application/rss+xml; charset=utf-8",
+        "date": "Thu, 26 Nov 2026 18:22:53 GMT",
+        "age": null,
+        "etag": null,
+        "last-modified": null
+      },
+      "feed_title": "NHL Headlines",
+      "items": [
+        {
+          "url": "https://www.nhl.com/news/nhl-on-tap-news-and-notes-november-27-2026",
+          "canonical": "https://www.nhl.com/news/nhl-on-tap-news-and-notes-november-27-2026",
+          "guid": "d5d63d17-c658-42d9-9e93-013b6276f593",
+          "title": "On Tap: Kantserov, Blackhawks face off against Rangers",
+          "published_rss": "Thu, 26 Nov 2026 18:10:47 -0000",
+          "published_utc": "2026-11-26T18:10:47+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/charlie-mcavoy-thankful-to-be-healthy-resumes-holiday-pie-delivery-for-boston-bruins",
+          "canonical": "https://www.nhl.com/news/charlie-mcavoy-thankful-to-be-healthy-resumes-holiday-pie-delivery-for-boston-bruins",
+          "guid": "b598488c-6cc2-47f2-b301-60f7d20c2f1d",
+          "title": "McAvoy thankful to resume Bruins holiday pie delivery",
+          "published_rss": "Thu, 26 Nov 2026 17:45:13 -0000",
+          "published_utc": "2026-11-26T17:45:13+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/dallas-stars-st-louis-blues-game-preview-november-27-2026",
+          "canonical": "https://www.nhl.com/news/dallas-stars-st-louis-blues-game-preview-november-27-2026",
+          "guid": "56a6769c-bdb5-475f-872e-a74b74ae968c",
+          "title": "Stars at Blues projected lineups",
+          "published_rss": "Thu, 26 Nov 2026 16:07:37 -0000",
+          "published_utc": "2026-11-26T16:07:37+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/toronto-maple-leafs-boston-bruins-game-preview-november-27-2026",
+          "canonical": "https://www.nhl.com/news/toronto-maple-leafs-boston-bruins-game-preview-november-27-2026",
+          "guid": "6002e9da-81be-4c3d-a9b8-adc8c36ff535",
+          "title": "Maple Leafs at Bruins projected lineups",
+          "published_rss": "Thu, 26 Nov 2026 15:54:26 -0000",
+          "published_utc": "2026-11-26T15:54:26+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/alex-ovechkin-farewell-tour-around-nhl",
+          "canonical": "https://www.nhl.com/news/alex-ovechkin-farewell-tour-around-nhl",
+          "guid": "934bd4ce-3cdd-4899-8760-ed2e37cca4b3",
+          "title": "Ovechkin farewell tour around NHL: Next stop, St. Louis",
+          "published_rss": "Thu, 26 Nov 2026 15:00:00 -0000",
+          "published_utc": "2026-11-26T15:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/utah-mammoth-nashville-predators-game-preview-november-27-2026",
+          "canonical": "https://www.nhl.com/news/utah-mammoth-nashville-predators-game-preview-november-27-2026",
+          "guid": "1a509d56-3a14-4585-a9e6-049639856b88",
+          "title": "Mammoth at Predators projected lineups",
+          "published_rss": "Thu, 26 Nov 2026 14:27:47 -0000",
+          "published_utc": "2026-11-26T14:27:47+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/colorado-avalanche-minnesota-wild-game-preview-november-27-2026",
+          "canonical": "https://www.nhl.com/news/colorado-avalanche-minnesota-wild-game-preview-november-27-2026",
+          "guid": "7ef8ac59-6c2f-48d3-bce2-85afb7727ca5",
+          "title": "Avalanche at Wild projected lineups",
+          "published_rss": "Thu, 26 Nov 2026 14:23:43 -0000",
+          "published_utc": "2026-11-26T14:23:43+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/ottawa-senators-tampa-bay-lightning-game-preview-november-27-2026",
+          "canonical": "https://www.nhl.com/news/ottawa-senators-tampa-bay-lightning-game-preview-november-27-2026",
+          "guid": "5a46eff6-dc29-4c01-82b0-73399c15fd10",
+          "title": "Senators at Lightning projected lineups",
+          "published_rss": "Thu, 26 Nov 2026 14:20:26 -0000",
+          "published_utc": "2026-11-26T14:20:26+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/san-jose-sharks-anaheim-ducks-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/san-jose-sharks-anaheim-ducks-game-recap-november-25-2026",
+          "guid": "8fe81012-8924-4998-aa69-2d75378266ab",
+          "title": "Gauthier stays hot, Ducks cruise past Sharks to end 4-game skid",
+          "published_rss": "Thu, 26 Nov 2026 07:26:00 -0000",
+          "published_utc": "2026-11-26T07:26:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/montreal-canadiens-colorado-avalanche-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/montreal-canadiens-colorado-avalanche-game-recap-november-25-2026",
+          "guid": "4c073c26-f0e5-4ca7-b759-7f2277fe1157",
+          "title": "Blackwood makes 28 saves, Avalanche shut out Canadiens",
+          "published_rss": "Thu, 26 Nov 2026 07:09:00 -0000",
+          "published_utc": "2026-11-26T07:09:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/chicago-blackhawks-seattle-kraken-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/chicago-blackhawks-seattle-kraken-game-recap-november-25-2026",
+          "guid": "60b19c8e-0693-4fd4-8171-2380a0933cfe",
+          "title": "Kantserov scores twice, Blackhawks top Kraken to win third straight",
+          "published_rss": "Thu, 26 Nov 2026 06:26:00 -0000",
+          "published_utc": "2026-11-26T06:26:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/super-16-nhl-power-rankings-november-26-2026",
+          "canonical": "https://www.nhl.com/news/super-16-nhl-power-rankings-november-26-2026",
+          "guid": "8d15a2ac-b582-47cb-b718-15d879a5cae6",
+          "title": "Super 16 Power Rankings analyze why teams are where they are",
+          "published_rss": "Thu, 26 Nov 2026 06:06:00 -0000",
+          "published_utc": "2026-11-26T06:06:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/brenden-dillon-to-have-player-safety-hearing-for-actions-in-new-jersey-devils-game",
+          "canonical": "https://www.nhl.com/news/brenden-dillon-to-have-player-safety-hearing-for-actions-in-new-jersey-devils-game",
+          "guid": "faeb6ce0-808f-4333-b203-261df0f04659",
+          "title": "Dillon of Devils to have Player Safety hearing",
+          "published_rss": "Thu, 26 Nov 2026 05:52:04 -0000",
+          "published_utc": "2026-11-26T05:52:04+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/utah-mammoth-minnesota-wild-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/utah-mammoth-minnesota-wild-game-recap-november-25-2026",
+          "guid": "35e98677-098f-406b-9b0b-847b687a9e82",
+          "title": "Kaprizov, Wild point streaks end at 15 in loss to Mammoth",
+          "published_rss": "Thu, 26 Nov 2026 05:48:00 -0000",
+          "published_utc": "2026-11-26T05:48:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/aleksander-barkov-brad-marchand-returns-give-florida-panthers-instant-lift",
+          "canonical": "https://www.nhl.com/news/aleksander-barkov-brad-marchand-returns-give-florida-panthers-instant-lift",
+          "guid": "ce2ea21e-9d5f-4459-aa69-47cc86998d78",
+          "title": "Barkov, Marchand returns give Panthers instant lift",
+          "published_rss": "Thu, 26 Nov 2026 05:30:40 -0000",
+          "published_utc": "2026-11-26T05:30:40+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/amanda-kessel-persevered-on-way-to-usa-hall-of-fame",
+          "canonical": "https://www.nhl.com/news/amanda-kessel-persevered-on-way-to-usa-hall-of-fame",
+          "guid": "9f2117d8-a1da-4d05-880b-d564448c5699",
+          "title": "Amanda Kessel persevered on way to U.S. Hall of Fame",
+          "published_rss": "Thu, 26 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-26T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/eddie-olczyk-with-chicago-family-for-holiday-showdown-between-blackhawks-and-rangers",
+          "canonical": "https://www.nhl.com/news/eddie-olczyk-with-chicago-family-for-holiday-showdown-between-blackhawks-and-rangers",
+          "guid": "482be3c5-8ff7-4bc9-bd08-f628ded1cab7",
+          "title": "Olczyk with Chicago ‘family’ for holiday showdown vs. Rangers",
+          "published_rss": "Thu, 26 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-26T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/hockey-fights-cancer/philadelphia-flyers-cole-knuble-making-family-proud-after-father-mike-cancer-treatment",
+          "canonical": "https://www.nhl.com/news/topic/hockey-fights-cancer/philadelphia-flyers-cole-knuble-making-family-proud-after-father-mike-cancer-treatment",
+          "guid": "aeecf5ef-3bdb-43fe-80a0-d7cb1bc18657",
+          "title": "Flyers' Knuble was fueled by dad's cancer fight",
+          "published_rss": "Thu, 26 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-26T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/montreal-canadiens-legend-maurice-richard-assisted-by-unheralded-stick-maker",
+          "canonical": "https://www.nhl.com/news/montreal-canadiens-legend-maurice-richard-assisted-by-unheralded-stick-maker",
+          "guid": "ff027fae-803d-4a5b-a3ee-fc36caaf93c0",
+          "title": "Rocket's legend got assist from unheralded stick-maker",
+          "published_rss": "Thu, 26 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-26T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/fantasy/nhl-picks-props-daily-fantasy-hockey-projections-for-2026-27-season",
+          "canonical": "https://www.nhl.com/news/topic/fantasy/nhl-picks-props-daily-fantasy-hockey-projections-for-2026-27-season",
+          "guid": "2b5931ab-3c1a-47dd-887d-de45d14e06b2",
+          "title": "NHL picks, props, fantasy projections for today",
+          "published_rss": "Thu, 26 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-26T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/wayne-gretzky-aluminum-stick-switch-featured-in-new-documentary",
+          "canonical": "https://www.nhl.com/news/wayne-gretzky-aluminum-stick-switch-featured-in-new-documentary",
+          "guid": "fc4fd25d-a447-4bf8-980f-a854465b797d",
+          "title": "Gretzky’s stick switch that shook hockey world featured in new documentary",
+          "published_rss": "Thu, 26 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-26T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/ahl-notebook-top-teams-through-1st-quarter-of-season",
+          "canonical": "https://www.nhl.com/news/ahl-notebook-top-teams-through-1st-quarter-of-season",
+          "guid": "80076df2-30ff-4e8e-94db-f8c88e5c4de2",
+          "title": "AHL notebook: Top teams through 1st quarter of season",
+          "published_rss": "Thu, 26 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-26T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/rangers-adam-fox-kraken-brandon-montour-join-forces-to-fight-als",
+          "canonical": "https://www.nhl.com/news/rangers-adam-fox-kraken-brandon-montour-join-forces-to-fight-als",
+          "guid": "7a4f3cc7-4e8e-4ca3-a29b-aff506977933",
+          "title": "Fox, Montour join forces to fight ALS",
+          "published_rss": "Thu, 26 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-26T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nashville-predators-dallas-stars-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/nashville-predators-dallas-stars-game-recap-november-25-2026",
+          "guid": "301f09b5-bc3f-4d97-b879-61112c2d9116",
+          "title": "Bourque scores first of season against former team, Predators top Stars",
+          "published_rss": "Thu, 26 Nov 2026 04:57:00 -0000",
+          "published_utc": "2026-11-26T04:57:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/new-york-rangers-buffalo-sabres-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/new-york-rangers-buffalo-sabres-game-recap-november-25-2026",
+          "guid": "88f990a8-2e28-472d-b7b0-59732fa0d06c",
+          "title": "Sabres start fast, score five to cruise past Rangers",
+          "published_rss": "Thu, 26 Nov 2026 04:50:00 -0000",
+          "published_utc": "2026-11-26T04:50:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/vancouver-canucks-detroit-red-wings-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/vancouver-canucks-detroit-red-wings-game-recap-november-25-2026",
+          "guid": "5fab914c-8eda-4af0-adca-e824eb25e446",
+          "title": "Finnie scores twice early, Red Wings cruise past Canucks",
+          "published_rss": "Thu, 26 Nov 2026 04:46:00 -0000",
+          "published_utc": "2026-11-26T04:46:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/philadelphia-flyers-washington-capitals-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/philadelphia-flyers-washington-capitals-game-recap-november-25-2026",
+          "guid": "6102bb11-c80c-409f-a97d-b9ffcce3a1b8",
+          "title": "Capitals pull away with four late goals, top Flyers to end five-game slide",
+          "published_rss": "Thu, 26 Nov 2026 04:43:00 -0000",
+          "published_utc": "2026-11-26T04:43:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/ottawa-senators-florida-panthers-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/ottawa-senators-florida-panthers-game-recap-november-25-2026",
+          "guid": "d338e517-564e-4a74-835c-06330d438590",
+          "title": "Panthers get past Senators in Marchand, Barkov return",
+          "published_rss": "Thu, 26 Nov 2026 04:38:00 -0000",
+          "published_utc": "2026-11-26T04:38:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/winnipeg-jets-boston-bruins-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/winnipeg-jets-boston-bruins-game-recap-november-25-2026",
+          "guid": "1cff9079-a478-44d6-824a-d466810e860d",
+          "title": "Connor has three points to help Jets get past Bruins",
+          "published_rss": "Thu, 26 Nov 2026 04:31:00 -0000",
+          "published_utc": "2026-11-26T04:31:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/new-york-islanders-st-louis-blues-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/new-york-islanders-st-louis-blues-game-recap-november-25-2026",
+          "guid": "a4d7acec-3376-47cb-86ec-d09bc127d75a",
+          "title": "Eklund ties it with three seconds left, Islanders edge Blues in shootout",
+          "published_rss": "Thu, 26 Nov 2026 04:23:00 -0000",
+          "published_utc": "2026-11-26T04:23:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/calgary-flames-pittsburgh-penguins-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/calgary-flames-pittsburgh-penguins-game-recap-november-25-2026",
+          "guid": "b1f43319-5cc8-4587-ad5d-6c242380ed71",
+          "title": "Flames score four in second period, hand Penguins fifth straight loss",
+          "published_rss": "Thu, 26 Nov 2026 04:20:00 -0000",
+          "published_utc": "2026-11-26T04:20:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/short-shifts/alex-ovechkin-washington-capitals-career-leader-assists",
+          "canonical": "https://www.nhl.com/news/topic/short-shifts/alex-ovechkin-washington-capitals-career-leader-assists",
+          "guid": "bd3a9772-f850-473e-8cde-0c9349e51308",
+          "title": "Capitals honor Ovechkin for becoming franchise leader in career assists",
+          "published_rss": "Thu, 26 Nov 2026 04:19:00 -0000",
+          "published_utc": "2026-11-26T04:19:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/new-jersey-devils-columbus-blue-jackets-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/new-jersey-devils-columbus-blue-jackets-game-recap-november-25-2026",
+          "guid": "26c83343-5975-4731-8107-603d8c2a3b45",
+          "title": "Hellebuyck makes 22 saves, Devils recover for shootout win against Blue Jackets",
+          "published_rss": "Thu, 26 Nov 2026 04:12:00 -0000",
+          "published_utc": "2026-11-26T04:12:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/carolina-hurricanes-tampa-bay-lightning-game-recap-november-25-2026",
+          "canonical": "https://www.nhl.com/news/carolina-hurricanes-tampa-bay-lightning-game-recap-november-25-2026",
+          "guid": "cab8d3ab-f135-40a3-a2cd-61437bc7ca65",
+          "title": "Hurricanes score three in third, defeat Lightning to run point streak to eight",
+          "published_rss": "Thu, 26 Nov 2026 03:57:00 -0000",
+          "published_utc": "2026-11-26T03:57:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/short-shifts/new-york-islanders-honor-casey-cizkas-1000-nhl-games-ceremony",
+          "canonical": "https://www.nhl.com/news/topic/short-shifts/new-york-islanders-honor-casey-cizkas-1000-nhl-games-ceremony",
+          "guid": "3ca75630-8fb3-44db-8d38-ca6be895cddf",
+          "title": "Islanders hold special ceremony for Cizikas’ 1,000 NHL games milestone",
+          "published_rss": "Thu, 26 Nov 2026 01:00:00 -0000",
+          "published_utc": "2026-11-26T01:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/san-jose-sharks-anaheim-ducks-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/san-jose-sharks-anaheim-ducks-game-preview-november-25-2026",
+          "guid": "5f60832d-91bc-495f-8dcd-158bf54c7051",
+          "title": "Sharks at Ducks projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 20:12:12 -0000",
+          "published_utc": "2026-11-25T20:12:12+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/montreal-canadiens-colorado-avalanche-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/montreal-canadiens-colorado-avalanche-game-preview-november-25-2026",
+          "guid": "4f05a33e-8be4-4ed5-8db2-7cb3f6fa4acc",
+          "title": "Canadiens at Avalanche projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 19:31:27 -0000",
+          "published_utc": "2026-11-25T19:31:27+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nhl-lineup-projections-2026-27-season",
+          "canonical": "https://www.nhl.com/news/nhl-lineup-projections-2026-27-season",
+          "guid": "ff2ba353-60d2-4296-9acc-5232b2054beb",
+          "title": "Projected lineups, starting goalies for Friday",
+          "published_rss": "Wed, 25 Nov 2026 19:26:00 -0000",
+          "published_utc": "2026-11-25T19:26:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/chicago-blackhawks-seattle-kraken-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/chicago-blackhawks-seattle-kraken-game-preview-november-25-2026",
+          "guid": "e93b8f45-abfe-439c-8ecf-fa861905ab40",
+          "title": "Blackhawks at Kraken projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 19:17:47 -0000",
+          "published_utc": "2026-11-25T19:17:47+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/utah-mammoth-minnesota-wild-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/utah-mammoth-minnesota-wild-game-preview-november-25-2026",
+          "guid": "27b28f17-b5ee-4e69-8b89-7f49c0db3e38",
+          "title": "Mammoth at Wild projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 18:53:45 -0000",
+          "published_utc": "2026-11-25T18:53:45+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nhl-on-tap-news-and-notes-november-25-2026",
+          "canonical": "https://www.nhl.com/news/nhl-on-tap-news-and-notes-november-25-2026",
+          "guid": "bb1435c2-1e08-44b5-9734-2a17c61930df",
+          "title": "NHL On Tap: 14-game feast hits table leading into Thanksgiving",
+          "published_rss": "Wed, 25 Nov 2026 18:28:00 -0000",
+          "published_utc": "2026-11-25T18:28:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nashville-predators-dallas-stars-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/nashville-predators-dallas-stars-game-preview-november-25-2026",
+          "guid": "e378a69c-b572-4966-bd70-186c37230910",
+          "title": "Predators at Stars projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 18:11:47 -0000",
+          "published_utc": "2026-11-25T18:11:47+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/vancouver-canucks-detroit-red-wings-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/vancouver-canucks-detroit-red-wings-game-preview-november-25-2026",
+          "guid": "08b1070e-6a2c-424b-b860-bc5c55a53461",
+          "title": "Canucks at Red Wings projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 18:09:18 -0000",
+          "published_utc": "2026-11-25T18:09:18+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/winnipeg-jets-boston-bruins-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/winnipeg-jets-boston-bruins-game-preview-november-25-2026",
+          "guid": "6c53f6fd-20fa-47cc-82d1-2eaa8820dc48",
+          "title": "Jets at Bruins projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 18:05:49 -0000",
+          "published_utc": "2026-11-25T18:05:49+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/carolina-hurricanes-tampa-bay-lightning-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/carolina-hurricanes-tampa-bay-lightning-game-preview-november-25-2026",
+          "guid": "1e0f2917-b164-407f-8c37-6b648440bc81",
+          "title": "Hurricanes at Lightning projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 17:47:58 -0000",
+          "published_utc": "2026-11-25T17:47:58+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/ottawa-senators-florida-panthers-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/ottawa-senators-florida-panthers-game-preview-november-25-2026",
+          "guid": "aed0fe9f-f209-4693-a267-bf564fc073d1",
+          "title": "Senators at Panthers projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 17:13:56 -0000",
+          "published_utc": "2026-11-25T17:13:56+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/new-york-rangers-buffalo-sabres-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/new-york-rangers-buffalo-sabres-game-preview-november-25-2026",
+          "guid": "36f21054-0626-41c0-b8fc-be82416b8516",
+          "title": "Rangers at Sabres projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 17:09:49 -0000",
+          "published_utc": "2026-11-25T17:09:49+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/new-jersey-devils-columbus-blue-jackets-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/new-jersey-devils-columbus-blue-jackets-game-preview-november-25-2026",
+          "guid": "0884a630-cac6-4206-8730-471fff54d07e",
+          "title": "Devils at Blue Jackets projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 17:07:29 -0000",
+          "published_utc": "2026-11-25T17:07:29+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/st-louis-blues-new-york-islanders-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/st-louis-blues-new-york-islanders-game-preview-november-25-2026",
+          "guid": "21eb2298-f225-455b-b2af-c18d7878f70c",
+          "title": "Blues at Islanders projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 17:01:14 -0000",
+          "published_utc": "2026-11-25T17:01:14+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/philadelphia-flyers-washington-capitals-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/philadelphia-flyers-washington-capitals-game-preview-november-25-2026",
+          "guid": "5f1cfdcd-5493-4653-9624-5d6aa74c1b1f",
+          "title": "Flyers at Capitals projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 16:55:01 -0000",
+          "published_utc": "2026-11-25T16:55:01+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/calgary-flames-pittsburgh-penguins-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/calgary-flames-pittsburgh-penguins-game-preview-november-25-2026",
+          "guid": "6540fc21-c23f-4a67-9199-f2c72278d109",
+          "title": "Flames at Penguins projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 16:50:34 -0000",
+          "published_utc": "2026-11-25T16:50:34+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/fantasy/nhl-fantasy-hockey-top-250-200-rankings-drafts-players-big-board-281505474",
+          "canonical": "https://www.nhl.com/news/topic/fantasy/nhl-fantasy-hockey-top-250-200-rankings-drafts-players-big-board-281505474",
+          "guid": "3b80b9e5-4728-4f9d-9c10-e681ba013dd3",
+          "title": "Fantasy hockey top 200 player rankings for 2026-27",
+          "published_rss": "Wed, 25 Nov 2026 14:00:00 -0000",
+          "published_utc": "2026-11-25T14:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/Fantasy/nhl-fantasy-hockey-top-100-forward-rankings-pools-282775028",
+          "canonical": "https://www.nhl.com/news/topic/Fantasy/nhl-fantasy-hockey-top-100-forward-rankings-pools-282775028",
+          "guid": "1c2b54f1-e582-4af9-9a3f-17d0f150be1d",
+          "title": "Fantasy hockey top 100 forward rankings for 2026-27",
+          "published_rss": "Wed, 25 Nov 2026 14:00:00 -0000",
+          "published_utc": "2026-11-25T14:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/Fantasy/nhl-fantasy-hockey-top-50-defenseman-rankings-pools-282830728",
+          "canonical": "https://www.nhl.com/news/topic/Fantasy/nhl-fantasy-hockey-top-50-defenseman-rankings-pools-282830728",
+          "guid": "bb9121b0-e368-45e5-903e-240fe4f17cd3",
+          "title": "Fantasy hockey top 50 defenseman rankings",
+          "published_rss": "Wed, 25 Nov 2026 14:00:00 -0000",
+          "published_utc": "2026-11-25T14:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nhl-edge-stats-wednesday-night-hockey-amazon-prime-2026-27",
+          "canonical": "https://www.nhl.com/news/nhl-edge-stats-wednesday-night-hockey-amazon-prime-2026-27",
+          "guid": "7fb622db-f0b3-45c6-ae67-e32aacea2710",
+          "title": "NHL EDGE stats for 'Wednesday Night Hockey'",
+          "published_rss": "Wed, 25 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-25T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/winnipeg-jets-have-become-lovable-underdogs-after-connor-hellebuyck-saga",
+          "canonical": "https://www.nhl.com/news/winnipeg-jets-have-become-lovable-underdogs-after-connor-hellebuyck-saga",
+          "guid": "0706c37b-c084-4ffa-b004-9fcd059183fd",
+          "title": "Jets have become 'lovable underdogs,' stayed course after Hellebuyck saga",
+          "published_rss": "Wed, 25 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-25T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nhl-fantasy-hockey-spin-dylan-larkin-montreal-canadiens-trade-2026",
+          "canonical": "https://www.nhl.com/news/nhl-fantasy-hockey-spin-dylan-larkin-montreal-canadiens-trade-2026",
+          "guid": "7b35c73c-3390-4016-b288-47b711966f6e",
+          "title": "Fantasy spin: Larkin has high ceiling after trade to Canadiens",
+          "published_rss": "Tue, 24 Nov 2026 21:03:36 -0000",
+          "published_utc": "2026-11-24T21:03:36+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/vegas-golden-knights-edmonton-oilers-game-preview-november-24-2026",
+          "canonical": "https://www.nhl.com/news/vegas-golden-knights-edmonton-oilers-game-preview-november-24-2026",
+          "guid": "719bfc42-5a70-495c-a784-0b6442cdecfd",
+          "title": "Golden Knights at Oilers projected lineups",
+          "published_rss": "Tue, 24 Nov 2026 18:37:21 -0000",
+          "published_utc": "2026-11-24T18:37:21+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/michael-hage-had-ties-to-dylan-larkin-before-trade-between-red-wings-and-canadiens",
+          "canonical": "https://www.nhl.com/news/michael-hage-had-ties-to-dylan-larkin-before-trade-between-red-wings-and-canadiens",
+          "guid": "5003e7f4-353f-4743-a5e5-5b9d9ad7715a",
+          "title": "Hage had ties to Larkin, Red Wings long before blockbuster trade from Montreal",
+          "published_rss": "Tue, 24 Nov 2026 16:00:00 -0000",
+          "published_utc": "2026-11-24T16:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nhl-fantasy-hockey-top-25-goaltender-rankings-pools-282860450",
+          "canonical": "https://www.nhl.com/news/nhl-fantasy-hockey-top-25-goaltender-rankings-pools-282860450",
+          "guid": "2fadcfa5-64be-4142-8101-4a23c863cae0",
+          "title": "Fantasy hockey top 25 goalie rankings for 2026-27",
+          "published_rss": "Tue, 24 Nov 2026 14:00:00 -0000",
+          "published_utc": "2026-11-24T14:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nhl-edge-stats-dylan-larkin-trade-to-montreal-canadiens-2026-27",
+          "canonical": "https://www.nhl.com/news/nhl-edge-stats-dylan-larkin-trade-to-montreal-canadiens-2026-27",
+          "guid": "62a7d6e0-9115-4c38-8e96-8ab9960da5b4",
+          "title": "NHL EDGE stats: Larkin trade boosts Canadiens’ Stanley Cup chances",
+          "published_rss": "Tue, 24 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-24T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/short-shifts/save-of-season-linus-ullmark-stick-save-ottawa-senators",
+          "canonical": "https://www.nhl.com/news/topic/short-shifts/save-of-season-linus-ullmark-stick-save-ottawa-senators",
+          "guid": "40e9d12c-4f64-4385-a4d7-d26944b19d3b",
+          "title": "Save of the Season? Senators' Ullmark makes wild stick save, lies down after",
+          "published_rss": "Tue, 24 Nov 2026 03:29:00 -0000",
+          "published_utc": "2026-11-24T03:29:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/short-shifts/goal-of-the-season-alex-laferriere-la-kings",
+          "canonical": "https://www.nhl.com/news/topic/short-shifts/goal-of-the-season-alex-laferriere-la-kings",
+          "guid": "c79c1d67-b84b-402a-8108-75eadff1c33b",
+          "title": "Goal of the Season? Laferriere goes between the legs",
+          "published_rss": "Tue, 24 Nov 2026 03:26:00 -0000",
+          "published_utc": "2026-11-24T03:26:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/short-shifts/hockey-fights-cancer-nhl-daily-digest-2026-27",
+          "canonical": "https://www.nhl.com/news/topic/short-shifts/hockey-fights-cancer-nhl-daily-digest-2026-27",
+          "guid": "06b69da1-fca6-431b-93f0-ac0eab823903",
+          "title": "Hockey Fights Cancer daily digest",
+          "published_rss": "Tue, 24 Nov 2026 02:40:00 -0000",
+          "published_utc": "2026-11-24T02:40:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/short-shifts/alex-ovechkin-capitals-washington-commanders-game",
+          "canonical": "https://www.nhl.com/news/topic/short-shifts/alex-ovechkin-capitals-washington-commanders-game",
+          "guid": "1c0fc87c-e72a-4e81-8b37-afdaf58aa601",
+          "title": "Ovechkin attends Commanders Monday Night Football game, fires up fans",
+          "published_rss": "Tue, 24 Nov 2026 02:18:00 -0000",
+          "published_utc": "2026-11-24T02:18:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/anaheim-ducks-seattle-kraken-game-preview-november-23-2026",
+          "canonical": "https://www.nhl.com/news/anaheim-ducks-seattle-kraken-game-preview-november-23-2026",
+          "guid": "dc5a41f5-74fc-4f06-ab2d-f9b7e523890c",
+          "title": "Ducks at Kraken projected lineups",
+          "published_rss": "Mon, 23 Nov 2026 20:29:20 -0000",
+          "published_utc": "2026-11-23T20:29:20+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/minnesota-wild-san-jose-sharks-game-preview-november-23-2026",
+          "canonical": "https://www.nhl.com/news/minnesota-wild-san-jose-sharks-game-preview-november-23-2026",
+          "guid": "54f83add-a15b-4b3e-b06c-0986b813e16f",
+          "title": "Wild at Sharks projected lineups",
+          "published_rss": "Mon, 23 Nov 2026 19:58:28 -0000",
+          "published_utc": "2026-11-23T19:58:28+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/los-angeles-kings-montreal-canadiens-game-preview-november-23-2026",
+          "canonical": "https://www.nhl.com/news/los-angeles-kings-montreal-canadiens-game-preview-november-23-2026",
+          "guid": "fc404abe-d305-4001-8c65-8eeb66cbce24",
+          "title": "Kings at Canadiens projected lineups",
+          "published_rss": "Mon, 23 Nov 2026 18:34:27 -0000",
+          "published_utc": "2026-11-23T18:34:27+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/utah-mammoth-winnipeg-jets-game-preview-november-23-2026",
+          "canonical": "https://www.nhl.com/news/utah-mammoth-winnipeg-jets-game-preview-november-23-2026",
+          "guid": "1598baf9-20cb-4e6b-8558-255f2adddfa1",
+          "title": "Mammoth at Jets projected lineups",
+          "published_rss": "Mon, 23 Nov 2026 18:21:11 -0000",
+          "published_utc": "2026-11-23T18:21:11+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/calgary-flames-ottawa-senators-game-preview-november-23-2026",
+          "canonical": "https://www.nhl.com/news/calgary-flames-ottawa-senators-game-preview-november-23-2026",
+          "guid": "0cc065cf-19c9-4ad6-b172-1eee06f49939",
+          "title": "Flames at Senators projected lineups",
+          "published_rss": "Mon, 23 Nov 2026 18:17:58 -0000",
+          "published_utc": "2026-11-23T18:17:58+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/toronto-maple-leafs-new-york-islanders-game-preview-november-23-2026",
+          "canonical": "https://www.nhl.com/news/toronto-maple-leafs-new-york-islanders-game-preview-november-23-2026",
+          "guid": "05b8c14b-c521-49dd-aa69-77c0b6e8d5b4",
+          "title": "Maple Leafs at Islanders projected lineups",
+          "published_rss": "Mon, 23 Nov 2026 17:48:06 -0000",
+          "published_utc": "2026-11-23T17:48:06+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/columbus-blue-jackets-new-jersey-devils-game-preview-november-23-2026",
+          "canonical": "https://www.nhl.com/news/columbus-blue-jackets-new-jersey-devils-game-preview-november-23-2026",
+          "guid": "021aff6e-9c78-4a3a-902e-4551c8790434",
+          "title": "Blue Jackets at Devils projected lineups",
+          "published_rss": "Mon, 23 Nov 2026 17:39:52 -0000",
+          "published_utc": "2026-11-23T17:39:52+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nhl-fantasy-hockey-podcast-betting-pools-futures-301027246",
+          "canonical": "https://www.nhl.com/news/nhl-fantasy-hockey-podcast-betting-pools-futures-301027246",
+          "guid": "a44e2702-73ff-4391-b11a-15c9986a0a79",
+          "title": "'NHL Fantasy on Ice' podcast available now",
+          "published_rss": "Mon, 23 Nov 2026 15:50:00 -0000",
+          "published_utc": "2026-11-23T15:50:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/futures-watch-nhl-awards-stanley-cup-contenders-2026-27-season",
+          "canonical": "https://www.nhl.com/news/futures-watch-nhl-awards-stanley-cup-contenders-2026-27-season",
+          "guid": "eef6d3f0-60fc-41ac-8157-73a5483b76df",
+          "title": "Futures watch: 2027 NHL Awards, Stanley Cup contenders",
+          "published_rss": "Mon, 23 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-23T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/pittsburgh-penguins-dallas-stars-game-preview-november-22-2026",
+          "canonical": "https://www.nhl.com/news/pittsburgh-penguins-dallas-stars-game-preview-november-22-2026",
+          "guid": "9cbc9c29-5886-46f9-98ea-b1e7fb6e2bf0",
+          "title": "Penguins at Stars projected lineups",
+          "published_rss": "Sun, 22 Nov 2026 22:33:00 -0000",
+          "published_utc": "2026-11-22T22:33:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/chicago-blackhawks-vancouver-canucks-game-preview-november-22-2026",
+          "canonical": "https://www.nhl.com/news/chicago-blackhawks-vancouver-canucks-game-preview-november-22-2026",
+          "guid": "66b31b00-aa4f-4388-9854-5b6db1788512",
+          "title": "Blackhawks at Canucks projected lineups",
+          "published_rss": "Sun, 22 Nov 2026 18:02:00 -0000",
+          "published_utc": "2026-11-22T18:02:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/edmonton-oilers-st-louis-blues-game-preview-november-22-2026",
+          "canonical": "https://www.nhl.com/news/edmonton-oilers-st-louis-blues-game-preview-november-22-2026",
+          "guid": "16115a2c-a4b8-422d-a7f3-5fda4f681eff",
+          "title": "Oilers at Blues projected lineups",
+          "published_rss": "Sun, 22 Nov 2026 16:13:58 -0000",
+          "published_utc": "2026-11-22T16:13:58+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/buffalo-sabres-tampa-bay-lightning-game-preview-november-22-2026",
+          "canonical": "https://www.nhl.com/news/buffalo-sabres-tampa-bay-lightning-game-preview-november-22-2026",
+          "guid": "d6436761-34c1-42b6-86ec-6d51b50851df",
+          "title": "Sabres at Lightning projected lineups",
+          "published_rss": "Sun, 22 Nov 2026 15:29:15 -0000",
+          "published_utc": "2026-11-22T15:29:15+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/new-jersey-devils-st-louis-blues-game-preview-november-21-2026",
+          "canonical": "https://www.nhl.com/news/new-jersey-devils-st-louis-blues-game-preview-november-21-2026",
+          "guid": "c68b267e-a89e-4fc5-8532-02700b8f19ee",
+          "title": "Devils at Blues projected lineups",
+          "published_rss": "Sat, 21 Nov 2026 23:00:00 -0000",
+          "published_utc": "2026-11-21T23:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/Fantasy/nhl-fantasy-hockey-keeper-dynasty-league-rankings-players-prospects-291137298",
+          "canonical": "https://www.nhl.com/news/topic/Fantasy/nhl-fantasy-hockey-keeper-dynasty-league-rankings-players-prospects-291137298",
+          "guid": "a205ea3b-6086-4630-993d-074ae9c0f0d0",
+          "title": "Fantasy hockey keeper / dynasty rankings",
+          "published_rss": "Fri, 20 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-20T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nhl-top-10-rookies-in-fantasy-hockey-for-2026-27-season",
+          "canonical": "https://www.nhl.com/news/nhl-top-10-rookies-in-fantasy-hockey-for-2026-27-season",
+          "guid": "262d455c-238e-4248-a8d6-3f7b5aa5c5ae",
+          "title": "Fantasy hockey top 10 rookie rankings for 2026-27",
+          "published_rss": "Fri, 20 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-20T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nhl-edge-stats-matthew-schaefer-new-york-islanders-2026-27",
+          "canonical": "https://www.nhl.com/news/nhl-edge-stats-matthew-schaefer-new-york-islanders-2026-27",
+          "guid": "55b270d2-0a38-4862-9a32-6749a001d4d6",
+          "title": "NHL EDGE stats behind Schaefer’s historic start to career",
+          "published_rss": "Wed, 18 Nov 2026 16:47:25 -0000",
+          "published_utc": "2026-11-18T16:47:25+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-cutter-gauthier-anaheim-ducks-goal-scoring-2026-27",
+          "canonical": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-cutter-gauthier-anaheim-ducks-goal-scoring-2026-27",
+          "guid": "cf047883-f84b-41c2-878e-a5547c96fd21",
+          "title": "NHL EDGE stats: Gauthier joins ‘Rocket’ Richard Trophy race during goal surge",
+          "published_rss": "Wed, 18 Nov 2026 14:48:00 -0000",
+          "published_utc": "2026-11-18T14:48:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-connor-mcdavid-edmonton-oilers-2026-27",
+          "canonical": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-connor-mcdavid-edmonton-oilers-2026-27",
+          "guid": "2f83e781-3801-4852-8788-8456c01082aa",
+          "title": "NHL EDGE stats behind McDavid’s historic start for Oilers",
+          "published_rss": "Tue, 17 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-17T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nhl-edge-stats-jesper-wallstedt-minnesota-wild-2026-27",
+          "canonical": "https://www.nhl.com/news/nhl-edge-stats-jesper-wallstedt-minnesota-wild-2026-27",
+          "guid": "8bf27064-767b-480b-b5f7-c7285946797c",
+          "title": "NHL EDGE stats behind Wallstedt’s breakout season for Wild",
+          "published_rss": "Mon, 16 Nov 2026 16:30:00 -0000",
+          "published_utc": "2026-11-16T16:30:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-global-series-finland-carolina-hurricanes-seattle-kraken-2026",
+          "canonical": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-global-series-finland-carolina-hurricanes-seattle-kraken-2026",
+          "guid": "fb58398f-04bd-46b8-9aaa-2b601cc3029e",
+          "title": "NHL EDGE stats for 2026 NHL Global Series Finland",
+          "published_rss": "Thu, 12 Nov 2026 05:00:00 -0000",
+          "published_utc": "2026-11-12T05:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-leaders-for-2026-27-season",
+          "canonical": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-leaders-for-2026-27-season",
+          "guid": "603c4352-34a6-4136-922a-5f2716820cc4",
+          "title": "NHL EDGE: Xhekaj has hardest shot resulting in goal of season",
+          "published_rss": "Fri, 06 Nov 2026 15:54:18 -0000",
+          "published_utc": "2026-11-06T15:54:18+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-winnipeg-jets-historic-comeback-november-3-2026",
+          "canonical": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-winnipeg-jets-historic-comeback-november-3-2026",
+          "guid": "8000c1f0-3801-40a4-b798-a8419495fe00",
+          "title": "Jets’ historic comeback against Canadiens fueled by puck possession, mid-range prowess",
+          "published_rss": "Wed, 04 Nov 2026 16:05:34 -0000",
+          "published_utc": "2026-11-04T16:05:34+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nhl-edge-stats-jacob-fowler-montreal-canadiens-2026-27",
+          "canonical": "https://www.nhl.com/news/nhl-edge-stats-jacob-fowler-montreal-canadiens-2026-27",
+          "guid": "cdb0f914-004f-4c56-a942-0fa6dcdd1792",
+          "title": "NHL EDGE stats: Fowler’s early case for Calder Trophy",
+          "published_rss": "Sun, 01 Nov 2026 23:08:00 -0000",
+          "published_utc": "2026-11-01T23:08:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/nhl-edge-stats-kirill-kaprizov-goal-scoring-minnesota-wild-2026-27",
+          "canonical": "https://www.nhl.com/news/nhl-edge-stats-kirill-kaprizov-goal-scoring-minnesota-wild-2026-27",
+          "guid": "e6299959-e71e-4d4f-b589-54ad0f9b30e9",
+          "title": "NHL EDGE stats behind Kaprizov’s historic goal-scoring for Wild",
+          "published_rss": "Wed, 28 Oct 2026 15:05:16 -0000",
+          "published_utc": "2026-10-28T15:05:16+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-connor-hellebuyck-trade-to-new-jersey-devils-2026-27",
+          "canonical": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-connor-hellebuyck-trade-to-new-jersey-devils-2026-27",
+          "guid": "e35321b6-c9ee-402e-987a-2bc86947fe63",
+          "title": "NHL EDGE stats: Hellebuyck trade solidifies Devils as contender",
+          "published_rss": "Wed, 28 Oct 2026 04:00:00 -0000",
+          "published_utc": "2026-10-28T04:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-ivar-stenberg-san-jose-sharks-2026-27",
+          "canonical": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-ivar-stenberg-san-jose-sharks-2026-27",
+          "guid": "639a68e6-9957-4150-8af6-c6f2ca4f5ad2",
+          "title": "NHL EDGE stats: Stenberg’s early impact with Sharks",
+          "published_rss": "Tue, 27 Oct 2026 04:00:00 -0000",
+          "published_utc": "2026-10-27T04:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-gavin-mckenna-toronto-maple-leafs-rookie-start-2026-27",
+          "canonical": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-gavin-mckenna-toronto-maple-leafs-rookie-start-2026-27",
+          "guid": "5fe05c51-11b1-416f-993d-574036e32769",
+          "title": "NHL EDGE stats: McKenna's early role with Maple Leafs",
+          "published_rss": "Tue, 20 Oct 2026 04:00:00 -0000",
+          "published_utc": "2026-10-20T04:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-evan-bouchard-edmonton-oilers-2026-27",
+          "canonical": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-evan-bouchard-edmonton-oilers-2026-27",
+          "guid": "6c159735-5f69-45f7-bdc7-438c470fdc67",
+          "title": "NHL EDGE stats: Bouchard’s early case for Norris Trophy",
+          "published_rss": "Sun, 18 Oct 2026 07:00:00 -0000",
+          "published_utc": "2026-10-18T07:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-brady-tkachuk-florida-panthers-2026-27",
+          "canonical": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-brady-tkachuk-florida-panthers-2026-27",
+          "guid": "11bc8cd7-1fe9-4a9f-b877-bdb9b010e155",
+          "title": "NHL EDGE stats: Brady Tkachuk’s back-to-back hat tricks for Panthers",
+          "published_rss": "Fri, 16 Oct 2026 14:26:18 -0000",
+          "published_utc": "2026-10-16T14:26:18+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-new-york-rangers-outlook-igor-shesterkin-injury-2026-27",
+          "canonical": "https://www.nhl.com/news/topic/nhl-edge/nhl-edge-stats-new-york-rangers-outlook-igor-shesterkin-injury-2026-27",
+          "guid": "f282b271-dd09-430f-8381-f0e0052f2d0e",
+          "title": "NHL EDGE stats: Rangers’ outlook with Shesterkin injured",
+          "published_rss": "Thu, 15 Oct 2026 04:00:00 -0000",
+          "published_utc": "2026-10-15T04:00:00+00:00"
+        }
+      ]
+    },
+    "islanders": {
+      "url": "https://www.to-rss.xyz/nhl/islanders/",
+      "final_url": "https://www.to-rss.xyz/nhl/islanders/",
+      "status": 200,
+      "request_started": "2026-11-26T18:22:52.090686+00:00",
+      "retrieved_utc": "2026-11-26T18:22:53.128768+00:00",
+      "sha256": "ed9432a10af6199b57e2d511f4237d1e7167f5aaf192ed847241010623bb6de6",
+      "headers": {
+        "content-type": "application/rss+xml; charset=utf-8",
+        "date": "Thu, 26 Nov 2026 18:22:53 GMT",
+        "age": null,
+        "etag": null,
+        "last-modified": null
+      },
+      "feed_title": "New York Islanders News",
+      "items": [
+        {
+          "url": "https://www.nhl.com/islanders/news/the-skinny-islanders-3-blues-2-so-nov-26-2026",
+          "canonical": "https://www.nhl.com/islanders/news/the-skinny-islanders-3-blues-2-so-nov-26-2026",
+          "guid": "a417ba08-c188-47d2-8611-001462ca3a2b",
+          "title": "THE SKINNY: Isles 3, Blues 2 (SO)",
+          "published_rss": "Thu, 26 Nov 2026 16:27:57 -0000",
+          "published_utc": "2026-11-26T16:27:57+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/eklund-gets-oar-sorokin-gets-helmet-nov-25-2026",
+          "canonical": "https://www.nhl.com/islanders/news/eklund-gets-oar-sorokin-gets-helmet-nov-25-2026",
+          "guid": "34b16001-6bba-4c1c-b7c1-969736d6a6c2",
+          "title": "READ: Eklund, Sorokin Earn Postgame Awards",
+          "published_rss": "Thu, 26 Nov 2026 04:56:02 -0000",
+          "published_utc": "2026-11-26T04:56:02+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/takeaways-isles-3-blues-2-so-nov-25-2026",
+          "canonical": "https://www.nhl.com/islanders/news/takeaways-isles-3-blues-2-so-nov-25-2026",
+          "guid": "ed6a8622-0af2-4c0e-a1f1-51c2005b654c",
+          "title": "TAKEAWAYS: Isles 3, Blues 2 SO",
+          "published_rss": "Thu, 26 Nov 2026 04:18:35 -0000",
+          "published_utc": "2026-11-26T04:18:35+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/video/stl-at-nyi-recap-6408903036112",
+          "canonical": "https://www.nhl.com/islanders/video/stl-at-nyi-recap-6408903036112",
+          "guid": "d6d1877c-aebc-41e9-a3cc-e79554768f30",
+          "title": "HIGHLIGHTS: Isles 3, Blues 2 SO",
+          "published_rss": "Thu, 26 Nov 2026 03:06:13 -0000",
+          "published_utc": "2026-11-26T03:06:13+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/isles-day-to-day-ritchie-to-return-vs-blues",
+          "canonical": "https://www.nhl.com/islanders/news/isles-day-to-day-ritchie-to-return-vs-blues",
+          "guid": "b9b6f340-9547-438c-8dd2-a5052fd49a7e",
+          "title": "ISLES DTD: Ritchie Expected to Return",
+          "published_rss": "Wed, 25 Nov 2026 17:29:36 -0000",
+          "published_utc": "2026-11-25T17:29:36+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/st-louis-blues-new-york-islanders-game-preview-november-25-2026",
+          "canonical": "https://www.nhl.com/news/st-louis-blues-new-york-islanders-game-preview-november-25-2026",
+          "guid": "21eb2298-f225-455b-b2af-c18d7878f70c",
+          "title": "Blues at Islanders projected lineups",
+          "published_rss": "Wed, 25 Nov 2026 17:01:14 -0000",
+          "published_utc": "2026-11-25T17:01:14+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/game-preview-islanders-vs-blues-nov-25-2026",
+          "canonical": "https://www.nhl.com/islanders/news/game-preview-islanders-vs-blues-nov-25-2026",
+          "guid": "85dc42ed-62b3-4bef-a7df-4d9a9b1b4af0",
+          "title": "Game Preview: Islanders vs Blues",
+          "published_rss": "Wed, 25 Nov 2026 05:00:03 -0000",
+          "published_utc": "2026-11-25T05:00:03+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/isles-day-to-day-palmieri-placed-on-injured-reserve",
+          "canonical": "https://www.nhl.com/islanders/news/isles-day-to-day-palmieri-placed-on-injured-reserve",
+          "guid": "0218e382-670f-4a8c-b7fe-a84658b5dc09",
+          "title": "ISLES DTD: Palmieri On IR, Ritchie Recalled",
+          "published_rss": "Tue, 24 Nov 2026 23:49:53 -0000",
+          "published_utc": "2026-11-24T23:49:53+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/isles-day-to-day-practice-updates-nov-24-2026",
+          "canonical": "https://www.nhl.com/islanders/news/isles-day-to-day-practice-updates-nov-24-2026",
+          "guid": "af9928c4-d396-429b-9bf4-b48ebda7b401",
+          "title": "Isles Day-to-Day: Practice Updates Nov. 24, 2026",
+          "published_rss": "Tue, 24 Nov 2026 19:44:00 -0000",
+          "published_utc": "2026-11-24T19:44:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/isles-day-to-day-pulock-out-1-2-weeks-palmieri-to-see-doctors",
+          "canonical": "https://www.nhl.com/islanders/news/isles-day-to-day-pulock-out-1-2-weeks-palmieri-to-see-doctors",
+          "guid": "b7a12bbd-1508-4951-a57f-742c2e86e7f8",
+          "title": "Isles Day-to-Day: Pulock Out 1-2 Weeks, Palmieri to See Doctors",
+          "published_rss": "Tue, 24 Nov 2026 17:35:38 -0000",
+          "published_utc": "2026-11-24T17:35:38+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/casey-s-corner-how-a-section-of-islanders-fans-celebrates-their-beloved-veteran",
+          "canonical": "https://www.nhl.com/islanders/news/casey-s-corner-how-a-section-of-islanders-fans-celebrates-their-beloved-veteran",
+          "guid": "7356cacf-a186-4cd9-9c79-0a1a7532094d",
+          "title": "Casey’s Corner: How a Section of Islanders Fans Celebrates Their Beloved Veteran",
+          "published_rss": "Tue, 24 Nov 2026 16:19:00 -0000",
+          "published_utc": "2026-11-24T16:19:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/the-skinny-maple-leafs-4-islanders-2-nov-22-2026",
+          "canonical": "https://www.nhl.com/islanders/news/the-skinny-maple-leafs-4-islanders-2-nov-22-2026",
+          "guid": "ce4ccc79-2b95-41da-a1a4-32b29768889b",
+          "title": "The Skinny: Maple Leafs 4, Islanders 2",
+          "published_rss": "Tue, 24 Nov 2026 15:00:00 -0000",
+          "published_utc": "2026-11-24T15:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/islanders-prospect-report-nov-16-2026-x0104",
+          "canonical": "https://www.nhl.com/islanders/news/islanders-prospect-report-nov-16-2026-x0104",
+          "guid": "c10e0d06-f775-4999-a21f-9ea6a25354ec",
+          "title": "Islanders Prospect Report: Nov. 24, 2026",
+          "published_rss": "Tue, 24 Nov 2026 14:46:09 -0000",
+          "published_utc": "2026-11-24T14:46:09+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/takeaways-islanders-7-game-point-streak-ends-in-4-2-loss-to-maple-leafs",
+          "canonical": "https://www.nhl.com/islanders/news/takeaways-islanders-7-game-point-streak-ends-in-4-2-loss-to-maple-leafs",
+          "guid": "bd68fff4-c90b-4446-867f-6fbc6c1d6845",
+          "title": "Takeaways: Islanders 7-Game Point Streak Ends in 4-2 loss to Maple Leafs",
+          "published_rss": "Tue, 24 Nov 2026 04:19:01 -0000",
+          "published_utc": "2026-11-24T04:19:01+00:00"
+        },
+        {
+          "url": "https://ubsarena.com/5-year-anniversary-sweepstakes/?utm_source=nyi_website&utm_medium=showcase&utm_campaign=nyi_belmontdepositcampaign&utm_content=ubsarena5yearsweeps",
+          "canonical": "https://ubsarena.com/5-year-anniversary-sweepstakes",
+          "guid": "e288302d-149e-43b7-aab3-194ae8fe1b7a",
+          "title": "CONTEST: UBS Arena 5-Year Sweepstakes",
+          "published_rss": "Tue, 24 Nov 2026 03:44:28 -0000",
+          "published_utc": "2026-11-24T03:44:28+00:00"
+        },
+        {
+          "url": "https://isleslab.com/products/2027-pucks-paws-calendar?utm_source=nyi_website&utm_medium=contentstack&utm_campaign=nyi_belmontdepositcampaign&utm_content=pucksandpaws2027",
+          "canonical": "https://isleslab.com/products/2027-pucks-paws-calendar",
+          "guid": "ce5950b2-3983-41f0-a487-d68538a46484",
+          "title": "PUCKS & PAWS: 2027 Puppy Calendar On Sale",
+          "published_rss": "Mon, 23 Nov 2026 22:32:11 -0000",
+          "published_utc": "2026-11-23T22:32:11+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/love-you-mom-how-ladybugs-connect-matthew-schaefer-to-his-mom-jennifer",
+          "canonical": "https://www.nhl.com/islanders/news/love-you-mom-how-ladybugs-connect-matthew-schaefer-to-his-mom-jennifer",
+          "guid": "2598205b-aa29-4295-9e49-948365d66b50",
+          "title": "‘Love You, Mom’ | How Ladybugs Connect Matthew Schaefer to His Mom Jennifer",
+          "published_rss": "Mon, 23 Nov 2026 19:38:26 -0000",
+          "published_utc": "2026-11-23T19:38:26+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/toronto-maple-leafs-new-york-islanders-game-preview-november-23-2026",
+          "canonical": "https://www.nhl.com/news/toronto-maple-leafs-new-york-islanders-game-preview-november-23-2026",
+          "guid": "05b8c14b-c521-49dd-aa69-77c0b6e8d5b4",
+          "title": "Maple Leafs at Islanders projected lineups",
+          "published_rss": "Mon, 23 Nov 2026 17:48:06 -0000",
+          "published_utc": "2026-11-23T17:48:06+00:00"
+        },
+        {
+          "url": "https://web.witcontests.com/islanders/trivia/casey-cizikas-trivia-presented-261123?utm_source=nyi_website&utm_medium=contentstack&utm_campaign=nyi_belmontdepositcampaign&utm_content=trivia",
+          "canonical": "https://web.witcontests.com/islanders/trivia/casey-cizikas-trivia-presented-261123",
+          "guid": "dd0599bf-7822-4b66-888e-7296ea7ec70e",
+          "title": "TRIVIA: Win A Casey Cizikas Signed Puck",
+          "published_rss": "Mon, 23 Nov 2026 05:00:42 -0000",
+          "published_utc": "2026-11-23T05:00:42+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/game-preview-islanders-vs-maple-leafs-nov-23-2026",
+          "canonical": "https://www.nhl.com/islanders/news/game-preview-islanders-vs-maple-leafs-nov-23-2026",
+          "guid": "13c1ce5a-6b5f-485e-92d2-73ec6795bcee",
+          "title": "Game Preview: Islanders vs Maple Leafs",
+          "published_rss": "Mon, 23 Nov 2026 05:00:41 -0000",
+          "published_utc": "2026-11-23T05:00:41+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/the-skinny-islanders-3-red-wings-2-nov-22-2026",
+          "canonical": "https://www.nhl.com/islanders/news/the-skinny-islanders-3-red-wings-2-nov-22-2026",
+          "guid": "36e570c7-cb80-45b9-aec2-b890d5999a38",
+          "title": "The Skinny: Islanders 3, Red Wings 2",
+          "published_rss": "Sun, 22 Nov 2026 17:03:54 -0000",
+          "published_utc": "2026-11-22T17:03:54+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/islanders-to-host-hockey-fights-cancer-night-on-nov-23-vs-toronto",
+          "canonical": "https://www.nhl.com/islanders/news/islanders-to-host-hockey-fights-cancer-night-on-nov-23-vs-toronto",
+          "guid": "25f1eea1-9b27-4b27-ae34-dbfe0a034342",
+          "title": "Islanders to Host Hockey Fights Cancer Night on Nov. 23 vs Toronto",
+          "published_rss": "Sun, 22 Nov 2026 15:32:00 -0000",
+          "published_utc": "2026-11-22T15:32:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/cizikas-earns-postgame-oar-in-1-000th-game-palat-gets-helmet",
+          "canonical": "https://www.nhl.com/islanders/news/cizikas-earns-postgame-oar-in-1-000th-game-palat-gets-helmet",
+          "guid": "027dabf4-3ed6-4635-b430-a1dba802edfc",
+          "title": "Cizikas Earns Postgame Oar In 1,000th Game, Palát Gets Helmet",
+          "published_rss": "Sun, 22 Nov 2026 03:47:18 -0000",
+          "published_utc": "2026-11-22T03:47:18+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/takeaways-islanders-celebrate-cizikas-1-000th-game-with-3-2-win-over-red-wings",
+          "canonical": "https://www.nhl.com/islanders/news/takeaways-islanders-celebrate-cizikas-1-000th-game-with-3-2-win-over-red-wings",
+          "guid": "da008c55-6b68-4ae4-97fa-3c1fc7b8326e",
+          "title": "Takeaways: Islanders Celebrate Cizikas’ 1,000th Game With 3-2 Win Over Red Wings",
+          "published_rss": "Sun, 22 Nov 2026 03:39:10 -0000",
+          "published_utc": "2026-11-22T03:39:10+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/endless-energy-powered-casey-cizikas-to-1-000-games-with-islanders",
+          "canonical": "https://www.nhl.com/islanders/news/endless-energy-powered-casey-cizikas-to-1-000-games-with-islanders",
+          "guid": "993fd91e-9377-4e5f-975c-4d41ee2e700f",
+          "title": "Endless Energy | Casey Cizikas' Journey to 1,000 Games with Islanders",
+          "published_rss": "Sat, 21 Nov 2026 13:30:00 -0000",
+          "published_utc": "2026-11-21T13:30:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/game-preview-islanders-at-red-wings-nov-21-2026",
+          "canonical": "https://www.nhl.com/islanders/news/game-preview-islanders-at-red-wings-nov-21-2026",
+          "guid": "216bdfff-1304-474e-b8e4-057687e66cb6",
+          "title": "Game Preview: Islanders at Red Wings",
+          "published_rss": "Sat, 21 Nov 2026 05:00:36 -0000",
+          "published_utc": "2026-11-21T05:00:36+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/casey-and-cameron-a-friendship-forged-through-high-fives",
+          "canonical": "https://www.nhl.com/islanders/news/casey-and-cameron-a-friendship-forged-through-high-fives",
+          "guid": "cbaa6236-47a3-4d95-8af9-c2cd9658a240",
+          "title": "Casey And Cameron: A Friendship Forged Through High-Fives",
+          "published_rss": "Fri, 20 Nov 2026 17:12:02 -0000",
+          "published_utc": "2026-11-20T17:12:02+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/the-skinny-jets-4-islanders-3-ot-nov-20-2026",
+          "canonical": "https://www.nhl.com/islanders/news/the-skinny-jets-4-islanders-3-ot-nov-20-2026",
+          "guid": "d9733c02-e824-411e-aeca-a7f1bead4c40",
+          "title": "The Skinny: Jets 4, Islanders 3 (OT)",
+          "published_rss": "Fri, 20 Nov 2026 15:46:27 -0000",
+          "published_utc": "2026-11-20T15:46:27+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/takeaways-islanders-extend-point-streak-to-six-games-in-4-3-ot-loss-to-jets",
+          "canonical": "https://www.nhl.com/islanders/news/takeaways-islanders-extend-point-streak-to-six-games-in-4-3-ot-loss-to-jets",
+          "guid": "9a5717cf-d9c9-41af-8214-0f8cab10ad0f",
+          "title": "Takeaways: Islanders Extend Point Streak to Six Games in 4-3 OT Loss to Jets",
+          "published_rss": "Fri, 20 Nov 2026 03:34:26 -0000",
+          "published_utc": "2026-11-20T03:34:26+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/islanders-wives-and-girlfriends-go-toy-shopping-for-local-children-in-the-community",
+          "canonical": "https://www.nhl.com/islanders/news/islanders-wives-and-girlfriends-go-toy-shopping-for-local-children-in-the-community",
+          "guid": "6368272c-73dd-4510-b5c8-e4f15f15a6cc",
+          "title": "Islanders Wives and Girlfriends go Toy Shopping for Local Children in the Community",
+          "published_rss": "Thu, 19 Nov 2026 22:22:37 -0000",
+          "published_utc": "2026-11-19T22:22:37+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/game-preview-islanders-at-jets-nov-19-2026",
+          "canonical": "https://www.nhl.com/islanders/news/game-preview-islanders-at-jets-nov-19-2026",
+          "guid": "b7900e16-02eb-4f79-9906-b911b95aecca",
+          "title": "Game Preview: Islanders at Jets",
+          "published_rss": "Thu, 19 Nov 2026 05:00:28 -0000",
+          "published_utc": "2026-11-19T05:00:28+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/the-anatomy-of-the-captain-bo-horvat-leading-the-way-for-the-islanders",
+          "canonical": "https://www.nhl.com/islanders/news/the-anatomy-of-the-captain-bo-horvat-leading-the-way-for-the-islanders",
+          "guid": "84eeac12-3a12-488e-9dda-5c4d2f6564c3",
+          "title": "The Anatomy Of The Captain | Bo Horvat Leading The Way For The Islanders",
+          "published_rss": "Thu, 19 Nov 2026 02:00:00 -0000",
+          "published_utc": "2026-11-19T02:00:00+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/isles-day-to-day-cal-ritchie-activated-from-injured-reserve-loaned-to-hamilton",
+          "canonical": "https://www.nhl.com/islanders/news/isles-day-to-day-cal-ritchie-activated-from-injured-reserve-loaned-to-hamilton",
+          "guid": "f4ed3090-a214-41df-9570-c6763dcb7166",
+          "title": "Isles Day-to-Day: Cal Ritchie Activated From Injured Reserve, Loaned to Hamilton",
+          "published_rss": "Wed, 18 Nov 2026 18:21:55 -0000",
+          "published_utc": "2026-11-18T18:21:55+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/the-skinny-islanders-5-blue-jackets-1-nov-18-2026",
+          "canonical": "https://www.nhl.com/islanders/news/the-skinny-islanders-5-blue-jackets-1-nov-18-2026",
+          "guid": "61957e43-c476-41bc-9ec5-20d6dae30810",
+          "title": "The Skinny: Islanders 5, Blue Jackets 1",
+          "published_rss": "Wed, 18 Nov 2026 15:41:30 -0000",
+          "published_utc": "2026-11-18T15:41:30+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/schaefer-and-deangelo-earn-postgame-oar-helmet-nov-17-2026",
+          "canonical": "https://www.nhl.com/islanders/news/schaefer-and-deangelo-earn-postgame-oar-helmet-nov-17-2026",
+          "guid": "5062e7fc-c126-436c-9927-9e2514c5025a",
+          "title": "Schaefer and DeAngelo Earn Postgame Oar, Helmet",
+          "published_rss": "Wed, 18 Nov 2026 14:00:06 -0000",
+          "published_utc": "2026-11-18T14:00:06+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/takeaways-islanders-cbj-nov-17-2026",
+          "canonical": "https://www.nhl.com/islanders/news/takeaways-islanders-cbj-nov-17-2026",
+          "guid": "b37c7546-20a0-42d0-883b-ab9b1afeeef1",
+          "title": "Takeaways: Schaefer’s First Career Hat Trick Powers Islanders To 5-1 Win Over Blue Jackets",
+          "published_rss": "Wed, 18 Nov 2026 04:34:44 -0000",
+          "published_utc": "2026-11-18T04:34:44+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/game-preview-islanders-vs-blue-jackets-nov-17-2026",
+          "canonical": "https://www.nhl.com/islanders/news/game-preview-islanders-vs-blue-jackets-nov-17-2026",
+          "guid": "930ee305-14f3-4aa9-b562-e973eda0efc6",
+          "title": "Game Preview: Islanders vs Blue Jackets",
+          "published_rss": "Tue, 17 Nov 2026 05:00:22 -0000",
+          "published_utc": "2026-11-17T05:00:22+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/islanders/news/islanders-prospect-report-nov-16-2026",
+          "canonical": "https://www.nhl.com/islanders/news/islanders-prospect-report-nov-16-2026",
+          "guid": "6f0922f9-8b5c-456d-874f-750042041d09",
+          "title": "Islanders Prospect Report: Nov. 16, 2026",
+          "published_rss": "Mon, 16 Nov 2026 23:06:20 -0000",
+          "published_utc": "2026-11-16T23:06:20+00:00"
+        }
+      ]
+    },
+    "mapleleafs": {
+      "url": "https://www.to-rss.xyz/nhl/mapleleafs/",
+      "final_url": "https://www.to-rss.xyz/nhl/mapleleafs/",
+      "status": 200,
+      "request_started": "2026-11-26T18:22:52.132713+00:00",
+      "retrieved_utc": "2026-11-26T18:22:53.127268+00:00",
+      "sha256": "2b273779832e20be3f3a8f88fff1dc4441b472fdc59ba6760984ff81a855cd81",
+      "headers": {
+        "content-type": "application/rss+xml; charset=utf-8",
+        "date": "Thu, 26 Nov 2026 18:22:53 GMT",
+        "age": null,
+        "etag": null,
+        "last-modified": null
+      },
+      "feed_title": "Toronto Maple Leafs News",
+      "items": [
+        {
+          "url": "https://www.nhl.com/news/toronto-maple-leafs-boston-bruins-game-preview-november-27-2026",
+          "canonical": "https://www.nhl.com/news/toronto-maple-leafs-boston-bruins-game-preview-november-27-2026",
+          "guid": "6002e9da-81be-4c3d-a9b8-adc8c36ff535",
+          "title": "Maple Leafs at Bruins projected lineups",
+          "published_rss": "Thu, 26 Nov 2026 15:54:26 -0000",
+          "published_utc": "2026-11-26T15:54:26+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-islanders-nov-23-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-islanders-nov-23-2026",
+          "guid": "32d6af85-426a-4236-8205-aa9f5e9615e7",
+          "title": "RECAP | Leafs @ Islanders | Nov. 23, 2026",
+          "published_rss": "Tue, 24 Nov 2026 04:06:48 -0000",
+          "published_utc": "2026-11-24T04:06:48+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/news/toronto-maple-leafs-new-york-islanders-game-preview-november-23-2026",
+          "canonical": "https://www.nhl.com/news/toronto-maple-leafs-new-york-islanders-game-preview-november-23-2026",
+          "guid": "05b8c14b-c521-49dd-aa69-77c0b6e8d5b4",
+          "title": "Maple Leafs at Islanders projected lineups",
+          "published_rss": "Mon, 23 Nov 2026 17:48:06 -0000",
+          "published_utc": "2026-11-23T17:48:06+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-islanders-nov-23-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-islanders-nov-23-2026",
+          "guid": "0d9549d8-2c9d-40cb-a5dc-a1b9a3708d80",
+          "title": "GAME DAY @ Islanders | Nov. 23, 2026",
+          "published_rss": "Mon, 23 Nov 2026 16:00:15 -0000",
+          "published_utc": "2026-11-23T16:00:15+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-blue-jackets-nov-21-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-blue-jackets-nov-21-2026",
+          "guid": "00d63acb-538d-4d4f-bfb5-62c224032f55",
+          "title": "RECAP | Leafs vs Blue Jackets | Nov. 21, 2026",
+          "published_rss": "Sun, 22 Nov 2026 04:50:47 -0000",
+          "published_utc": "2026-11-22T04:50:47+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-vs-blue-jackets-nov-21-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-vs-blue-jackets-nov-21-2026",
+          "guid": "7d511c91-f389-4b96-86db-ab52c5f03cb8",
+          "title": "GAME DAY vs Blue Jackets | Nov. 21, 2026",
+          "published_rss": "Sat, 21 Nov 2026 15:20:14 -0000",
+          "published_utc": "2026-11-21T15:20:14+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-kings-nov-19-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-kings-nov-19-2026",
+          "guid": "0846f90f-f002-4ae6-b091-e572fa106200",
+          "title": "RECAP | Leafs vs Kings | Nov. 19, 2026",
+          "published_rss": "Fri, 20 Nov 2026 14:27:12 -0000",
+          "published_utc": "2026-11-20T14:27:12+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-vs-kings-nov-19-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-vs-kings-nov-19-2026",
+          "guid": "dab64ee0-f3e2-46ff-bc9d-681f65b28152",
+          "title": "GAME DAY vs Kings | Nov. 19, 2026",
+          "published_rss": "Thu, 19 Nov 2026 19:00:33 -0000",
+          "published_utc": "2026-11-19T19:00:33+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-blackhawks-nov-17-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-blackhawks-nov-17-2026",
+          "guid": "df4114d3-08ed-4fe4-b0ec-841b04356bf9",
+          "title": "RECAP | Leafs @ Blackhawks | Nov. 17, 2026",
+          "published_rss": "Wed, 18 Nov 2026 05:26:54 -0000",
+          "published_utc": "2026-11-18T05:26:54+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-blackhawks-nov-17-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-blackhawks-nov-17-2026",
+          "guid": "ab24fd3f-e718-4a80-a508-50918dfbcca2",
+          "title": "GAME DAY @ Blackhawks | Nov. 17, 2026",
+          "published_rss": "Tue, 17 Nov 2026 15:08:52 -0000",
+          "published_utc": "2026-11-17T15:08:52+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-oilers-nov-14-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-oilers-nov-14-2026",
+          "guid": "838b2b31-955e-4e09-b51f-739b6146e576",
+          "title": "RECAP | Leafs vs Oilers | Nov. 14, 2026",
+          "published_rss": "Sun, 15 Nov 2026 05:49:11 -0000",
+          "published_utc": "2026-11-15T05:49:11+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-vs-oilers-nov-14-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-vs-oilers-nov-14-2026",
+          "guid": "2e1c4c99-bd1d-4b72-af10-29965cd688f3",
+          "title": "GAME DAY vs Oilers | Nov. 14, 2026",
+          "published_rss": "Sat, 14 Nov 2026 20:32:24 -0000",
+          "published_utc": "2026-11-14T20:32:24+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-wild-nov-12-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-wild-nov-12-2026",
+          "guid": "7358e9a8-9cd1-4392-a073-e02e711f10ae",
+          "title": "RECAP | Leafs vs Wild | Nov. 12, 2026",
+          "published_rss": "Fri, 13 Nov 2026 14:57:28 -0000",
+          "published_utc": "2026-11-13T14:57:28+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-vs-wild-nov-12-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-vs-wild-nov-12-2026",
+          "guid": "75fdcbdc-a3fd-44cf-aa8f-1785024d9db5",
+          "title": "GAME DAY vs Wild | Nov. 12, 2026",
+          "published_rss": "Thu, 12 Nov 2026 18:22:36 -0000",
+          "published_utc": "2026-11-12T18:22:36+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-avalanche-nov-10-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-avalanche-nov-10-2026",
+          "guid": "483bafb3-5dca-4bd5-b606-43133ebf4570",
+          "title": "RECAP | Leafs vs Avalanche | Nov. 10, 2026",
+          "published_rss": "Wed, 11 Nov 2026 04:27:48 -0000",
+          "published_utc": "2026-11-11T04:27:48+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-vs-avalanche-nov-10-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-vs-avalanche-nov-10-2026",
+          "guid": "19443bab-b4dd-4c4b-8315-4fabd25e3269",
+          "title": "GAME DAY vs Avalanche | Nov. 10, 2026",
+          "published_rss": "Tue, 10 Nov 2026 15:13:08 -0000",
+          "published_utc": "2026-11-10T15:13:08+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-devils-nov-8-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-devils-nov-8-2026",
+          "guid": "752eed08-70c4-47f4-954a-8919aaec9d06",
+          "title": "RECAP | Leafs vs Devils | Nov. 8, 2026",
+          "published_rss": "Mon, 09 Nov 2026 04:41:15 -0000",
+          "published_utc": "2026-11-09T04:41:15+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-vs-devils-nov-8-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-vs-devils-nov-8-2026",
+          "guid": "42c7e88f-9df2-4439-abcc-de54e7053c65",
+          "title": "GAME DAY vs Devils | Nov. 8, 2026",
+          "published_rss": "Sun, 08 Nov 2026 16:45:24 -0000",
+          "published_utc": "2026-11-08T16:45:24+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-canadiens-nov-7-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-canadiens-nov-7-2026",
+          "guid": "49fbb2f7-488f-4bb4-9d81-584676569898",
+          "title": "RECAP | Leafs vs Canadiens | Nov. 7, 2026",
+          "published_rss": "Sun, 08 Nov 2026 03:34:24 -0000",
+          "published_utc": "2026-11-08T03:34:24+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-mammoth-nov-3-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-mammoth-nov-3-2026",
+          "guid": "591cf054-df39-4406-8893-efef3f8a93dd",
+          "title": "RECAP | Leafs vs Mammoth | Nov. 3, 2026",
+          "published_rss": "Wed, 04 Nov 2026 04:29:05 -0000",
+          "published_utc": "2026-11-04T04:29:05+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-vs-mammoth-nov-3-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-vs-mammoth-nov-3-2026",
+          "guid": "68ac97d0-7898-4b18-ae03-3caa43f9eda3",
+          "title": "GAME DAY vs Mammoth | Nov. 3, 2026",
+          "published_rss": "Tue, 03 Nov 2026 16:00:24 -0000",
+          "published_utc": "2026-11-03T16:00:24+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-canucks-oct-31-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-canucks-oct-31-2026",
+          "guid": "2ef0a295-9628-4301-9ea3-e5f5b6b64441",
+          "title": "RECAP | Leafs @ Canucks | Oct. 31, 2026",
+          "published_rss": "Sun, 01 Nov 2026 02:46:25 -0000",
+          "published_utc": "2026-11-01T02:46:25+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-canucks-oct-31-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-canucks-oct-31-2026",
+          "guid": "4737d78f-59c1-4ae6-8efc-39649ce00ffc",
+          "title": "GAME DAY @ Canucks | Oct. 31, 2026",
+          "published_rss": "Sat, 31 Oct 2026 16:02:29 -0000",
+          "published_utc": "2026-10-31T16:02:29+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-kraken-oct-28-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-kraken-oct-28-2026",
+          "guid": "b8f8bfb1-b522-40e8-85c0-c1df76425590",
+          "title": "RECAP | Leafs @ Kraken | Oct. 28, 2026",
+          "published_rss": "Thu, 29 Oct 2026 05:48:43 -0000",
+          "published_utc": "2026-10-29T05:48:43+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-kraken-oct-28-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-kraken-oct-28-2026",
+          "guid": "8b0e20fa-440e-4cd2-87f2-da5db171b8fb",
+          "title": "GAME DAY @ Kraken | Oct. 28, 2026",
+          "published_rss": "Wed, 28 Oct 2026 14:33:30 -0000",
+          "published_utc": "2026-10-28T14:33:30+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-flames-oct-26-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-flames-oct-26-2026",
+          "guid": "1db0e61b-09d3-4582-a330-6e06435a42b7",
+          "title": "RECAP | Leafs @ Flames | Oct. 26, 2026",
+          "published_rss": "Tue, 27 Oct 2026 04:01:36 -0000",
+          "published_utc": "2026-10-27T04:01:36+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-flames-oct-26-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-flames-oct-26-2026",
+          "guid": "27785139-0211-4400-810a-e9d2f3d3e30f",
+          "title": "GAME DAY @ Flames | Oct. 26, 2026",
+          "published_rss": "Mon, 26 Oct 2026 15:27:29 -0000",
+          "published_utc": "2026-10-26T15:27:29+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-oilers-oct-24-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-oilers-oct-24-2026",
+          "guid": "e38e068e-6103-49df-ab76-678510db8581",
+          "title": "RECAP | Leafs @ Oilers | Oct. 24, 2026",
+          "published_rss": "Sun, 25 Oct 2026 02:59:55 -0000",
+          "published_utc": "2026-10-25T02:59:55+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-oilers-oct-24-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-oilers-oct-24-2026",
+          "guid": "44c31d1d-9156-458a-8b3d-87f40478e0c8",
+          "title": "GAME DAY @ Oilers | Oct. 24, 2026",
+          "published_rss": "Sat, 24 Oct 2026 14:09:21 -0000",
+          "published_utc": "2026-10-24T14:09:21+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-rangers-oct-22-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-rangers-oct-22-2026",
+          "guid": "0ea88a07-b5fa-46f6-ba64-6921c632e641",
+          "title": "RECAP | Leafs vs Rangers | Oct. 22, 2026",
+          "published_rss": "Fri, 23 Oct 2026 02:59:18 -0000",
+          "published_utc": "2026-10-23T02:59:18+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-vs-rangers-oct-22-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-vs-rangers-oct-22-2026",
+          "guid": "771efaaa-659e-4bb0-968f-dee9367fcb4b",
+          "title": "GAME DAY vs RANGERS | Oct. 22, 2026",
+          "published_rss": "Thu, 22 Oct 2026 15:48:27 -0000",
+          "published_utc": "2026-10-22T15:48:27+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-blue-jackets-oct-20-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-blue-jackets-oct-20-2026",
+          "guid": "32346b1e-a922-4c22-803d-d3674acadc6a",
+          "title": "RECAP | Leafs @ Blue Jackets | Oct. 20, 2026",
+          "published_rss": "Wed, 21 Oct 2026 02:45:19 -0000",
+          "published_utc": "2026-10-21T02:45:19+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-blue-jackets-oct-20-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-blue-jackets-oct-20-2026",
+          "guid": "335cc8f0-8664-4bca-99d5-09bbf495845b",
+          "title": "GAME DAY @ Blue Jackets | Oct. 20, 2026",
+          "published_rss": "Tue, 20 Oct 2026 17:55:58 -0000",
+          "published_utc": "2026-10-20T17:55:58+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-sharks-oct-19-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-sharks-oct-19-2026",
+          "guid": "6424b344-12af-4ad1-af9e-460ce9dddf6f",
+          "title": "RECAP | Leafs vs Sharks | Oct. 19, 2026",
+          "published_rss": "Tue, 20 Oct 2026 04:31:31 -0000",
+          "published_utc": "2026-10-20T04:31:31+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-vs-sharks-oct-19-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-vs-sharks-oct-19-2026",
+          "guid": "370bee43-b86f-4437-8880-c31f0258bb58",
+          "title": "GAME DAY vs SHARKS | Oct. 19, 2026",
+          "published_rss": "Mon, 19 Oct 2026 14:10:56 -0000",
+          "published_utc": "2026-10-19T14:10:56+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-islanders-oct-17-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-islanders-oct-17-2026",
+          "guid": "3afea9ed-324a-44ce-ac5a-c72fd03da9f4",
+          "title": "RECAP | Leafs vs. Islanders | Oct. 17, 2026",
+          "published_rss": "Sun, 18 Oct 2026 02:53:27 -0000",
+          "published_utc": "2026-10-18T02:53:27+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-vs-islanders-oct-17-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-vs-islanders-oct-17-2026",
+          "guid": "be493bf4-c4f6-45d6-a850-32690a947c03",
+          "title": "GAME DAY vs ISLANDERS | Oct. 17, 2026",
+          "published_rss": "Sat, 17 Oct 2026 13:54:11 -0000",
+          "published_utc": "2026-10-17T13:54:11+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/leafs-fall-short-to-sabres-in-ot",
+          "canonical": "https://www.nhl.com/mapleleafs/news/leafs-fall-short-to-sabres-in-ot",
+          "guid": "a93cef23-48c1-463f-b43a-fc17cf8ec2f2",
+          "title": "Leafs fall short to Sabres in OT",
+          "published_rss": "Fri, 16 Oct 2026 16:15:27 -0000",
+          "published_utc": "2026-10-16T16:15:27+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/maple-leafs-complete-trade-with-vancouver-x8932",
+          "canonical": "https://www.nhl.com/mapleleafs/news/maple-leafs-complete-trade-with-vancouver-x8932",
+          "guid": "9b52e2de-fda8-4383-b887-6f3af0018965",
+          "title": "Maple Leafs Complete Trade With Vancouver",
+          "published_rss": "Thu, 15 Oct 2026 21:58:09 -0000",
+          "published_utc": "2026-10-15T21:58:09+00:00"
+        },
+        {
+          "url": "https://www.nhl.com/mapleleafs/news/game-day-vs-buffalo-oct-15-2026",
+          "canonical": "https://www.nhl.com/mapleleafs/news/game-day-vs-buffalo-oct-15-2026",
+          "guid": "9b241135-3811-4c2b-b42a-4081b1ec3871",
+          "title": "GAME DAY vs BUFFALO | Oct. 15, 2026",
+          "published_rss": "Thu, 15 Oct 2026 15:15:19 -0000",
+          "published_utc": "2026-10-15T15:15:19+00:00"
+        }
+      ]
+    }
+  },
+  "club_indexes": {
+    "islanders": {
+      "url": "https://www.nhl.com/islanders/news/",
+      "final_url": "https://www.nhl.com/islanders/news/",
+      "status": 200,
+      "request_started": "2026-11-26T18:22:52.153723+00:00",
+      "retrieved_utc": "2026-11-26T18:22:52.676935+00:00",
+      "sha256": "f6d16012c306894c0cd5f3cdc0483f7de47a408ab64506fb735db4300f8ae850",
+      "headers": {
+        "content-type": "text/html",
+        "date": "Thu, 26 Nov 2026 18:22:53 GMT",
+        "age": "198",
+        "etag": null,
+        "last-modified": null
+      },
+      "article_urls": [
+        "https://www.nhl.com/islanders/news/casey-and-cameron-a-friendship-forged-through-high-fives",
+        "https://www.nhl.com/islanders/news/casey-s-corner-how-a-section-of-islanders-fans-celebrates-their-beloved-veteran",
+        "https://www.nhl.com/islanders/news/cizikas-earns-postgame-oar-in-1-000th-game-palat-gets-helmet",
+        "https://www.nhl.com/islanders/news/eklund-gets-oar-sorokin-gets-helmet-nov-25-2026",
+        "https://www.nhl.com/islanders/news/endless-energy-powered-casey-cizikas-to-1-000-games-with-islanders",
+        "https://www.nhl.com/islanders/news/game-preview-islanders-at-jets-nov-19-2026",
+        "https://www.nhl.com/islanders/news/game-preview-islanders-at-red-wings-nov-21-2026",
+        "https://www.nhl.com/islanders/news/game-preview-islanders-vs-blue-jackets-nov-17-2026",
+        "https://www.nhl.com/islanders/news/game-preview-islanders-vs-blues-nov-25-2026",
+        "https://www.nhl.com/islanders/news/game-preview-islanders-vs-maple-leafs-nov-23-2026",
+        "https://www.nhl.com/islanders/news/islanders-announce-2026-preseason-schedule",
+        "https://www.nhl.com/islanders/news/islanders-prospect-report-nov-16-2026",
+        "https://www.nhl.com/islanders/news/islanders-prospect-report-nov-16-2026-x0104",
+        "https://www.nhl.com/islanders/news/islanders-to-host-hockey-fights-cancer-night-on-nov-23-vs-toronto",
+        "https://www.nhl.com/islanders/news/islanders-wives-and-girlfriends-go-toy-shopping-for-local-children-in-the-community",
+        "https://www.nhl.com/islanders/news/isles-day-to-day-cal-ritchie-activated-from-injured-reserve-loaned-to-hamilton",
+        "https://www.nhl.com/islanders/news/isles-day-to-day-palmieri-placed-on-injured-reserve",
+        "https://www.nhl.com/islanders/news/isles-day-to-day-practice-updates-nov-24-2026",
+        "https://www.nhl.com/islanders/news/isles-day-to-day-pulock-out-1-2-weeks-palmieri-to-see-doctors",
+        "https://www.nhl.com/islanders/news/isles-day-to-day-ritchie-to-return-vs-blues",
+        "https://www.nhl.com/islanders/news/love-you-mom-how-ladybugs-connect-matthew-schaefer-to-his-mom-jennifer",
+        "https://www.nhl.com/islanders/news/schaefer-and-deangelo-earn-postgame-oar-helmet-nov-17-2026",
+        "https://www.nhl.com/islanders/news/takeaways-islanders-7-game-point-streak-ends-in-4-2-loss-to-maple-leafs",
+        "https://www.nhl.com/islanders/news/takeaways-islanders-cbj-nov-17-2026",
+        "https://www.nhl.com/islanders/news/takeaways-islanders-celebrate-cizikas-1-000th-game-with-3-2-win-over-red-wings",
+        "https://www.nhl.com/islanders/news/takeaways-islanders-extend-point-streak-to-six-games-in-4-3-ot-loss-to-jets",
+        "https://www.nhl.com/islanders/news/takeaways-isles-3-blues-2-so-nov-25-2026",
+        "https://www.nhl.com/islanders/news/the-anatomy-of-the-captain-bo-horvat-leading-the-way-for-the-islanders",
+        "https://www.nhl.com/islanders/news/the-skinny-islanders-3-blues-2-so-nov-26-2026",
+        "https://www.nhl.com/islanders/news/the-skinny-islanders-3-red-wings-2-nov-22-2026",
+        "https://www.nhl.com/islanders/news/the-skinny-islanders-5-blue-jackets-1-nov-18-2026",
+        "https://www.nhl.com/islanders/news/the-skinny-jets-4-islanders-3-ot-nov-20-2026",
+        "https://www.nhl.com/islanders/news/the-skinny-maple-leafs-4-islanders-2-nov-22-2026"
+      ]
+    },
+    "mapleleafs": {
+      "url": "https://www.nhl.com/mapleleafs/news/",
+      "final_url": "https://www.nhl.com/mapleleafs/news/",
+      "status": 200,
+      "request_started": "2026-11-26T18:22:52.173749+00:00",
+      "retrieved_utc": "2026-11-26T18:22:52.690316+00:00",
+      "sha256": "34a4f3260f936151befaaf0258ef6247d690b24b6e626eb0822163403cbdade7",
+      "headers": {
+        "content-type": "text/html",
+        "date": "Thu, 26 Nov 2026 18:22:53 GMT",
+        "age": "65",
+        "etag": null,
+        "last-modified": null
+      },
+      "article_urls": [
+        "https://www.nhl.com/mapleleafs/news/game-day-blackhawks-nov-17-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-blue-jackets-oct-20-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-canucks-oct-31-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-flames-oct-26-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-islanders-nov-23-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-kraken-oct-28-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-oilers-oct-24-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-vs-avalanche-nov-10-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-vs-blue-jackets-nov-21-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-vs-buffalo-oct-15-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-vs-devils-nov-8-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-vs-islanders-oct-17-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-vs-kings-nov-19-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-vs-mammoth-nov-3-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-vs-oilers-nov-14-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-vs-rangers-oct-22-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-vs-sharks-oct-19-2026",
+        "https://www.nhl.com/mapleleafs/news/game-day-vs-wild-nov-12-2026",
+        "https://www.nhl.com/mapleleafs/news/leafs-fall-short-to-sabres-in-ot",
+        "https://www.nhl.com/mapleleafs/news/maple-leafs-complete-trade-with-vancouver-x8932",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-blackhawks-nov-17-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-blue-jackets-oct-20-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-canucks-oct-31-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-flames-oct-26-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-islanders-nov-23-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-kraken-oct-28-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-oilers-oct-24-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-avalanche-nov-10-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-blue-jackets-nov-21-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-canadiens-nov-7-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-devils-nov-8-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-islanders-oct-17-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-kings-nov-19-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-mammoth-nov-3-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-oilers-nov-14-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-rangers-oct-22-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-sharks-oct-19-2026",
+        "https://www.nhl.com/mapleleafs/news/recap-leafs-vs-wild-nov-12-2026"
+      ]
+    }
+  }
+}
