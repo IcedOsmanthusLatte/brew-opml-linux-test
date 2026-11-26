@@ -122,14 +122,18 @@ def club_index(club, url):
     return club, record
 
 
-def run():
+def snapshot():
     with ThreadPoolExecutor(8) as pool:
         feeds = [pool.submit(feed, key, url) for key, url in FEEDS.items()]
         clubs = [pool.submit(club_index, key, url) for key, url in CLUBS.items()]
-        result = {
+        return {
             "feeds": dict(job.result() for job in feeds),
             "club_indexes": dict(job.result() for job in clubs),
         }
+
+
+def run():
+    result = snapshot()
     target = Path(sys.argv[1])
     target.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", "utf-8")
     print(json.dumps({

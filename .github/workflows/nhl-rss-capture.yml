@@ -1,0 +1,28 @@
+name: Observe literal NHL RSS URLs for updates
+
+on:
+  push:
+    branches: [nhl-rss-20261127]
+    paths: ['nhl-rss/watch.py']
+
+permissions:
+  contents: read
+
+jobs:
+  observe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Look for a newer canonical article over ordinary HTTP
+        run: python3 nhl-rss/watch.py observe-output
+      - name: Preserve metadata-only capture receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nhl-public-observation
+          path: observe-output/
+          if-no-files-found: warn
+          retention-days: 14

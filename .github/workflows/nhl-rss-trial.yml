@@ -3,6 +3,10 @@ name: Replay NHL RSS reader windows
 on:
   push:
     branches: [nhl-rss-20261127]
+    paths:
+      - 'nhl-rss/trial.py'
+      - 'nhl-rss/fixture_server.py'
+      - 'nhl-rss/snapshot-*.json'
 
 permissions:
   contents: read
