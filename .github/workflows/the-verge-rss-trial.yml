@@ -16,7 +16,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Import the same OPML into clean isolated Miniflux stores
-        run: python3 the-verge-rss/trial.py trial-output
+        run: python3 the-verge-rss/trial.py trial-output ba
       - name: Preserve verified reader and origin observations
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

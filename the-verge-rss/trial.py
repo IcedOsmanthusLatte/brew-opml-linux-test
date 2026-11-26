@@ -167,12 +167,15 @@ def analysis(name, rows, feed_ids):
 
 
 def run():
+    source_order = sys.argv[2] if len(sys.argv) > 2 else "ab"
+    if source_order not in ("ab", "ba"):
+        raise ValueError("Source order must be ab or ba")
     fixture = OUT / "fixture"
     fixture.mkdir()
     snapshots = {}
     manifest = {}
-    for phase in ("a", "b"):
-        snapshots[phase] = json.loads((SOURCE / f"snapshot-{phase}.json").read_text("utf-8"))
+    for phase, source_phase in zip(("a", "b"), source_order):
+        snapshots[phase] = json.loads((SOURCE / f"snapshot-{source_phase}.json").read_text("utf-8"))
         manifest[phase] = {}
         (fixture / phase).mkdir()
         for name in NAMES:
@@ -190,7 +193,8 @@ def run():
         docker("pull", tag)
         digest[name] = json.loads(docker("image", "inspect", tag, "--format", "{{json .RepoDigests}}"))[0]
     result = {"runner": os.environ.get("ImageOS"), "runner_image": os.environ.get("ImageVersion"),
-              "images": digest, "fixture_sha256": manifest, "cohorts": {}}
+              "images": digest, "fixture_sha256": manifest, "source_order": list(source_order),
+              "cohorts": {}}
     events = []
     with ExitStack() as cleanup:
         docker("network", "create", NETWORK)
@@ -211,7 +215,7 @@ def run():
         early_a = early.visible()
         first_urls = source_urls(snapshots["a"])
         compare_expected(early_a, early_ids, first_urls, exact=True)
-        result["cohorts"]["fresh_a"] = analysis("fresh_a", early_a, early_ids)
+        result["cohorts"]["fresh_first"] = analysis("fresh_first", early_a, early_ids)
         (fixture / "next").write_text("b")
         (fixture / "next").replace(fixture / "active.txt")
         early.refresh(early_ids)
@@ -219,13 +223,13 @@ def run():
         later_urls = source_urls(snapshots["b"])
         compare_expected(early_b, early_ids,
                          {name: set(first_urls[name]) | set(later_urls[name]) for name in NAMES}, exact=True)
-        result["cohorts"]["refreshed_b"] = analysis("refreshed_b", early_b, early_ids)
+        result["cohorts"]["existing_after_second"] = analysis("existing_after_second", early_b, early_ids)
         late = Reader(cleanup, "late", digest["app"])
         late_ids = late.load(sample, replay_urls)
         late.refresh(late_ids)
         late_b = late.visible()
         compare_expected(late_b, late_ids, later_urls, exact=True)
-        result["cohorts"]["fresh_b"] = analysis("fresh_b", late_b, late_ids)
+        result["cohorts"]["fresh_second"] = analysis("fresh_second", late_b, late_ids)
         for line in (fixture / "requests.jsonl").read_text().splitlines():
             event = json.loads(line)
             if event["sha256"] != manifest[event["phase"]][event["path"]]:
