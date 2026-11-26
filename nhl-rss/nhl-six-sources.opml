@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<opml version="2.0">
+  <head>
+    <title>Brew NHL six-source test</title>
+  </head>
+  <body>
+    <outline type="rss" text="CBS Sports NHL headlines (mixed in our test)" title="CBS Sports NHL headlines (mixed in our test)" xmlUrl="https://www.cbssports.com/rss/headlines/nhl/" />
+    <outline type="rss" text="CBS Sports all headlines (comparison)" title="CBS Sports all headlines (comparison)" xmlUrl="https://www.cbssports.com/rss/headlines/" />
+    <outline type="rss" text="ESPN NHL news" title="ESPN NHL news" xmlUrl="https://www.espn.com/espn/rss/nhl/news" />
+    <outline type="rss" text="NHL league news via to-rss" title="NHL league news via to-rss" xmlUrl="https://www.to-rss.xyz/nhl/news/" />
+    <outline type="rss" text="New York Islanders via to-rss" title="New York Islanders via to-rss" xmlUrl="https://www.to-rss.xyz/nhl/islanders/" />
+    <outline type="rss" text="Toronto Maple Leafs via to-rss" title="Toronto Maple Leafs via to-rss" xmlUrl="https://www.to-rss.xyz/nhl/mapleleafs/" />
+  </body>
+</opml>
