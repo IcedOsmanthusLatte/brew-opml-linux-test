@@ -13,7 +13,7 @@ from collections import Counter
 from contextlib import ExitStack
 from pathlib import Path
 from urllib.request import ProxyHandler, Request, build_opener
-from capture import FEEDS
+from capture import FEEDS, normalize
 
 
 SOURCE = Path(__file__).resolve().parent
@@ -145,10 +145,14 @@ class Reader:
 
 def compare_expected(rows, ids, expected, exact):
     for name, feed_id in ids.items():
-        keys = [row["url"] for row in rows if row["feed_id"] == feed_id]
-        observed, target = Counter(keys), Counter(expected[name])
+        keys = [normalize(row["url"], FEEDS[name]) for row in rows if row["feed_id"] == feed_id]
+        expected_keys = [normalize(url, FEEDS[name]) for url in expected[name]]
+        observed, target = Counter(keys), Counter(expected_keys)
         if (exact and observed != target) or (not exact and target - observed):
-            raise RuntimeError(f"{name} differs: expected {len(target)}, observed {len(observed)}")
+            raise RuntimeError(
+                f"{name} normalized URLs differ: missing {list(target - observed)}, "
+                f"extra {list(observed - target)}"
+            )
 
 
 def source_urls(snapshot):
@@ -162,10 +166,15 @@ def analysis(name, rows, feed_ids):
     names = {value: key for key, value in feed_ids.items()}
     counts = Counter(names[row["feed_id"]] for row in rows)
     duplicates = {}
-    for url, count in Counter(row["url"] for row in rows).items():
-        if count > 1:
-            duplicates[url] = [{"source": names[row["feed_id"]], "reader_entry_id": row["id"]}
-                               for row in rows if row["url"] == url]
+    by_url = {}
+    for row in rows:
+        key = normalize(row["url"], FEEDS[names[row["feed_id"]]])
+        by_url.setdefault(key, []).append({
+            "source": names[row["feed_id"]], "reader_entry_id": row["id"],
+        })
+    for key, items in by_url.items():
+        if len({row["source"] for row in items}) > 1:
+            duplicates[key] = items
     print(json.dumps({"cohort": name, "count": len(rows), "per_source": counts,
                       "cross_feed_duplicate_urls": len(duplicates)}), flush=True)
     return {"reader_native_api_rows": rows, "count": len(rows), "per_source": counts,
@@ -190,7 +199,11 @@ def run():
     replay_urls = {name: f"{ORIGIN}/{name}.xml" for name in NAMES}
     live_urls = {name: snapshots["a"][name]["url"] for name in NAMES}
     sample = opml(replay_urls)
-    (OUT / "public-six-sources.opml").write_bytes(opml(live_urls))
+    public_sample = (SOURCE / "nhl-six-sources.opml").read_bytes()
+    public_addrs = [row.attrib["xmlUrl"] for row in ET.fromstring(public_sample).iter("outline")]
+    if public_addrs != list(live_urls.values()):
+        raise RuntimeError("Published OPML addresses no longer match all literal captured URLs")
+    (OUT / "public-six-sources.opml").write_bytes(public_sample)
     (OUT / "replay-six-sources.opml").write_bytes(sample)
     digest = {}
     for name, tag in IMAGES.items():
@@ -198,6 +211,8 @@ def run():
         digest[name] = json.loads(docker("image", "inspect", tag, "--format", "{{json .RepoDigests}}"))[0]
     result = {"runner": os.environ.get("ImageOS"), "runner_image": os.environ.get("ImageVersion"),
               "images": digest, "fixture_sha256": manifest, "source_order": list(source_order),
+              "public_opml_sha256": hashlib.sha256(public_sample).hexdigest(),
+              "replay_opml_sha256": hashlib.sha256(sample).hexdigest(),
               "cohorts": {}}
     events = []
     with ExitStack() as cleanup:
@@ -246,7 +261,7 @@ def run():
         write_json(OUT / "result.json", result)
         live = Reader(cleanup, "live", digest["app"])
         try:
-            live_ids = live.load(opml(live_urls), live_urls)
+            live_ids = live.load(public_sample, live_urls)
             live.refresh(live_ids)
             result["cohorts"]["live_official"] = analysis("live_official", live.visible(), live_ids)
             result["public_urls_native_imported"] = len(NAMES)
