@@ -1,0 +1,36 @@
+name: RSS filter recovery comparison
+
+on:
+  push:
+    branches: [rss-filter-recovery-20261126-clean]
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        round: [1, 2]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare an isolated headless Chromium
+        run: |
+          python3 -m venv "$RUNNER_TEMP/rss-filter-venv"
+          "$RUNNER_TEMP/rss-filter-venv/bin/pip" install --disable-pip-version-check playwright==1.55.0
+          "$RUNNER_TEMP/rss-filter-venv/bin/playwright" install --with-deps chromium
+      - name: Compare fresh application databases and real article views
+        run: '"$RUNNER_TEMP/rss-filter-venv/bin/python" rss-filter-recovery/run_trial.py evidence ${{ matrix.round }}'
+      - name: Retain fixture and observations
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rss-filter-recovery-round-${{ matrix.round }}
+          path: evidence/
+          if-no-files-found: warn
+          retention-days: 14

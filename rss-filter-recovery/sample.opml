@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head><title>RSS filtering comparison fixture</title></head>
+  <body>
+    <outline type="rss" text="Retained example feed" title="Retained example feed" xmlUrl="http://rss-fixture.test:8090/retained.xml"/>
+    <outline type="rss" text="Removed example feed" title="Removed example feed" xmlUrl="http://rss-fixture.test:8090/removed.xml"/>
+  </body>
+</opml>
