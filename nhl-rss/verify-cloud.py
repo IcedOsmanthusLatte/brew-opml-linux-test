@@ -88,6 +88,12 @@ def main():
         assert len(dupes) == 3 and sorted(x["source"] for x in dupes) == [
             "islanders", "league", "mapleleafs",
         ]
+    new_articles = {item["canonical"] for details in snapshots["later_publications"].values()
+                    for item in details["new_published_urls"]}
+    observed = {key: {normalize(row["url"], "https://www.nhl.com") for row in cohort["reader_native_api_rows"]}
+                for key, cohort in cohorts.items()}
+    assert not any(new_articles & observed[key] for key in ("a-live", "a-replay"))
+    assert all(new_articles <= observed[key] for key in ("b-live", "b-replay"))
     summary = {
         "observed_at_utc": datetime.now(timezone.utc).isoformat(),
         "first_capture": snapshots["later_publications"]["league"]["first_read"],
@@ -109,6 +115,7 @@ def main():
         "reader_version": native_ab["native_reader_version"],
         "exact_public_opml_sha256": native_ab["public_opml_sha256"],
         "matching_league_preview_instances": 3,
+        "new_public_urls_verified_in_live_and_replay": {"a": False, "b": True},
         "cohorts": {k: {"per_source": v["per_source"], "rows": v["count"]} for k, v in cohorts.items()},
         "github_actions": {key: value["url"] for key, value in receipts.items()},
     }

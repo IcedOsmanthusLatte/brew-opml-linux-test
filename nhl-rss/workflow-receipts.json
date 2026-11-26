@@ -1,0 +1,16 @@
+{
+  "first": {
+    "file": "nhl-window-a.zip",
+    "digest": "3052565c8b5321d0434ca4c52cb6bcb43a71176ce20d99d13e12e308b343332f",
+    "artifact": 15143652955,
+    "commit": "58ad899af75088ff58321435ac190cb3313caf23",
+    "url": "https://github.com/IcedOsmanthusLatte/brew-opml-linux-test/actions/runs/45874669952"
+  },
+  "both": {
+    "file": "nhl-windows-ab.zip",
+    "digest": "64f892227ce9839a788b24cdf55f39a3a9172d93e9b45f482e5125f20e26caf7",
+    "artifact": 15143708724,
+    "commit": "7b07b643e5971f2f887c53a0a5d9f8c444b81c77",
+    "url": "https://github.com/IcedOsmanthusLatte/brew-opml-linux-test/actions/runs/45875536569"
+  }
+}
