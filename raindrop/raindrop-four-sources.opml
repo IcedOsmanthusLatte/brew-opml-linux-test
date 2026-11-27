@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head><title>Raindrop first-import comparison</title></head>
+  <body>
+    <outline type="rss" text="Miguel – AI (parent)" xmlUrl="https://mguhlin.raindrop.page/ai-57580928/feed"/>
+    <outline type="rss" text="Miguel – Education AI (child)" xmlUrl="https://mguhlin.raindrop.page/education-ai-60564646/feed"/>
+    <outline type="rss" text="Smithographics – Stellar Web Links (parent)" xmlUrl="https://smithographic.raindrop.page/stellar-web-links-54448211/feed"/>
+    <outline type="rss" text="Smithographics – Apps (child)" xmlUrl="https://smithographic.raindrop.page/apps-52725232/feed"/>
+  </body>
+</opml>
