@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head><title>Global News RSS Feeds</title></head>
+  <body>
+    <outline type="rss" text="Global News — Main" title="Global News — Main" xmlUrl="https://globalnews.ca/feed/" htmlUrl="https://globalnews.ca/"/>
+    <outline type="rss" text="Global News — National (regional menu)" title="Global News — National (regional menu)" xmlUrl="https://globalnews.ca/national/feed/" htmlUrl="https://globalnews.ca/national/"/>
+    <outline type="rss" text="Global News — Canada (section)" title="Global News — Canada (section)" xmlUrl="https://globalnews.ca/canada/feed/" htmlUrl="https://globalnews.ca/canada/"/>
+    <outline type="rss" text="Global News — Calgary (local)" title="Global News — Calgary (local)" xmlUrl="https://globalnews.ca/calgary/feed/" htmlUrl="https://globalnews.ca/calgary/"/>
+  </body>
+</opml>
