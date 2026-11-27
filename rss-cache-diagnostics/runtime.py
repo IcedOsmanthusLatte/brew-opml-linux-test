@@ -277,20 +277,49 @@ def phase(name):
     incoming.replace(active)
 
 
-def ordinary_refresh(app, feed):
+def fresh_update(app, feed):
     key = app.ids[feed_url(feed)]
-    if isinstance(app, Fresh):
-        call = app.cli("cli/actualize-user.php", "--user", USER, "--feed-id", str(key))
-        return {"path": "FreshRSS single-feed CLI", "stdout": call.stdout.decode(errors="replace").strip()}
-    app.request("PUT", f"/v1/feeds/{key}/refresh")
-    return {"path": "Miniflux ordinary single-feed API", "status": 204}
+    ui_step(app.page, app.url + f"/i/?c=subscription&a=feed&id={key}", "#feed_update")
+    control = app.page.locator('button[formaction*="a=actualize"]')
+    label = control.inner_text(timeout=7000).strip()
+    with app.page.expect_response(
+        lambda reply: "a=actualize" in reply.url and reply.request.method == "POST", timeout=14000
+    ) as capture:
+        control.click(timeout=7000)
+    response = capture.value
+    if response.status not in {200, 302, 303}:
+        raise RuntimeError(f"FreshRSS Update returned {response.status}.")
+    return {"path": "FreshRSS Manage > Update", "button_label": label, "status": response.status}
+
+
+def miniflux_update(app, feed, force):
+    key = app.ids[feed_url(feed)]
+    ui_step(app.page, app.url + f"/feed/{key}/entries/all", "main")
+    control = app.page.locator('button[data-no-action-url*="forceRefresh=false"]')
+    label = control.inner_text(timeout=7000).strip()
+    confirmation = control.get_attribute("data-label-question")
+    answer = control.get_attribute("data-label-yes" if force else "data-label-no")
+    endpoint = control.get_attribute("data-url" if force else "data-no-action-url")
+    control.click(timeout=7000)
+    with app.page.expect_response(
+        lambda reply: reply.url.endswith(endpoint) and reply.request.method == "POST", timeout=14000
+    ) as capture:
+        app.page.get_by_text(answer, exact=True).last.click(timeout=7000)
+    response = capture.value
+    if response.status not in {200, 204, 302, 303}:
+        raise RuntimeError(f"Miniflux Refresh returned {response.status}.")
+    return {"path": "Miniflux feed > Refresh > " + answer, "button_label": label,
+            "confirmation": confirmation, "answer": answer, "status": response.status}
+
+
+def ordinary_refresh(app, feed):
+    return fresh_update(app, feed) if isinstance(app, Fresh) else miniflux_update(app, feed, force=False)
 
 
 def recovery_refresh(app, feed):
     key = app.ids[feed_url(feed)]
     if isinstance(app, Mini):
-        app.request("PUT", f"/v1/feeds/{key}/refresh?force=true")
-        return {"path": "Miniflux documented single-feed force=true API", "status": 204}
+        return miniflux_update(app, feed, force=True)
     ui_step(app.page, app.url + f"/i/?c=subscription&a=feed&id={key}", "#feed_update")
     control = app.page.get_by_role("button", name="Clear cache", exact=False)
     if control.count() != 1:
@@ -305,7 +334,7 @@ def recovery_refresh(app, feed):
     with app.page.expect_navigation(wait_until="domcontentloaded", timeout=14000):
         control.click(timeout=7000)
     return {"path": "FreshRSS Manage feed > Maintenance > Clear cache, then single-feed refresh",
-            "refresh": ordinary_refresh(app, feed)}
+            "refresh": fresh_update(app, feed)}
 
 
 def view(app, feed):
@@ -374,8 +403,9 @@ def check_slice(app, feed, observation, expected_status, expected_latest, expect
     if expected_latest:
         required_entries[f"{feed}-latest"] = "unread"
     origin = observation["origin"]
-    if len(origin) != 1:
-        raise RuntimeError(f"{app.kind} {feed}: expected one controlled feed GET, got {origin}")
+    expected_count = 2 if isinstance(app, Mini) and expected_status == 200 else 1
+    if len(origin) != expected_count:
+        raise RuntimeError(f"{app.kind} {feed}: expected {expected_count} controlled feed GET(s), got {origin}")
     record = origin[0]
     generation = "warm" if record["phase"] == "warm" or feed == "unchanged" else "new"
     source = manifest[generation][feed]
@@ -385,6 +415,9 @@ def check_slice(app, feed, observation, expected_status, expected_latest, expect
         or record["sent_body"] != (expected_status == 200)
         or record["sha256"] != source["sha256"] or record["source_guids"] != source["guids"]
         or observation["views"]["all"] != required_entries
+        or any(entry["status"] != 200 or entry["if_none_match"] is not None or
+               entry["sha256"] != source["sha256"] or entry["source_guids"] != source["guids"]
+               for entry in origin[1:])
     ):
         raise RuntimeError(f"{app.kind} {feed}: expectation disagrees with recorded test: {observation}")
 
