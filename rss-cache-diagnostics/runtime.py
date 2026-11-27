@@ -301,7 +301,7 @@ def miniflux_update(app, feed, force):
     answer = control.get_attribute("data-label-yes" if force else "data-label-no")
     endpoint = control.get_attribute("data-url" if force else "data-no-action-url")
     control.click(timeout=7000)
-    with app.page.expect_response(
+    with app.page.expect_navigation(wait_until="domcontentloaded", timeout=14000), app.page.expect_response(
         lambda reply: reply.url.endswith(endpoint) and reply.request.method == "POST", timeout=14000
     ) as capture:
         app.page.get_by_text(answer, exact=True).last.click(timeout=7000)
