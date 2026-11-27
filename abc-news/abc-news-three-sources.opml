@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head><title>ABC News RSS source comparison</title></head>
+  <body>
+    <outline text="ABC News World News Headlines (control)" title="ABC News World News Headlines (control)" type="rss" xmlUrl="https://abcnews.com/abcnews/worldnewsheadlines" htmlUrl="https://abcnews.com/Site/page/rss-feeds-3520115"/>
+    <outline text="ABC News International Headlines" title="ABC News International Headlines" type="rss" xmlUrl="https://abcnews.com/abcnews/internationalheadlines" htmlUrl="https://abcnews.com/International"/>
+    <outline text="ABC News Top Stories" title="ABC News Top Stories" type="rss" xmlUrl="https://abcnews.com/abcnews/topstories" htmlUrl="https://abcnews.com/"/>
+  </body>
+</opml>
