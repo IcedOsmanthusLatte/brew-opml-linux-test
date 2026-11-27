@@ -1,0 +1,36 @@
+name: RSS cache diagnostics
+
+on:
+  push:
+    branches: [rss-cache-diagnostics-20261127]
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        round: [1, 2]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare isolated Chromium
+        run: |
+          python3 -m venv "$RUNNER_TEMP/rss-cache-venv"
+          "$RUNNER_TEMP/rss-cache-venv/bin/pip" install --disable-pip-version-check playwright==1.55.0
+          "$RUNNER_TEMP/rss-cache-venv/bin/playwright" install --with-deps chromium
+      - name: Observe source requests and article views
+        run: '"$RUNNER_TEMP/rss-cache-venv/bin/python" rss-cache-diagnostics/runtime.py evidence ${{ matrix.round }}'
+      - name: Save test observations
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rss-cache-round-${{ matrix.round }}
+          path: evidence/
+          if-no-files-found: error
+          retention-days: 14
