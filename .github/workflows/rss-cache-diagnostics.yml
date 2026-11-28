@@ -1,8 +1,8 @@
-name: RSS cache diagnostics
+name: FreshRSS 1.31.0 cache diagnostics
 
 on:
   push:
-    branches: [rss-cache-diagnostics-20261127]
+    branches: [freshrss-cache-131-20261128]
 
 permissions:
   contents: read
@@ -30,7 +30,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: rss-cache-round-${{ matrix.round }}
+          name: freshrss-131-round-${{ matrix.round }}
           path: evidence/
           if-no-files-found: error
           retention-days: 14
