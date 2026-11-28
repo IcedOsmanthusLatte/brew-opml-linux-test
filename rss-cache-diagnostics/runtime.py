@@ -1,4 +1,3 @@
-from base64 import b64encode
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import ExitStack
 from datetime import datetime, timedelta, timezone
@@ -19,16 +18,14 @@ from playwright.sync_api import sync_playwright
 
 USER = "filterlab"
 PASSWORD = secrets.token_urlsafe(27)
-BASIC = b64encode(f"{USER}:{PASSWORD}".encode()).decode()
 NETWORK = f"rsslab-{secrets.token_hex(4)}"
-DATABASE = f"{NETWORK}-db"
 FIXTURE = "http://rss-fixture.test:8090"
 FRESH_DIR = "/var/www/FreshRSS"
 SOURCE = Path(__file__).resolve().parent
 OUT = Path(sys.argv[1]).resolve()
 ROUND = int(sys.argv[2])
-APPS = {"freshrss": "freshrss/freshrss:1.30.4", "miniflux": "miniflux/miniflux:2.3.5"}
-IMAGES = {**APPS, "database": "postgres:16.13-alpine", "fixture": "python:3.12-alpine"}
+EXPECTED_VERSION = "1.31.0"
+IMAGES = {"freshrss": f"freshrss/freshrss:{EXPECTED_VERSION}", "fixture": "python:3.12-alpine"}
 FEEDS = ("unchanged", "updated", "stale", "recovery")
 HTTP = build_opener(ProxyHandler({}))
 
@@ -36,7 +33,7 @@ HTTP = build_opener(ProxyHandler({}))
 def docker(*args, check=True, timeout=60):
     proc = run(["docker", *args], capture_output=True, timeout=timeout, check=False)
     if check and proc.returncode:
-        diagnostic = proc.stderr.decode(errors="replace").replace(PASSWORD, "[redacted]").replace(BASIC, "[redacted]")
+        diagnostic = proc.stderr.decode(errors="replace").replace(PASSWORD, "[redacted]")
         raise RuntimeError(f"docker {args[0]} failed ({proc.returncode}): {diagnostic[-1200:]}")
     return proc
 
@@ -115,7 +112,7 @@ class Fresh:
         self.url = f"http://127.0.0.1:{port(self.name, 80)}"
         docker("cp", str(SOURCE / "fresh_db.php"), f"{self.name}:/tmp/fresh-db.php")
         start = ready(self.read, "FreshRSS")
-        if start["feeds"] or start["rows"] or start["version"] != "1.30.4":
+        if start["feeds"] or start["rows"] or start["version"] != EXPECTED_VERSION:
             raise RuntimeError("FreshRSS did not start with the expected clean version.")
         self.version = start["version"]
 
@@ -154,75 +151,6 @@ class Fresh:
             "nodes => nodes.map(node => ({url: node.dataset.link, status: node.classList.contains('not_read') ? 'unread' : 'read'}))"
         )
 
-
-class Mini:
-    kind = "miniflux"
-
-    def __init__(self, cleanup, tag, image):
-        self.name = f"{NETWORK}-mini-{tag}"
-        self.database = f"feeds_{tag}"
-        docker("exec", DATABASE, "createdb", "-U", USER, self.database)
-        docker("run", "-d", "--name", self.name, "--network", NETWORK, "-p", "127.0.0.1::8080",
-               "-e", f"DATABASE_URL=postgres://{USER}:{PASSWORD}@{DATABASE}/{self.database}?sslmode=disable",
-               "-e", "RUN_MIGRATIONS=1", "-e", "CREATE_ADMIN=1", "-e", f"ADMIN_USERNAME={USER}",
-               "-e", f"ADMIN_PASSWORD={PASSWORD}", "-e", "POLLING_FREQUENCY=3600",
-               "-e", "FETCHER_ALLOW_PRIVATE_NETWORKS=1", image)
-        cleanup.callback(docker, "rm", "-fv", self.name, check=False)
-        self.url = f"http://127.0.0.1:{port(self.name, 8080)}"
-        self.version = ready(lambda: self.request("GET", "/v1/version").decode().strip().strip('"'), "Miniflux")
-        if self.version.startswith("{"):
-            self.version = json.loads(self.version)["version"]
-        if self.version != "2.3.5" or self.read_feeds() or self.stored():
-            raise RuntimeError(f"Miniflux did not start with a clean expected version: {self.version!r}.")
-
-    def request(self, method, path, data=None, media=None):
-        headers = {"Authorization": f"Basic {BASIC}"}
-        if media:
-            headers["Content-Type"] = media
-        request = Request(self.url + path, data=data, headers=headers, method=method)
-        try:
-            with HTTP.open(request, timeout=25) as response:
-                return response.read()
-        except HTTPError as error:
-            detail = error.read().decode(errors="replace").replace(PASSWORD, "[redacted]").replace(BASIC, "[redacted]")
-            raise RuntimeError(f"Miniflux {method} {path}: HTTP {error.code} {detail[:260]}") from None
-
-    def read_feeds(self):
-        return json.loads(self.request("GET", "/v1/feeds"))
-
-    def import_opml(self, sample):
-        self.request("POST", "/v1/import", sample.read_bytes(), "application/xml")
-        def imported():
-            ids = {row["feed_url"]: row["id"] for row in self.read_feeds()}
-            return ids if set(ids) == {feed_url(feed) for feed in FEEDS} else None
-        self.ids = ready(imported, "Miniflux OPML import", seconds=28)
-
-    def login(self, browser):
-        self.context = browser.new_context(viewport={"width": 1200, "height": 800})
-        self.page = self.context.new_page()
-        field = ui_step(self.page, self.url + "/", "input[name=username]")
-        field.fill(USER)
-        self.page.locator("input[name=password]").fill(PASSWORD)
-        with self.page.expect_navigation(wait_until="domcontentloaded", timeout=14000):
-            field.locator("xpath=ancestor::form").locator("button[type=submit], input[type=submit]").first.click(timeout=7000)
-
-    def stored(self):
-        query = ("BEGIN READ ONLY; SELECT COALESCE(json_agg(rows),'[]'::json) FROM "
-                 "(SELECT url,title,status,hash AS source_id FROM entries ORDER BY url) AS rows; COMMIT;")
-        result = docker("exec", DATABASE, "psql", "-XqtA", "-v", "ON_ERROR_STOP=1", "-U", USER, "-d", self.database, "-c", query)
-        return {item_key(row.pop("url")): row for row in json.loads(result.stdout)}
-
-    def view(self, feed, all_items):
-        key = self.ids[feed_url(feed)]
-        ui_step(self.page, self.url + f"/feed/{key}/entries" + ("/all" if all_items else ""), "main")
-        rows = self.page.locator("article.entry-item[data-id]").evaluate_all(
-            """nodes => nodes.map(node => ({
-                title: node.querySelector('.item-title a').textContent.trim(),
-                status: node.classList.contains('item-status-unread') ? 'unread' : 'read'
-            }))"""
-        )
-        known = {row["title"]: f"{FIXTURE}/article/{key}" for key, row in self.stored().items()}
-        return [{"url": known[row["title"]], "status": row["status"]} for row in rows]
 
 
 def write_inputs():
@@ -292,34 +220,13 @@ def fresh_update(app, feed):
     return {"path": "FreshRSS Manage > Update", "button_label": label, "status": response.status}
 
 
-def miniflux_update(app, feed, force):
-    key = app.ids[feed_url(feed)]
-    ui_step(app.page, app.url + f"/feed/{key}/entries/all", "main")
-    control = app.page.locator('button[data-no-action-url*="forceRefresh=false"]')
-    label = control.inner_text(timeout=7000).strip()
-    confirmation = control.get_attribute("data-label-question")
-    answer = control.get_attribute("data-label-yes" if force else "data-label-no")
-    endpoint = control.get_attribute("data-url" if force else "data-no-action-url")
-    control.click(timeout=7000)
-    with app.page.expect_navigation(wait_until="domcontentloaded", timeout=14000), app.page.expect_response(
-        lambda reply: reply.url.endswith(endpoint) and reply.request.method == "POST", timeout=14000
-    ) as capture:
-        app.page.get_by_text(answer, exact=True).last.click(timeout=7000)
-    response = capture.value
-    if response.status not in {200, 204, 302, 303}:
-        raise RuntimeError(f"Miniflux Refresh returned {response.status}.")
-    return {"path": "Miniflux feed > Refresh > " + answer, "button_label": label,
-            "confirmation": confirmation, "answer": answer, "status": response.status}
-
 
 def ordinary_refresh(app, feed):
-    return fresh_update(app, feed) if isinstance(app, Fresh) else miniflux_update(app, feed, force=False)
+    return fresh_update(app, feed)
 
 
 def recovery_refresh(app, feed):
     key = app.ids[feed_url(feed)]
-    if isinstance(app, Mini):
-        return miniflux_update(app, feed, force=True)
     ui_step(app.page, app.url + f"/i/?c=subscription&a=feed&id={key}", "#feed_update")
     control = app.page.get_by_role("button", name="Clear cache", exact=False)
     if control.count() != 1:
@@ -330,10 +237,17 @@ def recovery_refresh(app, feed):
     control.evaluate("""el => {for (let node = el.parentElement; node; node = node.parentElement) {
         if (node.tagName === 'DETAILS') node.open = true;
     }}""")
+    label = control.inner_text(timeout=7000).strip()
     app.page.once("dialog", lambda dialog: dialog.accept())
-    with app.page.expect_navigation(wait_until="domcontentloaded", timeout=14000):
+    with app.page.expect_navigation(wait_until="domcontentloaded", timeout=14000), app.page.expect_response(
+        lambda reply: "a=clearCache" in reply.url and reply.request.method == "POST", timeout=14000,
+    ) as clear:
         control.click(timeout=7000)
+    response = clear.value
+    if response.status not in {200, 302, 303}:
+        raise RuntimeError(f"FreshRSS Clear cache returned {response.status}.")
     return {"path": "FreshRSS Manage feed > Maintenance > Clear cache, then single-feed refresh",
+            "clear_label": label, "clear_status": response.status, "clear_method": response.request.method,
             "refresh": fresh_update(app, feed)}
 
 
@@ -354,6 +268,7 @@ def request_log(offset, feed):
 
 def capture(app, feed, stage, refresh, find_origin=True):
     offset = len(origin_log())
+    before_feeds = app.read()["feeds"]
     result = refresh(app, feed)
     records = request_log(offset, feed)
     # FreshRSS can keep a local RSS cache briefly. Let the regular path expire it naturally.
@@ -366,7 +281,12 @@ def capture(app, feed, stage, refresh, find_origin=True):
             result = refresh(app, feed)
             records = request_log(offset, feed)
         result["waited_for_expiry_retries"] = retry_count
-    observed = {"refresh": result, "origin": records, "views": view(app, feed)}
+    after_feeds = app.read()["feeds"]
+    if before_feeds != after_feeds:
+        raise RuntimeError(f"FreshRSS altered existing subscriptions during {stage}/{feed}.")
+    observed = {"refresh": result, "origin": records, "views": view(app, feed),
+                "same_subscriptions": True, "subscription_count": len(after_feeds),
+                "subscription": next(row for row in after_feeds if row["url"] == feed_url(feed))}
     write_json(OUT / f"{app.kind}-{stage}-{feed}.json", observed)
     if stage in {"ordinary", "recovery"} and feed in {"stale", "recovery"}:
         picture(app.page, f"{app.kind}-{stage}-{feed}")
@@ -403,7 +323,7 @@ def check_slice(app, feed, observation, expected_status, expected_latest, expect
     if expected_latest:
         required_entries[f"{feed}-latest"] = "unread"
     origin = observation["origin"]
-    expected_count = 2 if isinstance(app, Mini) and expected_status == 200 else 1
+    expected_count = 1
     if len(origin) != expected_count:
         raise RuntimeError(f"{app.kind} {feed}: expected {expected_count} controlled feed GET(s), got {origin}")
     record = origin[0]
@@ -445,19 +365,12 @@ def main():
             cleanup.callback(docker, "rm", "-fv", fixture, check=False)
             fixture_public = f"http://127.0.0.1:{port(fixture, 8090)}"
             ready(lambda: HTTP.open(fixture_public + "/", timeout=3).status == 200, "Fixture server")
-            docker("run", "-d", "--name", DATABASE, "--network", NETWORK, "-e", f"POSTGRES_USER={USER}",
-                   "-e", f"POSTGRES_PASSWORD={PASSWORD}", images["database"])
-            cleanup.callback(docker, "rm", "-fv", DATABASE, check=False)
-            ready(lambda: docker("exec", DATABASE, "pg_isready", "-h", DATABASE, "-U", USER,
-                                 check=False).returncode == 0, "PostgreSQL")
             browser = playwright.chromium.launch(headless=True)
             cleanup.callback(browser.close)
-            apps = (Fresh(cleanup, "test", images["freshrss"]), Mini(cleanup, "test", images["miniflux"]))
+            apps = (Fresh(cleanup, "test", images["freshrss"]),)
             progress["versions"] = {app.kind: app.version for app in apps}
             for app in apps:
                 app.import_opml(sample)
-                if isinstance(app, Mini) and any(feed["ignore_http_cache"] or feed["crawler"] for feed in app.read_feeds()):
-                    raise RuntimeError("Miniflux did not use default caching or feed-only retrieval.")
                 app.login(browser)
                 app_warm = {}
                 for feed in FEEDS:
@@ -496,11 +409,13 @@ def main():
                             checks[f"{step}/{feed}"] = str(error)
                 app_observations["checks"] = checks
                 write_json(summary_path, progress)
+                if any(value != "matches controlled expectation" for value in checks.values()):
+                    raise RuntimeError(f"Some observations did not meet expectations: {checks}")
                 print(f"{app.kind} {app.version}: recorded origin and article views", flush=True)
         progress["status"] = "complete"
     except Exception as error:
         progress["status"] = "failed"
-        progress["diagnostic"] = str(error).replace(PASSWORD, "[redacted]").replace(BASIC, "[redacted]")
+        progress["diagnostic"] = str(error).replace(PASSWORD, "[redacted]")
         raise
     finally:
         write_json(summary_path, progress)
